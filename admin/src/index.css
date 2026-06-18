@@ -1,0 +1,9 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15px; }
+body { font-family: 'Inter', system-ui, sans-serif; background: #F1F5F9; color: #1E293B; -webkit-font-smoothing: antialiased; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+button { cursor: pointer; font-family: inherit; border: none; background: none; }
+img { max-width: 100%; display: block; }
+input, textarea, select { font-family: inherit; }
+:focus-visible { outline: 2px solid #8B0000; outline-offset: 2px; border-radius: 4px; }
