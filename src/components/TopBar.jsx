@@ -17,15 +17,15 @@ export default function TopBar() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13" aria-hidden="true">
               <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.99-2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
             </svg>
-            +250 788 315 609
+            +250 788877848
           </a>
           <span className="topbar-sep" aria-hidden="true">|</span>
-          <a href="mailto:info@diocesedekabgayi.org" className="topbar-contact-link">
+          <a href="mailto:dkabgayi@gmail.com" className="topbar-contact-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13" aria-hidden="true">
               <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
               <polyline points="22,6 12,13 2,6"/>
             </svg>
-            info@diocesedekabgayi.org
+            dkabgayi@gmail.com
           </a>
         </div>
 
@@ -43,10 +43,10 @@ export default function TopBar() {
           <a href="https://twitter.com/diocesekabgayi" target="_blank" rel="noopener noreferrer" className="topbar-social" aria-label="X / Twitter">
             <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
-          <a href="#donate" className="topbar-donate">
+          {/* <a href="#donate" className="topbar-donate">
             <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
             {t("topbar_donate")}
-          </a>
+          </a> */}
           {/* Admin portal link — same app, /admin route */}
           <a
             href="/admin"

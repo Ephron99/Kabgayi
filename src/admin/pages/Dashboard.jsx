@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api";
 import { useAdminLang } from "../context/AdminLangContext";
+import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen } from "lucide-react";
 
 export default function Dashboard() {
   const { t } = useAdminLang();
@@ -29,10 +30,10 @@ export default function Dashboard() {
   }, []);
 
   const statCards = [
-    { icon: "🖼️", label: t("hero_slides"), value: stats.slides,   to: "/admin/hero",     color: "#8B0000" },
-    { icon: "📰", label: t("news"),        value: stats.news,     to: "/admin/news",     color: "#2563EB" },
-    { icon: "⛪", label: t("parishes"),    value: stats.parishes, to: "/admin/parishes", color: "#059669" },
-    { icon: "✉️", label: t("unread"),      value: stats.messages, to: "/admin/messages", color: "#D97706" },
+    { icon: Image, label: t("hero_slides"), value: stats.slides,   to: "/admin/hero",     color: "#8B0000" },
+    { icon: Newspaper, label: t("news"),        value: stats.news,     to: "/admin/news",     color: "#2563EB" },
+    { icon: Church, label: t("parishes"),    value: stats.parishes, to: "/admin/parishes", color: "#059669" },
+    { icon: Mail, label: t("unread"),      value: stats.messages, to: "/admin/messages", color: "#D97706" },
   ];
 
   if (loading) return (
@@ -44,22 +45,32 @@ export default function Dashboard() {
   return (
     <div>
       <div className="stats-grid">
-        {statCards.map((s) => (
-          <Link to={s.to} key={s.label} className="stat-card" style={{ borderLeftColor: s.color, textDecoration: "none" }}>
-            <div className="stat-icon" style={{ background: `${s.color}15`, fontSize: 26 }}>{s.icon}</div>
-            <div>
-              <div className="stat-value" style={{ color: s.color }}>{s.value}</div>
-              <div className="stat-label">{s.label}</div>
-            </div>
-          </Link>
-        ))}
+        {statCards.map((s) => {
+  const Icon = s.icon;
+  return (
+    <Link to={s.to} key={s.label} className="stat-card" style={{ borderLeftColor: s.color, textDecoration: "none" }}>
+      <div className="stat-icon" style={{ background: `${s.color}15`, color: s.color }}>
+        <Icon size={26} />
+      </div>
+      <div>
+        <div className="stat-value" style={{ color: s.color }}>{s.value}</div>
+        <div className="stat-label">{s.label}</div>
+      </div>
+    </Link>
+  );
+})}
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24 }}>
         <div className="card">
-          <div className="card-title">📰 {t("recent_news")}</div>
+          <div className="card-title" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <Newspaper size={18} /> {t("recent_news")}
+          </div>
           {recentNews.length === 0 ? (
-            <div className="empty-state"><div className="empty-icon">📭</div><p>{t("no_articles")}</p></div>
+            // Messages card
+<div className="card-title" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+  <Mail size={18} /> {t("recent_msgs")}
+</div>
           ) : (
             <table>
               <thead><tr><th>{t("title_col")}</th><th>{t("status")}</th><th>{t("date")}</th></tr></thead>
@@ -86,9 +97,14 @@ export default function Dashboard() {
         </div>
 
         <div className="card">
-          <div className="card-title">✉️ {t("recent_msgs")}</div>
+         <div className="card-title" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <Newspaper size={18} /> {t("recent_news")}
+          </div>
           {recentMsgs.length === 0 ? (
-            <div className="empty-state"><div className="empty-icon">📭</div><p>{t("no_messages")}</p></div>
+            // Messages card
+            <div className="card-title" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <Mail size={18} /> {t("recent_msgs")}
+            </div>
           ) : (
             <table>
               <thead><tr><th>{t("from")}</th><th>{t("subject")}</th><th>{t("status")}</th></tr></thead>

@@ -3,7 +3,7 @@ import { NavLink, useLocation, Link } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { useAdminLang } from "../context/AdminLangContext";
 import "../admin.css";
-
+import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen } from "lucide-react";
 const LANG_OPTIONS = [
   { code: "fr", flag: "🇫🇷", label: "Français" },
   { code: "en", flag: "🇬🇧", label: "English" },
@@ -17,18 +17,18 @@ export default function Layout({ children }) {
   const [langOpen, setLangOpen] = useState(false);
 
   const NAV = [
-    { section: t("general") },
-    { to: "/admin",           icon: "📊", label: t("dashboard"),   exact: true },
-    { section: t("content") },
-    { to: "/admin/hero",      icon: "🖼️", label: t("hero_slides") },
-    { to: "/admin/news",      icon: "📰", label: t("news") },
-    { to: "/admin/parishes",  icon: "⛪", label: t("parishes") },
-    { section: t("communication") },
-    { to: "/admin/messages",  icon: "✉️", label: t("messages") },
-    { section: t("system") },
-    { to: "/admin/settings",  icon: "⚙️", label: t("settings") },
-    { to: "/admin/users",     icon: "👥", label: t("users"), adminOnly: true },
-  ];
+  { section: t("general") },
+  { to: "/admin",          icon: LayoutDashboard, label: t("dashboard"),   exact: true },
+  { section: t("content") },
+  { to: "/admin/hero",     icon: Image,           label: t("hero_slides") },
+  { to: "/admin/news",     icon: Newspaper,       label: t("news") },
+  { to: "/admin/parishes", icon: Church,          label: t("parishes") },
+  { section: t("communication") },
+  { to: "/admin/messages", icon: Mail,            label: t("messages") },
+  { section: t("system") },
+  { to: "/admin/settings", icon: Settings,        label: t("settings") },
+  { to: "/admin/users",    icon: Users,           label: t("users"), adminOnly: true },
+];
 
   // Derive page title from pathname
   const seg = location.pathname.replace("/admin", "").replace(/^\//, "").split("/")[0];
@@ -68,7 +68,9 @@ export default function Layout({ children }) {
                 end={item.exact}
                 className={({ isActive }) => `sidebar-link${isActive ? " active" : ""}`}
               >
-                <span className="sidebar-link-icon">{item.icon}</span>
+                <span className="sidebar-link-icon">
+                  {(() => { const Icon = item.icon; return <Icon size={18} />; })()}
+                </span>
                 {item.label}
               </NavLink>
             );
@@ -125,7 +127,7 @@ export default function Layout({ children }) {
 
           {/* Logout */}
           <button className="sidebar-logout" onClick={logout}>
-            <span>🚪</span> {t("logout")}
+            <span><DoorOpen size={26} /> </span> {t("logout")}
           </button>
         </div>
       </aside>

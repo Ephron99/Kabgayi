@@ -4,7 +4,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
-
+import { Save, Rocket, Image, Settings, Trash2, Reply } from "lucide-react";
 const EMPTY = {
   category_fr:"", category_en:"", category_rw:"",
   title_fr:"",    title_en:"",    title_rw:"",
@@ -70,10 +70,10 @@ export default function NewsForm() {
         </div>
         <div style={{ display:"flex", gap:10 }}>
           <button className="btn btn-secondary" onClick={() => handleSave(false)} disabled={saving}>
-            {t("save_draft")}
+            <Save size={16} />Draft
           </button>
           <button className="btn btn-primary" onClick={() => handleSave(true)} disabled={saving}>
-            {saving ? t("publishing") : t("publish")}
+            {saving ? t("publishing") : <Rocket size={16} />}publish
           </button>
         </div>
       </div>
@@ -125,7 +125,7 @@ export default function NewsForm() {
 
           {/* Image upload */}
           <div className="card">
-            <div className="card-title">{t("image_section")}</div>
+            <div className="card-title"><Image size={18} /></div>
             <ImageUpload
               value={form.image_url}
               onChange={(url) => setForm({ ...form, image_url: url })}
@@ -136,7 +136,7 @@ export default function NewsForm() {
 
           {/* Publish options */}
           <div className="card">
-            <div className="card-title">{t("options")}</div>
+            <div className="card-title"><Settings size={18} /></div>
             <div style={{ display:"flex", alignItems:"center", gap:10 }}>
               <label className="toggle">
                 <input type="checkbox" checked={form.is_published}
@@ -157,7 +157,7 @@ export default function NewsForm() {
                       api.deleteNews(id).then(() => nav("/admin/news"));
                   }}
                 >
-                  {t("delete_article")}
+                  <Trash2 size={16} /> 
                 </button>
               </>
             )}

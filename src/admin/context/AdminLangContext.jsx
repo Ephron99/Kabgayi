@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-
+import { Save, Rocket, Image, Settings, Trash2, Reply } from "lucide-react";
 // Admin UI translations
 const T = {
   fr: {
@@ -84,7 +84,7 @@ const T = {
     full_content:  "Contenu complet",
     image_section: "🖼️ Image",
     options:       "⚙️ Options",
-    delete_article:"🗑️ Supprimer l'article",
+    // delete_article:"🗑️ Supprimer l'article",
     image_url_ph:  "https://...",
     cat_ph:        "ex: ORDINATION, PÈLERINAGE...",
 

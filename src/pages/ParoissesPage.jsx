@@ -1,6 +1,7 @@
 import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
+import { resolveImg } from "../utils/imageUrl";
 
 export default function ParoissesPage() {
   const { t, lang } = useLang();
@@ -63,7 +64,7 @@ export default function ParoissesPage() {
               <article key={p.id} className="parish-card">
                 <div className="parish-card-img-wrap">
                   <img
-                    src={p.image_url || "https://images.unsplash.com/photo-1548625149-720754952028?w=400&q=80"}
+                    src={resolveImg(p.image_url) || "https://images.unsplash.com/photo-1548625149-720754952028?w=400&q=80"}
                     alt={p.name}
                     className="parish-card-img"
                     loading="lazy"

@@ -101,15 +101,15 @@ export const translations = {
     footer_media: "Médias",
     footer_services_f: "Services",
     footer_contact: "Contactez-nous",
-    footer_rights: "© 2024 Diocèse de Kabgayi – Tous droits réservés",
+    footer_rights: "© 2024 Diocèse de Kabgayi – Tous droits réservés, Développé par STEPH E House",
     footer_legal: "Mentions légales",
     footer_privacy: "Politique de confidentialité",
 
     // Contact info
     contact_address: "B.P. 23 Kabgayi – Rwanda",
-    contact_phone: "+250 788 315 609",
-    contact_email: "info@diocesedekabgayi.org",
-    contact_web: "www.diocesedekabgayi.org",
+    contact_phone: "+250 788877848",
+    contact_email: "dkabgayi@gmail.com",
+    contact_web: "diocesekabgayi.rw",
 
     // About page
     about_title: "À Propos du Diocèse",
@@ -213,14 +213,14 @@ export const translations = {
     footer_media: "Media",
     footer_services_f: "Services",
     footer_contact: "Contact Us",
-    footer_rights: "© 2024 Diocese of Kabgayi – All rights reserved",
+    footer_rights: "© 2024 Diocese of Kabgayi – diocesekabgayi.rw, Developed by STEPH E House",
     footer_legal: "Legal Notice",
     footer_privacy: "Privacy Policy",
 
     contact_address: "P.O. Box 23 Kabgayi – Rwanda",
-    contact_phone: "+250 788 315 609",
-    contact_email: "info@diocesedekabgayi.org",
-    contact_web: "www.diocesedekabgayi.org",
+    contact_phone: "+250 788877848",
+    contact_email: "dkabgayi@gmail.com",
+    contact_web: "diocesekabgayi.rw",
 
     about_title: "About the Diocese",
     about_history_title: "Our History",
@@ -322,14 +322,14 @@ export const translations = {
     footer_media: "Itangazamakuru",
     footer_services_f: "Serivisi",
     footer_contact: "Twunganire",
-    footer_rights: "© 2024 Diyosezi ya Kabgayi – Uburenganzira bwose bwihariwe",
+    footer_rights: "© 2024 Uburenganzira bwose bwihariwe na Diyosezi ya Kabgayi – yakozwe na STEPH E House",
     footer_legal: "Amategeko",
     footer_privacy: "Politiki y'Ibanga",
 
     contact_address: "B.P. 23 Kabgayi – Rwanda",
-    contact_phone: "+250 788 315 609",
-    contact_email: "info@diocesedekabgayi.org",
-    contact_web: "www.diocesedekabgayi.org",
+    contact_phone: "+250 788877848",
+    contact_email: "dkabgayi@gmail.com",
+    contact_web: "diocesekabgayi.rw",
 
     about_title: "Ibyerekeye Diyosezi",
     about_history_title: "Amateka Yacu",

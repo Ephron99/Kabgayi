@@ -1,6 +1,7 @@
 import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
+import { resolveImg } from "../utils/imageUrl";
 
 export default function ActualitesPage() {
   const { t, lang } = useLang();
@@ -77,7 +78,7 @@ export default function ActualitesPage() {
               <article key={item.id} className="news-card news-card--large">
                 <Link to={`/actualites/${item.id}`} className="news-card-img-wrap">
                   <img
-                    src={item.image_url || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80"}
+                    src={resolveImg(item.image_url) || "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80"}
                     alt={getField(item, "title")}
                     className="news-card-img"
                     loading="lazy"

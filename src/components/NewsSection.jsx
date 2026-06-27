@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
+import { resolveImg } from "../utils/imageUrl";
+import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg'; 
 
+const FALLBACK_PHOTO = eveque;
 // Static fallback shown while loading or if backend is down
 const FALLBACK = [
   { id: 1, published_at: "2024-05-12", category_fr: "ORDINATION", category_en: "ORDINATION", category_rw: "UBUPADIRI",
@@ -11,7 +14,7 @@ const FALLBACK = [
     excerpt_fr: "Le diocèse de Kabgayi a la joie d'annoncer l'ordination sacerdotale de trois diacres.",
     excerpt_en: "The Diocese of Kabgayi is pleased to announce the priestly ordination of three deacons.",
     excerpt_rw: "Diyosezi ya Kabgayi yishimira gutangaza ubupadiri bw'abadiyakoni batatu.",
-    image_url: "https://images.unsplash.com/photo-1545050073-c2d4693c3c16?w=600&q=80" },
+    image_url: FALLBACK_PHOTO },
   { id: 2, published_at: "2024-05-08", category_fr: "PÈLERINAGE", category_en: "PILGRIMAGE", category_rw: "URUGENDO",
     title_fr: "Pèlerinage diocésain à Notre Dame de Kibeho",
     title_en: "Diocesan pilgrimage to Our Lady of Kibeho",
@@ -19,7 +22,7 @@ const FALLBACK = [
     excerpt_fr: "Plus de 5 000 fidèles ont participé au pèlerinage annuel du diocèse.",
     excerpt_en: "More than 5,000 faithful participated in the diocese's annual pilgrimage.",
     excerpt_rw: "Abakristu barengeje 5.000 bashoboye gufata urugendo rw'umwaka wa diyosezi.",
-    image_url: "https://images.unsplash.com/photo-1612538498456-e861df91d4d0?w=600&q=80" },
+    image_url: FALLBACK_PHOTO },
   { id: 3, published_at: "2024-05-03", category_fr: "CARÊME", category_en: "LENT", category_rw: "KAREME",
     title_fr: "Carême de partage : merci pour votre générosité",
     title_en: "Sharing Lent: thank you for your generosity",
@@ -27,7 +30,7 @@ const FALLBACK = [
     excerpt_fr: "Grâce à votre soutien, plusieurs projets sociaux ont été réalisés.",
     excerpt_en: "Thanks to your support, several social projects have been completed.",
     excerpt_rw: "Binyuze ku bufasha bwawe, imishinga myinshi y'imibereho yashyizwe mu bikorwa.",
-    image_url: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&q=80" },
+    image_url: FALLBACK_PHOTO },
   { id: 4, published_at: "2024-04-28", category_fr: "PÂQUES", category_en: "EASTER", category_rw: "PASIKA",
     title_fr: "Message de Pâques de Mgr Balthazar Ntivuguruzwa",
     title_en: "Easter message from Mgr Balthazar Ntivuguruzwa",
@@ -35,7 +38,7 @@ const FALLBACK = [
     excerpt_fr: "Le Christ est ressuscité ! Alléluia, Alléluia !",
     excerpt_en: "Christ is risen! Alleluia, Alleluia!",
     excerpt_rw: "Kristu yazutse! Haleluya, Haleluya!",
-    image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" },
+    image_url: FALLBACK_PHOTO },
 ];
 
 export default function NewsSection() {
@@ -94,7 +97,12 @@ export default function NewsSection() {
                 <Link to={`/actualites/${item.id}`} className="news-card-img-wrap"
                   aria-label={getField(item, "title")}>
                   <img
-                    src={item.image_url}
+                    
+                      src={item.image_url === FALLBACK_PHOTO ? item.image_url : resolveImg(item.image_url)}
+                      alt={getField(item, "title")}
+                      className="news-card-img"
+                      loading="lazy"
+                    
                     alt={getField(item, "title")}
                     className="news-card-img"
                     loading="lazy"
