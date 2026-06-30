@@ -3,14 +3,14 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import { BACKEND_BASE } from "../../config";
 
 const EMPTY = {
   name:"", location:"", vicar:"", phone:"", email:"",
   image_url:"", description:"", sort_order:0, is_active:1,
 };
 
-const BACKEND = "http://localhost:5000";
-const resolveUrl = (url) => (!url ? "" : url.startsWith("http") ? url : `${BACKEND}${url}`);
+const resolveUrl = (url) => (!url ? "" : url.startsWith("https") ? url : `${BACKEND_BASE}${url}`);
 
 export default function ParishesPage() {
   const { t }               = useAdminLang();

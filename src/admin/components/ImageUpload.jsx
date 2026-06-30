@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { api } from "../api";
+import { BACKEND_BASE } from "../../config";
 
 /**
  * ImageUpload — reusable file-picker + drag-and-drop image uploader
@@ -23,12 +24,10 @@ export default function ImageUpload({
   const [progress, setProg] = useState(0); // 0 = idle, 1-100 = uploading, -1 = error
   const [error, setError]   = useState("");
 
-  const BACKEND = "http://localhost:5000"; // for displaying uploaded images
-
   const resolveUrl = (url) => {
     if (!url) return "";
-    if (url.startsWith("http")) return url;
-    return `${BACKEND}${url}`;
+    if (url.startsWith("https")) return url;
+    return `${BACKEND_BASE}${url}`;
   };
 
   const upload = async (file) => {

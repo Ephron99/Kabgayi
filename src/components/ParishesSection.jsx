@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
 
-const BACKEND = "http://localhost:5000";
-const resolveImg = (url) => (!url ? "" : url.startsWith("http") ? url : `${BACKEND}${url}`);
+const BACKEND = "https://localhost:5000";
+const resolveImg = (url) => (!url ? "" : url.startsWith("https") ? url : `${BACKEND}${url}`);
 
 const FALLBACK = [
   { id: 1, name: "Paroisse Cathédrale de Kabgayi",  location: "Kabgayi",    image_url: "https://images.unsplash.com/photo-1548625149-720754952028?w=400&q=80" },

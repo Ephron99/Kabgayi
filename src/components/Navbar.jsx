@@ -1,267 +1,187 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import eveque from '../assets/logo_balthazar-3-2bb20.jpg';
-const LANG_FLAGS = {
-  fr: { label: "Français", flag: "🇫🇷" },
-  en: { label: "English", flag: "🇬🇧" },
-  rw: { label: "Kinyarwanda", flag: "🇷🇼" },
-};
+import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
 
 export default function Navbar() {
-  const { t, lang, setLang } = useLang();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLang();
   const [activeDropdown, setActiveDropdown] = useState(null);
-  const [langOpen, setLangOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
     setActiveDropdown(null);
-    setLangOpen(false);
+    setMenuOpen(false);
   }, [location]);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handler = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setActiveDropdown(null);
-        setLangOpen(false);
-        setMenuOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
   const navItems = [
-    { key: "home", label: t("nav_home"), path: "/" },
-    { key: "about", label: t("nav_about"), path: "/a-propos" },
+    { key: "home",    label: t("nav_home"),    path: "/" },
     {
-      key: "services",
-      label: t("nav_services"),
-      path: "/services",
+      key: "diocese", label: "Diocèse",         path: "/a-propos",
       children: [
-        { label: t("sub_economat"), path: "/services/economat" },
-        { label: t("sub_caritas"), path: "/services/caritas" },
-        { label: t("sub_education"), path: "/services/education" },
-        { label: t("sub_hopital"), path: "/services/hopital" },
-        { label: t("sub_hotel"), path: "/services/hotel-saint-andre" },
-        { label: t("sub_imprimerie"), path: "/services/imprimerie" },
-        { label: t("sub_centres"), path: "/services/centres-spiritualite" },
-        { label: t("sub_institut"), path: "/services/institut-catholique" },
+        { label: t("nav_about"),        path: "/a-propos" },
+        { label: t("nav_vie_consacree"), path: "/vie-consacree" },
+      ],
+    },
+    { key: "actualites", label: t("nav_actualites"), path: "/actualites" },
+    {
+      key: "medias", label: "Médias", path: "/documentation",
+      children: [
+        { label: t("sub_homelies"),  path: "/documentation/homelies" },
+        { label: t("sub_mwigisha"), path: "/documentation/mwigisha" },
+        { label: t("sub_urumuri"),  path: "/documentation/urumuri" },
+        { label: t("sub_nouvelles"),path: "/documentation/nouvelles" },
+        { label: t("sub_videos"),   path: "/liturgie/videos" },
       ],
     },
     {
-      key: "pastorale",
-      label: t("nav_pastorale"),
-      path: "/pastorale",
+      key: "pastorale", label: t("nav_pastorale"), path: "/pastorale",
       children: [
-        { label: t("sub_priorites"), path: "/pastorale/priorites" },
+        { label: t("sub_priorites"),   path: "/pastorale/priorites" },
         { label: t("sub_commissions"), path: "/pastorale/commissions" },
-        { label: t("sub_aumoneries"), path: "/pastorale/aumoneries" },
+        { label: t("sub_aumoneries"),  path: "/pastorale/aumoneries" },
       ],
     },
     { key: "paroisses", label: t("nav_paroisses"), path: "/paroisses" },
-    { key: "vie_consacree", label: t("nav_vie_consacree"), path: "/vie-consacree" },
+    { key: "evenements", label: "Événements", path: "/actualites" },
     {
-      key: "actualites",
-      label: t("nav_actualites"),
-      path: "/actualites",
-    },
-    {
-      key: "documentation",
-      label: t("nav_documentation"),
-      path: "/documentation",
+      key: "documents", label: "Documents", path: "/documentation",
       children: [
-        { label: t("sub_homelies"), path: "/documentation/homelies" },
+        { label: t("sub_homelies"),  path: "/documentation/homelies" },
         { label: t("sub_mwigisha"), path: "/documentation/mwigisha" },
-        { label: t("sub_urumuri"), path: "/documentation/urumuri" },
-        { label: t("sub_nouvelles"), path: "/documentation/nouvelles" },
+        { label: t("sub_urumuri"),  path: "/documentation/urumuri" },
       ],
     },
-    {
-      key: "accueil_liturgique",
-      label: t("nav_accueil_liturgique"),
-      path: "/liturgie",
-      children: [
-        { label: t("sub_liturgie"), path: "/liturgie/jour" },
-        { label: t("sub_videos"), path: "/liturgie/videos" },
-      ],
-    },
+    { key: "contact", label: "Contact", path: "/contact" },
   ];
 
-  const toggleDropdown = (key) => {
-    setActiveDropdown(activeDropdown === key ? null : key);
-  };
+  const toggle = (key) => setActiveDropdown((prev) => (prev === key ? null : key));
 
   return (
-    <nav className={`navbar${scrolled ? " navbar--scrolled" : ""}`} ref={navRef} role="navigation" aria-label="Navigation principale">
-      <div className="navbar-inner">
+    <nav className={`navbar-v2${scrolled ? " sticky" : ""}`} ref={navRef}>
+      <div className="navbar-v2-inner">
         {/* Logo */}
-        <Link to="/" className="navbar-logo" aria-label="Accueil – Diocèse de Kabgayi">
-          <div className="navbar-logo-icon">
-           <img src={eveque} alt="Évêque du Diocèse de Kabgayi" />
-          </div>
-          <div className="navbar-logo-text">
-            <span className="navbar-logo-title">Diocèse</span>
-            <span className="navbar-logo-sub">de Kabgayi</span>
+        <Link to="/" className="navbar-v2-logo" aria-label="Accueil – Diocèse de Kabgayi">
+          <img
+            src={logoImg}
+            alt="Blason Diocèse de Kabgayi"
+            className="navbar-v2-logo-img"
+            onError={(e) => { e.target.style.display = "none"; }}
+          />
+          <div className="navbar-v2-logo-text">
+            <strong>DIOCÈSE DE KABGAYI</strong>
+            <em>Orate in veritate</em>
           </div>
         </Link>
 
-        {/* Desktop Nav */}
-        <ul className="navbar-menu" role="menubar">
-          {navItems.map((item) => (
-            <li
-              key={item.key}
-              className={`navbar-item${item.children ? " has-dropdown" : ""}${activeDropdown === item.key ? " open" : ""}`}
-              role="none"
-            >
-              {item.children ? (
-                <>
-                  <button
-                    className={`navbar-link${location.pathname.startsWith(item.path) ? " active" : ""}`}
-                    onClick={() => toggleDropdown(item.key)}
-                    aria-haspopup="true"
-                    aria-expanded={activeDropdown === item.key}
-                    role="menuitem"
-                  >
+        {/* Desktop menu */}
+        <ul className="navbar-v2-menu">
+          {navItems.map((item) => {
+            const isActive =
+              location.pathname === item.path ||
+              (item.path !== "/" && location.pathname.startsWith(item.path));
+            const isOpen = activeDropdown === item.key;
+
+            return (
+              <li key={item.key} className={`navbar-v2-item${item.children ? " has-sub" : ""}${isOpen ? " open" : ""}`}>
+                {item.children ? (
+                  <>
+                    <button
+                      className={`navbar-v2-link${isActive ? " active" : ""}`}
+                      onClick={() => toggle(item.key)}
+                      aria-expanded={isOpen}
+                    >
+                      {item.label}
+                      <svg className="nav-arrow" viewBox="0 0 10 6" width="9" height="9">
+                        <path d="M0 0l5 6 5-6z" fill="currentColor"/>
+                      </svg>
+                    </button>
+                    <ul className="navbar-v2-dropdown">
+                      {item.children.map((child) => (
+                        <li key={child.path}>
+                          <Link to={child.path} className="navbar-v2-dropdown-item">
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <Link to={item.path} className={`navbar-v2-link${isActive ? " active" : ""}`}>
                     {item.label}
-                    <svg className="dropdown-arrow" viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
-                      <path d="M0 0l5 6 5-6z" fill="currentColor" />
-                    </svg>
-                  </button>
-                  <ul className="dropdown-menu" role="menu">
-                    {item.children.map((child) => (
-                      <li key={child.path} role="none">
-                        <Link
-                          to={child.path}
-                          className="dropdown-item"
-                          role="menuitem"
-                        >
-                          <span className="dropdown-item-dot" aria-hidden="true"></span>
-                          {child.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              ) : (
-                <Link
-                  to={item.path}
-                  className={`navbar-link${location.pathname === item.path ? " active" : ""}`}
-                  role="menuitem"
-                >
-                  {item.label}
-                </Link>
-              )}
-            </li>
-          ))}
+                  </Link>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
-        {/* Language Switcher */}
-        <div className="lang-switcher">
-          <button
-            className="lang-btn"
-            onClick={() => setLangOpen(!langOpen)}
-            aria-haspopup="true"
-            aria-expanded={langOpen}
-            aria-label="Changer de langue"
-          >
-            <span>{LANG_FLAGS[lang].flag}</span>
-            <span>{LANG_FLAGS[lang].label}</span>
-            <svg viewBox="0 0 10 6" width="10" height="6" aria-hidden="true">
-              <path d="M0 0l5 6 5-6z" fill="currentColor" />
-            </svg>
-          </button>
-          {langOpen && (
-            <ul className="lang-menu" role="menu" aria-label="Sélection de langue">
-              {Object.entries(LANG_FLAGS).map(([code, { label, flag }]) => (
-                <li key={code} role="none">
-                  <button
-                    className={`lang-option${lang === code ? " active" : ""}`}
-                    onClick={() => { setLang(code); setLangOpen(false); }}
-                    role="menuitem"
-                    lang={code}
-                  >
-                    <span>{flag}</span> {label}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        {/* Search */}
+        <button className="navbar-v2-search" aria-label="Rechercher">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="18" height="18">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </button>
 
-        {/* Hamburger */}
+        {/* Hamburger (mobile) */}
         <button
-          className={`hamburger${menuOpen ? " open" : ""}`}
+          className={`hamburger-v2${menuOpen ? " open" : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label={menuOpen ? "Fermer le menu" : "Ouvrir le menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-menu"
+          aria-label="Menu"
         >
-          <span></span><span></span><span></span>
+          <span/><span/><span/>
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        id="mobile-menu"
-        className={`mobile-menu${menuOpen ? " open" : ""}`}
-        aria-hidden={!menuOpen}
-      >
-        {navItems.map((item) => (
-          <div key={item.key} className="mobile-item">
-            {item.children ? (
-              <>
-                <button
-                  className="mobile-link mobile-link--parent"
-                  onClick={() => toggleDropdown(item.key + "_m")}
-                  aria-expanded={activeDropdown === item.key + "_m"}
-                >
-                  {item.label}
-                  <svg className={`dropdown-arrow${activeDropdown === item.key + "_m" ? " rotated" : ""}`} viewBox="0 0 10 6" width="10" height="6">
-                    <path d="M0 0l5 6 5-6z" fill="currentColor" />
-                  </svg>
-                </button>
-                {activeDropdown === item.key + "_m" && (
-                  <div className="mobile-submenu">
-                    {item.children.map((child) => (
-                      <Link key={child.path} to={child.path} className="mobile-sublink">
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </>
-            ) : (
-              <Link to={item.path} className="mobile-link">
-                {item.label}
-              </Link>
-            )}
-          </div>
-        ))}
-        {/* Mobile Lang */}
-        <div className="mobile-lang">
-          {Object.entries(LANG_FLAGS).map(([code, { label, flag }]) => (
-            <button
-              key={code}
-              className={`mobile-lang-btn${lang === code ? " active" : ""}`}
-              onClick={() => setLang(code)}
-              lang={code}
-            >
-              {flag} {label}
-            </button>
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="navbar-v2-mobile">
+          {navItems.map((item) => (
+            <div key={item.key} className="navbar-v2-mobile-item">
+              {item.children ? (
+                <>
+                  <button
+                    className="navbar-v2-mobile-link"
+                    onClick={() => toggle(item.key + "_m")}
+                  >
+                    {item.label}
+                    <svg viewBox="0 0 10 6" width="9" height="9" className={activeDropdown === item.key + "_m" ? "rotated" : ""}>
+                      <path d="M0 0l5 6 5-6z" fill="currentColor"/>
+                    </svg>
+                  </button>
+                  {activeDropdown === item.key + "_m" && (
+                    <div className="navbar-v2-mobile-sub">
+                      {item.children.map((c) => (
+                        <Link key={c.path} to={c.path} className="navbar-v2-mobile-sublink">{c.label}</Link>
+                      ))}
+                    </div>
+                  )}
+                </>
+              ) : (
+                <Link to={item.path} className="navbar-v2-mobile-link">{item.label}</Link>
+              )}
+            </div>
           ))}
         </div>
-      </div>
+      )}
     </nav>
   );
 }

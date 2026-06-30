@@ -1,8 +1,8 @@
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
 import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg'; 
-const BACKEND = "http://localhost:5000";
-const resolveUrl = (url) => (!url ? null : url.startsWith("http") ? url : `${BACKEND}${url}`);
+const BACKEND = "https://localhost:5000";
+const resolveUrl = (url) => (!url ? null : url.startsWith("https") ? url : `${BACKEND}${url}`);
 
 const FALLBACK_PHOTO = eveque;
 

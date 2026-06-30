@@ -1,4 +1,6 @@
-const BASE = "/api";
+import { API_URL } from "../config";
+
+const BASE = API_URL;
 
 function getToken() {
   return localStorage.getItem("admin_token");

@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
+import { API_URL } from "../config";
 
 /**
  * Generic data-fetching hook.
- * Returns { data, loading, error, reload }
- * Falls back to `fallback` if the request fails.
+ * Paths like "/api/news" are resolved against VITE_API_URL automatically.
  */
-export function useApi(url, fallback = null) {
+export function useApi(path, fallback = null) {
+  // path may be "/api/hero" or "/api/news?limit=4"
+  // Strip leading "/api" since API_URL already ends with /api
+  const url = API_URL + path.replace(/^\/api/, "");
+
   const [data, setData]       = useState(fallback);
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState(null);
@@ -21,18 +25,9 @@ export function useApi(url, fallback = null) {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
       })
-      .then((json) => {
-        if (!cancelled) setData(json);
-      })
-      .catch((err) => {
-        if (!cancelled) {
-          setError(err.message);
-          // keep fallback data intact on error
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
-      });
+      .then((json) => { if (!cancelled) setData(json); })
+      .catch((err) => { if (!cancelled) setError(err.message); })
+      .finally(() => { if (!cancelled) setLoading(false); });
 
     return () => { cancelled = true; };
   }, [url, rev]);

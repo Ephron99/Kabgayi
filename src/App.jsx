@@ -8,12 +8,15 @@ import AboutPage     from "./pages/AboutPage";
 import GenericPage   from "./pages/GenericPage";
 import ParoissesPage from "./pages/ParoissesPage";
 import ActualitesPage from "./pages/ActualitesPage";
+import NewsDetailPage  from "./pages/NewsDetailPage";
 import VieConsacreePage from "./pages/VieConsacreePage";
 import ContactPage   from "./pages/ContactPage";
+import MaintenancePage from "./pages/MaintenancePage";
 import AdminApp      from "./admin/AdminApp";
 import "./App.css";
 
-/** Public layout wrapper — topbar + navbar + footer */
+const MAINTENANCE_MODE = true; // ← flip to false to bring the site back
+
 function PublicLayout({ children }) {
   return (
     <>
@@ -26,39 +29,48 @@ function PublicLayout({ children }) {
   );
 }
 
+function PublicSite() {
+  return (
+    <LanguageProvider>
+      <PublicLayout>
+        <Routes>
+          <Route path="/"                       element={MAINTENANCE_MODE ? <MaintenancePage /> : <HomePage />} />
+          <Route path="/home"                   element={<HomePage />} />
+          <Route path="/a-propos"               element={<AboutPage />} />
+          <Route path="/services"               element={<GenericPage section="services" />} />
+          <Route path="/services/:slug"         element={<GenericPage section="services" />} />
+          <Route path="/pastorale"              element={<GenericPage section="pastorale" />} />
+          <Route path="/pastorale/:slug"        element={<GenericPage section="pastorale" />} />
+          <Route path="/paroisses"              element={<ParoissesPage />} />
+          <Route path="/paroisses/:id"          element={<ParoissesPage />} />
+          <Route path="/vie-consacree"          element={<VieConsacreePage />} />
+          <Route path="/actualites"             element={<ActualitesPage />} />
+          <Route path="/actualites/:id"         element={<NewsDetailPage />} />
+          <Route path="/documentation"          element={<GenericPage section="documentation" />} />
+          <Route path="/documentation/:slug"    element={<GenericPage section="documentation" />} />
+          <Route path="/liturgie"               element={<GenericPage section="liturgie" />} />
+          <Route path="/liturgie/:slug"         element={<GenericPage section="liturgie" />} />
+          <Route path="/contact"                element={<ContactPage />} />
+          <Route path="*"                       element={<HomePage />} />
+        </Routes>
+      </PublicLayout>
+    </LanguageProvider>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* ── Admin portal — no public chrome ── */}
         <Route path="/admin/*" element={<AdminApp />} />
 
-        {/* ── Public website ── */}
-        <Route path="/*" element={
-          <LanguageProvider>
-            <PublicLayout>
-              <Routes>
-                <Route path="/"                       element={<HomePage />} />
-                <Route path="/a-propos"               element={<AboutPage />} />
-                <Route path="/services"               element={<GenericPage section="services" />} />
-                <Route path="/services/:slug"         element={<GenericPage section="services" />} />
-                <Route path="/pastorale"              element={<GenericPage section="pastorale" />} />
-                <Route path="/pastorale/:slug"        element={<GenericPage section="pastorale" />} />
-                <Route path="/paroisses"              element={<ParoissesPage />} />
-                <Route path="/paroisses/:id"          element={<ParoissesPage />} />
-                <Route path="/vie-consacree"          element={<VieConsacreePage />} />
-                <Route path="/actualites"             element={<ActualitesPage />} />
-                <Route path="/actualites/:id"         element={<ActualitesPage />} />
-                <Route path="/documentation"          element={<GenericPage section="documentation" />} />
-                <Route path="/documentation/:slug"   element={<GenericPage section="documentation" />} />
-                <Route path="/liturgie"               element={<GenericPage section="liturgie" />} />
-                <Route path="/liturgie/:slug"         element={<GenericPage section="liturgie" />} />
-                <Route path="/contact"                element={<ContactPage />} />
-                <Route path="*"                       element={<HomePage />} />
-              </Routes>
-            </PublicLayout>
-          </LanguageProvider>
-        } />
+        {/* Maintenance page — no navbar/footer */}
+        {MAINTENANCE_MODE && (
+          <Route path="/" element={<MaintenancePage />} />
+        )}
+
+        {/* Full public site, with chrome */}
+        <Route path="/*" element={<PublicSite />} />
       </Routes>
     </BrowserRouter>
   );

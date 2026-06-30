@@ -3,6 +3,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import { BACKEND_BASE } from "../../config";
 
 const EMPTY = {
   badge: "", image_url: "", sort_order: 0, is_active: 1,
@@ -11,8 +12,7 @@ const EMPTY = {
   points_fr: ["","",""], points_en: ["","",""], points_rw: ["","",""],
 };
 
-const BACKEND = "http://localhost:5000";
-const resolveUrl = (url) => (!url ? "" : url.startsWith("http") ? url : `${BACKEND}${url}`);
+const resolveUrl = (url) => (!url ? "" : url.startsWith("https") ? url : `${BACKEND_BASE}${url}`);
 
 export default function HeroPage() {
   const { t } = useAdminLang();

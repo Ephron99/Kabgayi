@@ -1,21 +1,15 @@
-import HeroSlider from "../components/HeroSlider";
-import StatsBar from "../components/StatsBar";
-import BishopSection from "../components/BishopSection";
-import NewsSection from "../components/NewsSection";
-import ParishesSection from "../components/ParishesSection";
-import ValuesSection from "../components/ValuesSection";
-import CTASection from "../components/CTASection";
+import HeroSlider       from "../components/HeroSlider";
+import StatsBar         from "../components/StatsBar";
+import NewsSection      from "../components/NewsSection";
+import HomeBottomSection from "../components/HomeBottomSection";
 
 export default function HomePage() {
   return (
     <main id="main-content">
       <HeroSlider />
       <StatsBar />
-      <BishopSection />
       <NewsSection />
-      <ParishesSection />
-      <ValuesSection />
-      <CTASection />
+      <HomeBottomSection />
     </main>
   );
 }
