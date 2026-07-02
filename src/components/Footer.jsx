@@ -1,5 +1,11 @@
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
+import { MapPin, Phone, Mail, Globe, Clock } from "lucide-react";
+
+const FbIcon = () => <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
+const YtIcon = () => <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#1A1A2E" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg>;
+const TwIcon = () => <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>;
+const IgIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>;
 
 export default function Footer() {
   const { t, lang } = useLang();
@@ -27,12 +33,14 @@ export default function Footer() {
             </p>
             <div className="footer-v2-socials">
               {[
-                { href:"https://www.facebook.com/diocesedekabgayi", label:"Facebook", icon:<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> },
-                { href:"https://www.youtube.com/diocesedekabgayi", label:"YouTube", icon:<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon fill="#1A1A2E" points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg> },
-                { href:"https://twitter.com/diocesekabgayi", label:"Twitter", icon:<svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> },
-                { href:"https://www.instagram.com/diocesedekabgayi", label:"Instagram", icon:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> },
-              ].map(({ href, label, icon }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="footer-v2-social" aria-label={label}>{icon}</a>
+                { href:"https://www.facebook.com/diocesedekabgayi", label:"Facebook",  Ico: FbIcon },
+                { href:"https://www.youtube.com/diocesedekabgayi",  label:"YouTube",   Ico: YtIcon },
+                { href:"https://twitter.com/diocesekabgayi",        label:"Twitter",   Ico: TwIcon },
+                { href:"https://www.instagram.com/diocesedekabgayi",label:"Instagram", Ico: IgIcon },
+              ].map(({ href, label, Ico }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="footer-v2-social" aria-label={label}>
+                  <Ico />
+                </a>
               ))}
             </div>
           </div>
@@ -65,26 +73,11 @@ export default function Footer() {
           <address className="footer-v2-col">
             <h4 className="footer-v2-col-title">{lang === "fr" ? "CONTACT" : "CONTACT"}</h4>
             <ul className="footer-v2-contact">
-              <li>
-                <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
-                BP 60 Kabgayi – Rwanda
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.6 19.79 19.79 0 0 1 1.61 5a2 2 0 0 1 1.99-2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 10.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                <a href="tel:+250786535173">+250 786 535 173</a>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                <a href="mailto:info@diocesekabgayi.rw">info@diocesekabgayi.rw</a>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-                <a href="https://www.diocesekabgayi.rw" target="_blank" rel="noopener noreferrer">www.diocesekabgayi.rw</a>
-              </li>
-              <li>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                Lun – Ven : 8h00 – 17h00
-              </li>
+              <li><MapPin  size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/> BP 60 Kabgayi – Rwanda</li>
+              <li><Phone   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="tel:+250786535173">+250 786 535 173</a></li>
+              <li><Mail    size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="mailto:info@diocesekabgayi.rw">info@diocesekabgayi.rw</a></li>
+              <li><Globe   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="https://www.diocesekabgayi.rw" target="_blank" rel="noopener noreferrer">www.diocesekabgayi.rw</a></li>
+              <li><Clock   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/>Lun – Ven : 8h00 – 17h00</li>
             </ul>
           </address>
 

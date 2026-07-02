@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
 import { resolveImg } from "../utils/imageUrl";
+import { Calendar, ChevronRight } from "lucide-react";
 import bishopFallback from "../assets/portrait_eveque_-_copy_2_-9a431.jpg";
 
 const FALLBACK = [
@@ -89,7 +90,7 @@ export default function NewsSection() {
                 </Link>
                 <div className="news-v2-card-body">
                   <div className="news-v2-card-date">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="13" height="13"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    <Calendar size={13} strokeWidth={2} />
                     {formatDate(item.published_at || item.created_at)}
                   </div>
                   <h3 className="news-v2-card-title">
@@ -125,9 +126,7 @@ export default function NewsSection() {
             </div>
             <Link to="/a-propos" className="bishop-msg-btn">
               {lang === "fr" ? "Lire le message complet" : lang === "en" ? "Read full message" : "Soma ubutumwa bwose"}
-              <svg viewBox="0 0 20 20" fill="currentColor" width="14" height="14">
-                <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"/>
-              </svg>
+              <ChevronRight size={14} />
             </Link>
           </div>
         </div>

@@ -79,7 +79,7 @@ export default function Navbar() {
     <nav className={`navbar-v2${scrolled ? " sticky" : ""}`} ref={navRef}>
       <div className="navbar-v2-inner">
         {/* Logo */}
-        <Link to="/" className="navbar-v2-logo" aria-label="Accueil – Diocèse de Kabgayi">
+        {/* <Link to="/" className="navbar-v2-logo" aria-label="Accueil – Diocèse de Kabgayi">
           <img
             src={logoImg}
             alt="Blason Diocèse de Kabgayi"
@@ -90,7 +90,7 @@ export default function Navbar() {
             <strong>DIOCÈSE DE KABGAYI</strong>
             <em>Orate in veritate</em>
           </div>
-        </Link>
+        </Link> */}
 
         {/* Desktop menu */}
         <ul className="navbar-v2-menu">
