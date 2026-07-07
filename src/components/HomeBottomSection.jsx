@@ -4,7 +4,7 @@ import { useApi } from "../hooks/useApi";
 import {
   MapPin, Search, FileText,
   ClipboardList, Heart, Target,
-  ChevronRight, FolderOpen, Church, X,
+  ChevronRight, FolderOpen, Church, CalendarDays,
 } from "lucide-react";
 
 // ── Parishes widget ─────────────────────────────────────────
@@ -85,33 +85,38 @@ function DocumentsWidget({ lang }) {
   );
 }
 
-// ── Twitter widget ──────────────────────────────────────────
-function TwitterWidget({ lang }) {
-  const tweets = [
-    { date: "11 Juin 2026", text: lang === "fr" ? "Journée mondiale du Pauvre : « L'espérance des pauvres ne sera jamais déçue. »" : "World Day of the Poor: hope is never deceived." },
-    { date: "10 Juin 2026", text: lang === "fr" ? "Pèlerinage diocésain 2026 à Notre-Dame de Kibeho. Tous invités !" : "Diocesan pilgrimage 2026 to Our Lady of Kibeho. All welcome!" },
-    { date: "09 Juin 2026", text: lang === "fr" ? "Formation des catéchistes : Un engagement pour l'avenir de notre Église." : "Catechist formation: A commitment for our Church's future." },
+// ── Agenda Pastoral widget ──────────────────────────────────
+function AgendaWidget({ lang }) {
+  const events = [
+    { day: "25", month: "MAI",  titleFr: "Pèlerinage diocésain à Kibeho",  titleEn: "Diocesan pilgrimage to Kibeho",  titleRw: "Urugendo rwa diyosezi i Kibeho",  placeFr: "Basilique de Kibeho",         placeEn: "Kibeho Basilica",            placeRw: "Katedrale ya Kibeho" },
+    { day: "02", month: "JUIN", titleFr: "Ordination presbytérale",         titleEn: "Priestly ordination",           titleRw: "Ubupadiri bushya",               placeFr: "Basilique de Kabgayi",        placeEn: "Kabgayi Basilica",           placeRw: "Katedrale ya Kabgayi" },
+    { day: "15", month: "JUIN", titleFr: "Retraite des jeunes",              titleEn: "Youth retreat",                 titleRw: "Amahoro y'urubyiruko",           placeFr: "Centre pastoral de Kabgayi",  placeEn: "Kabgayi Pastoral Centre",    placeRw: "Ikigo cya pastoral ya Kabgayi" },
+    { day: "29", month: "JUIN", titleFr: "Assemblée diocésaine",             titleEn: "Diocesan assembly",             titleRw: "Inteko ya diyosezi",             placeFr: "Centre pastoral de Kabgayi",  placeEn: "Kabgayi Pastoral Centre",    placeRw: "Ikigo cya pastoral ya Kabgayi" },
   ];
+
+  const getTitle = (e) => lang === "en" ? e.titleEn : lang === "rw" ? e.titleRw : e.titleFr;
+  const getPlace = (e) => lang === "en" ? e.placeEn : lang === "rw" ? e.placeRw : e.placeFr;
+
   return (
-    <div className="home-widget">
+    <div className="home-widget agenda-widget">
       <div className="home-widget-header">
-        <X size={15} strokeWidth={2} style={{ color:"#1DA1F2", flexShrink:0 }} />
-        <h3>@TWITTER DIOCESE OF KABGAYI</h3>
+        <CalendarDays size={15} strokeWidth={2} style={{ color:"var(--red)", flexShrink:0 }} />
+        <h3>{lang === "fr" ? "AGENDA PASTORAL" : lang === "en" ? "PASTORAL AGENDA" : "GAHUNDA Y'UBUTUMWA"}</h3>
       </div>
-      <div className="home-tweets-list">
-        {tweets.map((tw, i) => (
-          <div key={i} className="home-tweet">
-            <div className="home-tweet-date">{tw.date}</div>
-            <p className="home-tweet-text">{tw.text}</p>
-            <a href="https://twitter.com/diocesekabgayi" target="_blank" rel="noopener noreferrer" className="home-tweet-link">
-              {lang === "fr" ? "Voir sur Twitter →" : "View on Twitter →"}
-            </a>
+      <div className="agenda-list">
+        {events.map((ev, i) => (
+          <div key={i} className="agenda-item">
+            <div className="agenda-date">
+              <span className="agenda-day">{ev.day}</span>
+              <span className="agenda-month">{ev.month}</span>
+            </div>
+            <div className="agenda-info">
+              <strong className="agenda-title">{getTitle(ev)}</strong>
+              <span className="agenda-place">{getPlace(ev)}</span>
+            </div>
           </div>
         ))}
       </div>
-      <a href="https://twitter.com/diocesekabgayi" target="_blank" rel="noopener noreferrer" className="home-widget-footer-link">
-        Suivre @DioceseKabgayi →
-      </a>
     </div>
   );
 }
@@ -195,7 +200,7 @@ export default function HomeBottomSection() {
         <div className="home-widgets-inner">
           <ParishesWidget lang={lang} />
           <DocumentsWidget lang={lang} />
-          <TwitterWidget lang={lang} />
+          <AgendaWidget lang={lang} />
         </div>
       </section>
 
