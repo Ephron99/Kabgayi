@@ -35,7 +35,8 @@ const FALLBACK = [
 export default function NewsSection() {
   const { t, lang } = useLang();
   const { data, loading } = useApi("/api/news?limit=3", { data: FALLBACK });
-  const { data: settings } = useApi("/api/settings", {});
+  const { data: settings }  = useApi("/api/settings", {});
+  const { data: bishopData } = useApi("/api/bishop", {});
 
   const items = (Array.isArray(data) ? data : (data?.data ?? FALLBACK)).slice(0, 3);
 
@@ -50,8 +51,14 @@ export default function NewsSection() {
     } catch { return d; }
   };
 
-  const bishopPhoto = settings?.bishop_photo ? resolveImg(settings.bishop_photo) : bishopFallback;
-  const bishopName  = settings?.bishop_name || "Mgr Balthazar NTIVUGURUZWA";
+  const bishopPhoto = bishopData?.photo_url
+    ? resolveImg(bishopData.photo_url)
+    : settings?.bishop_photo ? resolveImg(settings.bishop_photo) : bishopFallback;
+  const bishopName = bishopData?.bishop_name || settings?.bishop_name || "Mgr Balthazar NTIVUGURUZWA";
+  const bishopRole = (lang === "en" ? bishopData?.bishop_role_en : lang === "rw" ? bishopData?.bishop_role_rw : bishopData?.bishop_role_fr)
+    || "Évêque du Diocèse de Kabgayi";
+  const bishopMsg  = (lang === "en" ? bishopData?.message_en : lang === "rw" ? bishopData?.message_rw : bishopData?.message_fr)
+    || "Soyons des témoins joyeux de l'Évangile, au service de l'amour et de la vérité.";
 
   return (
     <section className="news-v2-section">
@@ -117,12 +124,12 @@ export default function NewsSection() {
                 onError={(e) => { e.target.src = bishopFallback; }}
               />
               <blockquote className="bishop-msg-quote">
-                {lang === "fr"
-                  ? "« Soyons des témoins joyeux de l'Évangile, au service de l'amour et de la vérité. »"
-                  : lang === "en"
-                  ? "« Let us be joyful witnesses of the Gospel, in the service of love and truth. »"
-                  : "« Tube inzira z'inkuru nziza z'Ubutumwa Bwiza, mu gusukura urukundo n'ukuri. »"}
+                « {bishopMsg} »
               </blockquote>
+            </div>
+            <div className="bishop-msg-meta">
+              <strong>{bishopName}</strong>
+              <span>{bishopRole}</span>
             </div>
             <Link to="/a-propos" className="bishop-msg-btn">
               {lang === "fr" ? "Lire le message complet" : lang === "en" ? "Read full message" : "Soma ubutumwa bwose"}

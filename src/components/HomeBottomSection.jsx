@@ -87,15 +87,20 @@ function DocumentsWidget({ lang }) {
 
 // ── Agenda Pastoral widget ──────────────────────────────────
 function AgendaWidget({ lang }) {
-  const events = [
-    { day: "25", month: "MAI",  titleFr: "Pèlerinage diocésain à Kibeho",  titleEn: "Diocesan pilgrimage to Kibeho",  titleRw: "Urugendo rwa diyosezi i Kibeho",  placeFr: "Basilique de Kibeho",         placeEn: "Kibeho Basilica",            placeRw: "Katedrale ya Kibeho" },
-    { day: "02", month: "JUIN", titleFr: "Ordination presbytérale",         titleEn: "Priestly ordination",           titleRw: "Ubupadiri bushya",               placeFr: "Basilique de Kabgayi",        placeEn: "Kabgayi Basilica",           placeRw: "Katedrale ya Kabgayi" },
-    { day: "15", month: "JUIN", titleFr: "Retraite des jeunes",              titleEn: "Youth retreat",                 titleRw: "Amahoro y'urubyiruko",           placeFr: "Centre pastoral de Kabgayi",  placeEn: "Kabgayi Pastoral Centre",    placeRw: "Ikigo cya pastoral ya Kabgayi" },
-    { day: "29", month: "JUIN", titleFr: "Assemblée diocésaine",             titleEn: "Diocesan assembly",             titleRw: "Inteko ya diyosezi",             placeFr: "Centre pastoral de Kabgayi",  placeEn: "Kabgayi Pastoral Centre",    placeRw: "Ikigo cya pastoral ya Kabgayi" },
-  ];
+  const { data } = useApi("/api/agenda", []);
+  const events = Array.isArray(data) ? data : [];
 
-  const getTitle = (e) => lang === "en" ? e.titleEn : lang === "rw" ? e.titleRw : e.titleFr;
-  const getPlace = (e) => lang === "en" ? e.placeEn : lang === "rw" ? e.placeRw : e.placeFr;
+  const getTitle = (e) => (lang === "en" ? e.title_en : lang === "rw" ? e.title_rw : e.title_fr) || e.title_fr || "";
+  const getPlace = (e) => (lang === "en" ? e.place_en : lang === "rw" ? e.place_rw : e.place_fr) || e.place_fr || "";
+  const getMonth = (e) => (lang === "en" ? e.month_en : lang === "rw" ? e.month_rw : e.month_fr) || e.month_fr || "";
+
+  // Static fallback while API loads
+  const displayEvents = events.length > 0 ? events : [
+    { day:"25", month_fr:"MAI",  month_en:"MAY",  month_rw:"GICURASI", title_fr:"Pèlerinage diocésain à Kibeho",  title_en:"Diocesan pilgrimage to Kibeho",  title_rw:"Urugendo rwa diyosezi i Kibeho",  place_fr:"Basilique de Kibeho",        place_en:"Kibeho Basilica",         place_rw:"Katedrale ya Kibeho" },
+    { day:"02", month_fr:"JUIN", month_en:"JUNE", month_rw:"KAMENA",   title_fr:"Ordination presbytérale",        title_en:"Priestly ordination",           title_rw:"Ubupadiri bushya",               place_fr:"Basilique de Kabgayi",       place_en:"Kabgayi Basilica",        place_rw:"Katedrale ya Kabgayi" },
+    { day:"15", month_fr:"JUIN", month_en:"JUNE", month_rw:"KAMENA",   title_fr:"Retraite des jeunes",             title_en:"Youth retreat",                 title_rw:"Amahoro y'urubyiruko",           place_fr:"Centre pastoral de Kabgayi", place_en:"Kabgayi Pastoral Centre", place_rw:"Ikigo cya pastoral" },
+    { day:"29", month_fr:"JUIN", month_en:"JUNE", month_rw:"KAMENA",   title_fr:"Assemblée diocésaine",            title_en:"Diocesan assembly",             title_rw:"Inteko ya diyosezi",             place_fr:"Centre pastoral de Kabgayi", place_en:"Kabgayi Pastoral Centre", place_rw:"Ikigo cya pastoral" },
+  ];
 
   return (
     <div className="home-widget agenda-widget">
@@ -104,11 +109,11 @@ function AgendaWidget({ lang }) {
         <h3>{lang === "fr" ? "AGENDA PASTORAL" : lang === "en" ? "PASTORAL AGENDA" : "GAHUNDA Y'UBUTUMWA"}</h3>
       </div>
       <div className="agenda-list">
-        {events.map((ev, i) => (
-          <div key={i} className="agenda-item">
+        {displayEvents.slice(0, 4).map((ev, i) => (
+          <div key={ev.id || i} className="agenda-item">
             <div className="agenda-date">
               <span className="agenda-day">{ev.day}</span>
-              <span className="agenda-month">{ev.month}</span>
+              <span className="agenda-month">{getMonth(ev)}</span>
             </div>
             <div className="agenda-info">
               <strong className="agenda-title">{getTitle(ev)}</strong>

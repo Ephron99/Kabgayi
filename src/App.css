@@ -558,3 +558,13 @@ button { cursor:pointer; font-family:inherit; border:none; background:none; }
   margin-top: 4px;
   border-top: 1px solid var(--border);
 }
+
+/* ── Bishop message meta ── */
+.bishop-msg-meta { display:flex; flex-direction:column; gap:2px; padding:10px 0 4px; border-top:1px solid var(--border); margin-top:4px; }
+.bishop-msg-meta strong { font-size:13px; color:var(--navy); }
+.bishop-msg-meta span   { font-size:12px; color:var(--red); }
+
+/* ── Admin agenda date preview ── */
+.agenda-admin-date { display:flex; flex-direction:column; align-items:center; background:var(--gray-light); border-radius:6px; padding:6px 10px; min-width:52px; }
+.agenda-admin-day   { font-size:18px; font-weight:800; color:var(--navy); line-height:1; }
+.agenda-admin-month { font-size:9px;  font-weight:700; color:var(--gray); letter-spacing:1px; text-transform:uppercase; }

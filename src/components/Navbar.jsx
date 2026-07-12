@@ -40,25 +40,6 @@ export default function Navbar() {
       key: "diocese",
       label: lang === "fr" ? "Diocèse" : lang === "en" ? "Diocese" : "Diyosezi",
       path: "/a-propos",
-      children: [
-        {
-          group: lang === "fr" ? "DIOCÈSE" : lang === "en" ? "DIOCESE" : "DIYOSEZI",
-          items: [
-            { label: lang === "fr" ? "Carte géographique"   : lang === "en" ? "Geographic map"      : "Ikarita",               path: "/a-propos#carte" },
-            { label: lang === "fr" ? "Aperçu historique"    : lang === "en" ? "Historical overview"  : "Amateka",               path: "/a-propos#histoire" },
-            { label: lang === "fr" ? "État de chrétienté"   : lang === "en" ? "State of Christianity": "Itorero ubu",           path: "/a-propos#etat" },
-          ],
-        },
-        {
-          group: lang === "fr" ? "ÉVÊCHÉ" : lang === "en" ? "BISHOPRIC" : "EPISKOPI",
-          items: [
-            { label: lang === "fr" ? "Évêque – Biographie, blason et devise" : lang === "en" ? "Bishop – Biography & coat of arms" : "Umusenyeri",  path: "/a-propos#eveque" },
-            { label: lang === "fr" ? "Vicariat Général"    : lang === "en" ? "Vicar General"         : "Vicaire Général",       path: "/a-propos#vicariat" },
-            { label: lang === "fr" ? "Chancellerie"        : lang === "en" ? "Chancellery"           : "Chancellerie",          path: "/a-propos#chancellerie" },
-            { label: lang === "fr" ? "Secrétariat"         : lang === "en" ? "Secretariat"           : "Secrétariat",           path: "/a-propos#secretariat" },
-          ],
-        },
-      ],
     },
     {
       key: "services",
@@ -70,21 +51,21 @@ export default function Navbar() {
           items: [
             { label: lang === "fr" ? "Économat Général"          : lang === "en" ? "General Bursar"          : "Ubukungu Rusange",    path: "/services/economat" },
             { label: "Caritas",                                                                                                        path: "/services/caritas" },
-            { label: lang === "fr" ? "Éducation Catholique"      : lang === "en" ? "Catholic Education"      : "Uburezi Gatolika",   path: "/services/education" },
+            // { label: lang === "fr" ? "Éducation Catholique"      : lang === "en" ? "Catholic Education"      : "Uburezi Gatolika",   path: "/services/education" },
             { label: lang === "fr" ? "Hôpital Kabgayi"           : lang === "en" ? "Kabgayi Hospital"        : "Ibitaro bya Kabgayi", path: "/services/hopital" },
             { label: lang === "fr" ? "Hôtel Saint André"         : lang === "en" ? "Hotel Saint André"       : "Hoteli Saint André",  path: "/services/hotel-saint-andre" },
             { label: lang === "fr" ? "Imprimerie de Kabgayi"     : lang === "en" ? "Kabgayi Print House"     : "Inzego z'Ibyapa",     path: "/services/imprimerie" },
-            { label: lang === "fr" ? "Centres de Spiritualité"   : lang === "en" ? "Spirituality Centers"    : "Ibigo bya Spiritualité", path: "/services/centres-spiritualite" },
+            // { label: lang === "fr" ? "Centres de Spiritualité"   : lang === "en" ? "Spirituality Centers"    : "Ibigo bya Spiritualité", path: "/services/centres-spiritualite" },
           ],
         },
         {
           group: lang === "fr" ? "ÉDUCATION" : lang === "en" ? "EDUCATION" : "UBUREZI",
           items: [
-            { label: "ICK – Institut Catholique de Kabgayi",        path: "/services/ick" },
-            { label: lang === "fr" ? "Institut Ste Elizabeth Kabgayi" : "Institut Ste Elizabeth Kabgayi", path: "/services/ste-elizabeth" },
-            { label: lang === "fr" ? "Grand Séminaire Kabgayi"       : "Kabgayi Major Seminary",          path: "/services/grand-seminaire" },
-            { label: lang === "fr" ? "Écoles Catholiques privées"    : "Private Catholic schools",        path: "/services/ecoles-privees" },
-            { label: lang === "fr" ? "Écoles Catholiques Conventionnées" : "Conventional Catholic schools", path: "/services/ecoles-conventionnees" },
+            { label: "ICK – Institut Catholique de Kabgayi",        path: "/education/ick" },
+            { label: lang === "fr" ? "Institut Ste Elizabeth Kabgayi" : "Institut Ste Elizabeth Kabgayi", path: "/education/ste-elizabeth" },
+            // { label: lang === "fr" ? "Grand Séminaire Kabgayi"       : "Kabgayi Major Seminary",          path: "/education/grand-seminaire" },
+            // { label: lang === "fr" ? "Écoles Catholiques privées"    : "Private Catholic schools",        path: "/education/ecoles-privees" },
+            // { label: lang === "fr" ? "Écoles Catholiques Conventionnées" : "Conventional Catholic schools", path: "/education/ecoles-conventionnees" },
           ],
         },
       ],
@@ -94,22 +75,22 @@ export default function Navbar() {
       label: lang === "fr" ? "Paroisses" : lang === "en" ? "Parishes" : "Paruwasi",
       path: "/paroisses",
     },
-    {
-      key: "pastorale",
-      label: lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral",
-      path: "/pastorale",
-      children: [
-        {
-          group: "",
-          items: [
-            { label: lang === "fr" ? "Priorités pastorales du Diocèse" : lang === "en" ? "Diocesan pastoral priorities" : "Ibintu by'Ingenzi", path: "/pastorale/priorites" },
-            { label: lang === "fr" ? "Commissions diocésaines"         : lang === "en" ? "Diocesan commissions"          : "Komisiyo",          path: "/pastorale/commissions" },
-            { label: lang === "fr" ? "Aumôneries"                      : lang === "en" ? "Chaplaincies"                  : "Abapadiri b'Ubutumwa", path: "/pastorale/aumoneries" },
-            { label: lang === "fr" ? "Vie Consacrée"                   : lang === "en" ? "Consecrated Life"              : "Ubuzima Bwejejwe",  path: "/vie-consacree" },
-          ],
-        },
-      ],
-    },
+    // {
+    //   key: "pastorale",
+    //   label: lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral",
+    //   path: "/pastorale",
+    //   children: [
+    //     {
+    //       group: "",
+    //       items: [
+    //         { label: lang === "fr" ? "Priorités pastorales du Diocèse" : lang === "en" ? "Diocesan pastoral priorities" : "Ibintu by'Ingenzi", path: "/pastorale/priorites" },
+    //         { label: lang === "fr" ? "Commissions diocésaines"         : lang === "en" ? "Diocesan commissions"          : "Komisiyo",          path: "/pastorale/commissions" },
+    //         { label: lang === "fr" ? "Aumôneries"                      : lang === "en" ? "Chaplaincies"                  : "Abapadiri b'Ubutumwa", path: "/pastorale/aumoneries" },
+    //         { label: lang === "fr" ? "Vie Consacrée"                   : lang === "en" ? "Consecrated Life"              : "Ubuzima Bwejejwe",  path: "/vie-consacree" },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       key: "actualites",
       label: lang === "fr" ? "Actualités" : lang === "en" ? "News" : "Amakuru",
@@ -125,24 +106,24 @@ export default function Navbar() {
         },
       ],
     },
-    {
-      key: "publications",
-      label: lang === "fr" ? "Nos Publications" : lang === "en" ? "Publications" : "Ibitangazwa",
-      path: "/documentation",
-      children: [
-        {
-          group: "",
-          items: [
-            { label: "Mwigisha",                                                                                              path: "/documentation/mwigisha" },
-            { label: lang === "fr" ? "Train-d'union"         : lang === "en" ? "Newsletter"       : "Itangazo",         path: "/documentation/nouvelles" },
-            { label: lang === "fr" ? "Homélies de l'Évêque"  : lang === "en" ? "Bishop's homilies": "Insiguro",          path: "/documentation/homelies" },
-            { label: lang === "fr" ? "Urumuri Rwa Kristu"    : lang === "en" ? "Urumuri Rwa Kristu": "Urumuri Rwa Kristu", path: "/documentation/urumuri" },
-            { label: lang === "fr" ? "Vidéos"                : lang === "en" ? "Videos"            : "Amashusho",         path: "/liturgie/videos" },
-            { label: lang === "fr" ? "Albums Photos"         : lang === "en" ? "Photo albums"      : "Amafoto",           path: "/documentation/photos" },
-          ],
-        },
-      ],
-    },
+    // {
+    //   key: "publications",
+    //   label: lang === "fr" ? "Nos Publications" : lang === "en" ? "Publications" : "Ibitangazwa",
+    //   path: "/documentation",
+    //   children: [
+    //     {
+    //       group: "",
+    //       items: [
+    //         { label: "Mwigisha",                                                                                              path: "/documentation/mwigisha" },
+    //         { label: lang === "fr" ? "Train-d'union"         : lang === "en" ? "Newsletter"       : "Itangazo",         path: "/documentation/nouvelles" },
+    //         { label: lang === "fr" ? "Homélies de l'Évêque"  : lang === "en" ? "Bishop's homilies": "Insiguro",          path: "/documentation/homelies" },
+    //         { label: lang === "fr" ? "Urumuri Rwa Kristu"    : lang === "en" ? "Urumuri Rwa Kristu": "Urumuri Rwa Kristu", path: "/documentation/urumuri" },
+    //         { label: lang === "fr" ? "Vidéos"                : lang === "en" ? "Videos"            : "Amashusho",         path: "/liturgie/videos" },
+    //         { label: lang === "fr" ? "Albums Photos"         : lang === "en" ? "Photo albums"      : "Amafoto",           path: "/documentation/photos" },
+    //       ],
+    //     },
+    //   ],
+    // },
     {
       key: "contact",
       label: lang === "fr" ? "Nous Contacter" : lang === "en" ? "Contact" : "Twunganire",

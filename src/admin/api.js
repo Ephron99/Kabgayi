@@ -70,6 +70,16 @@ export const api = {
   getSettings:   ()     => request("GET",  "/settings"),
   saveSettings:  (b)    => request("PUT",  "/settings", b),
 
+  // Bishop message
+  getBishop:     ()     => request("GET", "/bishop"),
+  saveBishop:    (b)    => request("PUT", "/bishop", b),
+
+  // Agenda
+  getAgenda:     ()     => request("GET",  "/agenda/all"),
+  createEvent:   (b)    => request("POST", "/agenda", b),
+  updateEvent:   (id,b) => request("PUT",  `/agenda/${id}`, b),
+  deleteEvent:   (id)   => request("DELETE",`/agenda/${id}`),
+
   // Contact messages
   getMessages:   ()     => request("GET",  "/contact"),
   markRead:      (id)   => request("PATCH",`/contact/${id}/read`),

@@ -39,6 +39,8 @@ function PublicSite() {
           <Route path="/a-propos"               element={<AboutPage />} />
           <Route path="/services"               element={<GenericPage section="services" />} />
           <Route path="/services/:slug"         element={<GenericPage section="services" />} />
+          <Route path="/education"              element={<GenericPage section="education" />} />
+          <Route path="/education/:slug"        element={<GenericPage section="education" />} />
           <Route path="/pastorale"              element={<GenericPage section="pastorale" />} />
           <Route path="/pastorale/:slug"        element={<GenericPage section="pastorale" />} />
           <Route path="/paroisses"              element={<ParoissesPage />} />
@@ -68,7 +70,7 @@ export default function App() {
         {MAINTENANCE_MODE && (
           <Route path="/" element={<MaintenancePage />} />
         )}
-
+          <Route path="/home" element={<MaintenancePage />} />
         {/* Full public site, with chrome */}
         <Route path="/*" element={<PublicSite />} />
       </Routes>

@@ -11,6 +11,8 @@ import ParishesPage from "./pages/ParishesPage";
 import MessagesPage from "./pages/MessagesPage";
 import SettingsPage from "./pages/SettingsPage";
 import UsersPage   from "./pages/UsersPage";
+import BishopPage  from "./pages/BishopPage";
+import AgendaPage  from "./pages/AgendaPage";
 import "./admin.css";
 
 function Guard({ children }) {
@@ -41,6 +43,8 @@ function AdminRoutes() {
               <Route path="news/new"  element={<NewsForm />} />
               <Route path="news/:id"  element={<NewsForm />} />
               <Route path="parishes"  element={<ParishesPage />} />
+              <Route path="bishop"    element={<BishopPage />} />
+              <Route path="agenda"    element={<AgendaPage />} />
               <Route path="messages"  element={<MessagesPage />} />
               <Route path="settings"  element={<SettingsPage />} />
               <Route path="users"     element={<UsersPage />} />

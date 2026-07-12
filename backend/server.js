@@ -48,6 +48,8 @@ app.use("/api/parishes", require("./routes/parishRoutes"));
 app.use("/api/settings", require("./routes/settingsRoutes"));
 app.use("/api/contact",  require("./routes/contactRoutes"));
 app.use("/api/users",    require("./routes/usersRoutes"));
+app.use("/api/bishop",   require("./routes/bishopRoutes"));
+app.use("/api/agenda",   require("./routes/agendaRoutes"));
 
 // Health check
 app.get("/api/health", (req, res) =>

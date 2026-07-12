@@ -3,7 +3,7 @@ import { NavLink, useLocation, Link } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { useAdminLang } from "../context/AdminLangContext";
 import "../admin.css";
-import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen } from "lucide-react";
+import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen, Cross, CalendarDays } from "lucide-react";
 const LANG_OPTIONS = [
   { code: "fr", flag: "🇫🇷", label: "Français" },
   { code: "en", flag: "🇬🇧", label: "English" },
@@ -23,6 +23,8 @@ export default function Layout({ children }) {
   { to: "/admin/hero",     icon: Image,           label: t("hero_slides") },
   { to: "/admin/news",     icon: Newspaper,       label: t("news") },
   { to: "/admin/parishes", icon: Church,          label: t("parishes") },
+  { to: "/admin/bishop",   icon: Cross,           label: "Message Évêque" },
+  { to: "/admin/agenda",   icon: CalendarDays,    label: "Agenda Pastoral" },
   { section: t("communication") },
   { to: "/admin/messages", icon: Mail,            label: t("messages") },
   { section: t("system") },

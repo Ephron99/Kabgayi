@@ -16,6 +16,7 @@ export const translations = {
     nav_actualites: "Actualités",
     nav_documentation: "Documentation",
     nav_accueil_liturgique: "Accueil",
+    nav_education: "Éducation",
 
     // Services submenus
     sub_economat: "Économat Général",
@@ -26,6 +27,13 @@ export const translations = {
     sub_imprimerie: "Imprimerie de Kabgayi",
     sub_centres: "Centres de Spiritualité",
     sub_institut: "Institut Catholique de Kabgayi",
+    sub_ick: "ICK – Institut Catholique de Kabgayi",
+    sub_ste_elizabeth: "Institut Ste Elizabeth Kabgayi",
+    sub_grand_seminaire: "Grand Séminaire Kabgayi",
+    sub_ecoles_privees: "Écoles Catholiques privées",
+    sub_ecoles_conventionnees: "Écoles Catholiques Conventionnées",
+
+    page_education: "Éducation",
 
     // Pastorale submenus
     sub_priorites: "Priorités Pastorales du Diocèse",
@@ -141,6 +149,7 @@ export const translations = {
     nav_actualites: "News",
     nav_documentation: "Documentation",
     nav_accueil_liturgique: "Home",
+    nav_education: "Education",
 
     sub_economat: "General Bursar",
     sub_caritas: "Caritas",
@@ -150,6 +159,13 @@ export const translations = {
     sub_imprimerie: "Kabgayi Print House",
     sub_centres: "Spirituality Centers",
     sub_institut: "Catholic Institute of Kabgayi",
+    sub_ick: "ICK – Catholic Institute of Kabgayi",
+    sub_ste_elizabeth: "Institut Ste Elizabeth Kabgayi",
+    sub_grand_seminaire: "Kabgayi Major Seminary",
+    sub_ecoles_privees: "Private Catholic Schools",
+    sub_ecoles_conventionnees: "State-partnered Catholic Schools",
+
+    page_education: "Education",
 
     sub_priorites: "Diocesan Pastoral Priorities",
     sub_commissions: "Commissions",
@@ -250,6 +266,7 @@ export const translations = {
     nav_actualites: "Amakuru",
     nav_documentation: "Inyandiko",
     nav_accueil_liturgique: "Ahabanza",
+    nav_education: "Uburezi",
 
     sub_economat: "Ubukungu Rusange",
     sub_caritas: "Caritas",
@@ -259,6 +276,13 @@ export const translations = {
     sub_imprimerie: "Inzego z'Ibyapa bya Kabgayi",
     sub_centres: "Ibigo bya Spiritualité",
     sub_institut: "Inshuri Gatolika ya Kabgayi",
+    sub_ick: "ICK – Inshuri Gatolika ya Kabgayi",
+    sub_ste_elizabeth: "Inshuri Ste Elizabeth ya Kabgayi",
+    sub_grand_seminaire: "Grand Séminaire ya Kabgayi",
+    sub_ecoles_privees: "Amashuri Gatolika y'abikorera",
+    sub_ecoles_conventionnees: "Amashuri Gatolika y'amasezerano",
+
+    page_education: "Uburezi",
 
     sub_priorites: "Ibintu by'Ingenzi bya Pastoral",
     sub_commissions: "Komisiyo",
