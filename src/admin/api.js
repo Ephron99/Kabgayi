@@ -90,4 +90,18 @@ export const api = {
   createUser:    (b)    => request("POST", "/users", b),
   updateUser:    (id,b) => request("PUT",  `/users/${id}`, b),
   deleteUser:    (id)   => request("DELETE",`/users/${id}`),
+
+  // Pastoral items
+  getPastoralItems:    ()     => request("GET",  "/pastoral/admin"),
+  getPastoralItem:    (slug) => request("GET",  `/pastoral/slug/${slug}`),
+  createPastoralItem: (b)    => request("POST", "/pastoral", b),
+  updatePastoralItem: (id,b) => request("PUT",  `/pastoral/${id}`, b),
+  deletePastoralItem: (id)   => request("DELETE",`/pastoral/${id}`),
+  
+  // Services
+  getServices:    ()     => request("GET",  "/services/all"),
+  getService:    (slug) => request("GET",  `/services/slug/${slug}`),
+  createService: (b)    => request("POST", "/services", b),
+  updateService: (id,b) => request("PUT",  `/services/${id}`, b),
+  deleteService: (id)   => request("DELETE",`/services/${id}`),
 };

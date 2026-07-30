@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { Search } from "lucide-react";
 import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
+import { useApi } from "../hooks/useApi";
 
 export default function Navbar() {
   const { t, lang } = useLang();
@@ -11,6 +12,11 @@ export default function Navbar() {
   const [scrolled, setScrolled]             = useState(false);
   const location = useLocation();
   const navRef   = useRef(null);
+  const { data: pastoralItems, error: pastoralError } = useApi("/api/pastoral", []);
+  const { data: services, error: servicesError } = useApi("/api/services", []);
+
+  if (pastoralError) console.error("[Navbar] Failed to load pastoral items:", pastoralError);
+  if (servicesError) console.error("[Navbar] Failed to load services:", servicesError);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -29,6 +35,99 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // Build services menu structure
+  const buildServicesMenu = () => {
+    if (!services || !Array.isArray(services)) return [];
+
+    // Filter active items, only services section (no education)
+    const activeItems = services.filter(item => item.is_active && item.section === "services");
+    if (activeItems.length === 0) return [];
+
+    // Sort by sort_order
+    activeItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+    // Build menu groups
+    return [
+      {
+        group: "",
+        items: activeItems.map(item => ({
+          label: item[`name_${lang}`] || item.name_fr,
+          path: `/services/${item.slug}`
+        }))
+      }
+    ];
+  };
+
+  // Build pastoral menu structure
+  const buildPastoralMenu = () => {
+    const menuGroups = [];
+
+    if (pastoralItems && Array.isArray(pastoralItems)) {
+      const activePastoralItems = pastoralItems.filter(item => item.is_active);
+      activePastoralItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+      const topLevel = activePastoralItems.filter(item => !item.parent_id);
+      const children = activePastoralItems.filter(item => item.parent_id);
+
+      const standaloneTopLevel = topLevel.filter(parent =>
+        !children.some(child => child.parent_id === parent.id)
+      );
+
+      if (standaloneTopLevel.length > 0) {
+        menuGroups.push({
+          group: "",
+          items: standaloneTopLevel.map(item => ({
+            label: item[`name_${lang}`] || item.name_fr,
+            path: `/pastorale/${item.slug}`
+          }))
+        });
+      }
+
+      topLevel.forEach(parent => {
+        const parentChildren = children.filter(c => c.parent_id === parent.id);
+        if (parentChildren.length > 0) {
+          menuGroups.push({
+            group: parent[`name_${lang}`] || parent.name_fr,
+            items: parentChildren.map(child => ({
+              label: child[`name_${lang}`] || child.name_fr,
+              path: `/pastorale/${child.slug}`
+            }))
+          });
+        }
+      });
+
+      const orphanChildren = children.filter(c =>
+        !topLevel.some(p => p.id === c.parent_id)
+      );
+      if (orphanChildren.length > 0) {
+        menuGroups.push({
+          group: "",
+          items: orphanChildren.map(item => ({
+            label: item[`name_${lang}`] || item.name_fr,
+            path: `/pastorale/${item.slug}`
+          }))
+        });
+      }
+    }
+
+    if (services && Array.isArray(services)) {
+      const educationItems = services.filter(item => item.is_active && item.section === "education");
+      educationItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+
+      if (educationItems.length > 0) {
+        menuGroups.push({
+          group: lang === "fr" ? "ÉDUCATION" : lang === "en" ? "EDUCATION" : "UBUREZI",
+          items: educationItems.map(item => ({
+            label: item[`name_${lang}`] || item.name_fr,
+            path: `/services/${item.slug}`
+          }))
+        });
+      }
+    }
+
+    return menuGroups;
+  };
+
   // ── Menu structure ──────────────────────────────────────
   const navItems = [
     {
@@ -45,52 +144,19 @@ export default function Navbar() {
       key: "services",
       label: lang === "fr" ? "Services Diocésains" : lang === "en" ? "Diocesan Services" : "Serivisi",
       path: "/services",
-      children: [
-        {
-          group: "",
-          items: [
-            { label: lang === "fr" ? "Économat Général"          : lang === "en" ? "General Bursar"          : "Ubukungu Rusange",    path: "/services/economat" },
-            { label: "Caritas",                                                                                                        path: "/services/caritas" },
-            // { label: lang === "fr" ? "Éducation Catholique"      : lang === "en" ? "Catholic Education"      : "Uburezi Gatolika",   path: "/services/education" },
-            { label: lang === "fr" ? "Hôpital Kabgayi"           : lang === "en" ? "Kabgayi Hospital"        : "Ibitaro bya Kabgayi", path: "/services/hopital" },
-            { label: lang === "fr" ? "Hôtel Saint André"         : lang === "en" ? "Hotel Saint André"       : "Hoteli Saint André",  path: "/services/hotel-saint-andre" },
-            { label: lang === "fr" ? "Imprimerie de Kabgayi"     : lang === "en" ? "Kabgayi Print House"     : "Inzego z'Ibyapa",     path: "/services/imprimerie" },
-            // { label: lang === "fr" ? "Centres de Spiritualité"   : lang === "en" ? "Spirituality Centers"    : "Ibigo bya Spiritualité", path: "/services/centres-spiritualite" },
-          ],
-        },
-        {
-          group: lang === "fr" ? "ÉDUCATION" : lang === "en" ? "EDUCATION" : "UBUREZI",
-          items: [
-            { label: "ICK – Institut Catholique de Kabgayi",        path: "/education/ick" },
-            { label: lang === "fr" ? "Institut Ste Elizabeth Kabgayi" : "Institut Ste Elizabeth Kabgayi", path: "/education/ste-elizabeth" },
-            // { label: lang === "fr" ? "Grand Séminaire Kabgayi"       : "Kabgayi Major Seminary",          path: "/education/grand-seminaire" },
-            // { label: lang === "fr" ? "Écoles Catholiques privées"    : "Private Catholic schools",        path: "/education/ecoles-privees" },
-            // { label: lang === "fr" ? "Écoles Catholiques Conventionnées" : "Conventional Catholic schools", path: "/education/ecoles-conventionnees" },
-          ],
-        },
-      ],
+      children: buildServicesMenu(),
     },
     {
       key: "paroisses",
       label: lang === "fr" ? "Paroisses" : lang === "en" ? "Parishes" : "Paruwasi",
       path: "/paroisses",
     },
-    // {
-    //   key: "pastorale",
-    //   label: lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral",
-    //   path: "/pastorale",
-    //   children: [
-    //     {
-    //       group: "",
-    //       items: [
-    //         { label: lang === "fr" ? "Priorités pastorales du Diocèse" : lang === "en" ? "Diocesan pastoral priorities" : "Ibintu by'Ingenzi", path: "/pastorale/priorites" },
-    //         { label: lang === "fr" ? "Commissions diocésaines"         : lang === "en" ? "Diocesan commissions"          : "Komisiyo",          path: "/pastorale/commissions" },
-    //         { label: lang === "fr" ? "Aumôneries"                      : lang === "en" ? "Chaplaincies"                  : "Abapadiri b'Ubutumwa", path: "/pastorale/aumoneries" },
-    //         { label: lang === "fr" ? "Vie Consacrée"                   : lang === "en" ? "Consecrated Life"              : "Ubuzima Bwejejwe",  path: "/vie-consacree" },
-    //       ],
-    //     },
-    //   ],
-    // },
+    {
+      key: "pastorale",
+      label: lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral",
+      path: "/pastorale",
+      children: buildPastoralMenu(),
+    },
     {
       key: "actualites",
       label: lang === "fr" ? "Actualités" : lang === "en" ? "News" : "Amakuru",
@@ -154,12 +220,13 @@ export default function Navbar() {
               location.pathname === item.path ||
               (item.path !== "/" && location.pathname.startsWith(item.path));
             const isOpen = activeDropdown === item.key;
+            const hasChildren = item.children && item.children.length > 0;
 
             return (
               <li key={item.key}
-                className={`navbar-v2-item${item.children ? " has-sub" : ""}${isOpen ? " open" : ""}`}
+                className={`navbar-v2-item${hasChildren ? " has-sub" : ""}${isOpen ? " open" : ""}`}
                 role="none">
-                {item.children ? (
+                {hasChildren ? (
                   <>
                     <button
                       className={`navbar-v2-link${isActive ? " active" : ""}`}
@@ -230,45 +297,48 @@ export default function Navbar() {
       {/* Mobile menu */}
       {menuOpen && (
         <div id="mobile-nav" className="navbar-v2-mobile" role="menu">
-          {navItems.map((item) => (
-            <div key={item.key} className="navbar-v2-mobile-item">
-              {item.children ? (
-                <>
-                  <button
-                    className="navbar-v2-mobile-link"
-                    onClick={() => toggle(item.key + "_m")}
-                    aria-expanded={activeDropdown === item.key + "_m"}
-                  >
-                    {item.label}
-                    <svg viewBox="0 0 10 6" width="9" height="9"
-                      className={activeDropdown === item.key + "_m" ? "rotated" : ""}
-                      aria-hidden="true">
-                      <path d="M0 0l5 6 5-6z" fill="currentColor"/>
-                    </svg>
-                  </button>
-                  {activeDropdown === item.key + "_m" && (
-                    <div className="navbar-v2-mobile-sub">
-                      {item.children.map((group, gi) => (
-                        <div key={gi}>
-                          {group.group && (
-                            <div className="mobile-group-title">{group.group}</div>
-                          )}
-                          {group.items.map((child) => (
-                            <Link key={child.path + child.label} to={child.path}
-                              className="navbar-v2-mobile-sublink">
-                              {child.label}
-                            </Link>
-                          ))}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link to={item.path} className="navbar-v2-mobile-link">{item.label}</Link>
-              )}
-            </div>
-          ))}
+          {navItems.map((item) => {
+            const hasChildren = item.children && item.children.length > 0;
+            return (
+              <div key={item.key} className="navbar-v2-mobile-item">
+                {hasChildren ? (
+                  <>
+                    <button
+                      className="navbar-v2-mobile-link"
+                      onClick={() => toggle(item.key + "_m")}
+                      aria-expanded={activeDropdown === item.key + "_m"}
+                    >
+                      {item.label}
+                      <svg viewBox="0 0 10 6" width="9" height="9"
+                        className={activeDropdown === item.key + "_m" ? "rotated" : ""}
+                        aria-hidden="true">
+                        <path d="M0 0l5 6 5-6z" fill="currentColor"/>
+                      </svg>
+                    </button>
+                    {activeDropdown === item.key + "_m" && (
+                      <div className="navbar-v2-mobile-sub">
+                        {item.children.map((group, gi) => (
+                          <div key={gi}>
+                            {group.group && (
+                              <div className="mobile-group-title">{group.group}</div>
+                            )}
+                            {group.items.map((child) => (
+                              <Link key={child.path + child.label} to={child.path}
+                                className="navbar-v2-mobile-sublink">
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link to={item.path} className="navbar-v2-mobile-link">{item.label}</Link>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </nav>

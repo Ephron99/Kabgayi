@@ -50,6 +50,8 @@ app.use("/api/contact",  require("./routes/contactRoutes"));
 app.use("/api/users",    require("./routes/usersRoutes"));
 app.use("/api/bishop",   require("./routes/bishopRoutes"));
 app.use("/api/agenda",   require("./routes/agendaRoutes"));
+app.use("/api/pastoral", require("./routes/pastoralRoutes"));
+app.use("/api/services", require("./routes/serviceRoutes"));
 
 // Health check
 app.get("/api/health", (req, res) =>

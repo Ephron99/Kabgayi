@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { useAdminLang } from "../context/AdminLangContext";
+import { Cross, Eye, EyeOff, Globe, AlertCircle } from "lucide-react";
 
 const LANG_OPTIONS = [
   { code: "fr", flag: "🇫🇷", label: "Français" },
@@ -50,15 +51,15 @@ export default function LoginPage() {
       <div className="login-card">
         {/* Logo */}
         <div className="login-logo">
-          <div className="login-logo-icon">✝</div>
+          <div className="login-logo-icon"><Cross size={32} /></div>
           <div className="login-title">{t("admin_portal")}</div>
           <div className="login-sub">{t("diocese")}</div>
         </div>
 
         {/* Error */}
         {error && (
-          <div className="login-error" role="alert">
-            <span>⚠️ </span>{error}
+          <div className="login-error" role="alert" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}>
+            <AlertCircle size={18} /> {error}
           </div>
         )}
 
@@ -107,7 +108,7 @@ export default function LoginPage() {
                 }}
                 aria-label={showPw ? "Masquer" : "Afficher"}
               >
-                {showPw ? "🙈" : "👁️"}
+                {showPw ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
           </div>
@@ -127,8 +128,8 @@ export default function LoginPage() {
         {/* Footer */}
         <div className="login-footer">
           <p>{t("restricted")}</p>
-          <Link to="/" className="login-back-link">
-            🌐 {t("back_site")}
+          <Link to="/" className="login-back-link" style={{display:'inline-flex',alignItems:'center',gap:'0.5rem'}}>
+            <Globe size={16} /> {t("back_site")}
           </Link>
         </div>
       </div>

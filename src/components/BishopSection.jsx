@@ -1,6 +1,7 @@
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
-import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg'; 
+import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg';
+import { Cross } from "lucide-react";
 const BACKEND = "https://localhost:5000";
 const resolveUrl = (url) => (!url ? null : url.startsWith("https") ? url : `${BACKEND}${url}`);
 
@@ -52,7 +53,7 @@ export default function BishopSection() {
               loading="lazy"
             />
             <div className="bishop-photo-badge">
-              <span className="bishop-cross" aria-hidden="true">✝</span>
+              <span className="bishop-cross" aria-hidden="true"><Cross size={20} /></span>
             </div>
           </div>
           <div className="bishop-info">

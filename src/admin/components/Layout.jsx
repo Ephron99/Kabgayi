@@ -3,7 +3,7 @@ import { NavLink, useLocation, Link } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { useAdminLang } from "../context/AdminLangContext";
 import "../admin.css";
-import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen, Cross, CalendarDays } from "lucide-react";
+import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen, Cross, CalendarDays, HeartHandshake } from "lucide-react";
 const LANG_OPTIONS = [
   { code: "fr", flag: "🇫🇷", label: "Français" },
   { code: "en", flag: "🇬🇧", label: "English" },
@@ -23,6 +23,8 @@ export default function Layout({ children }) {
   { to: "/admin/hero",     icon: Image,           label: t("hero_slides") },
   { to: "/admin/news",     icon: Newspaper,       label: t("news") },
   { to: "/admin/parishes", icon: Church,          label: t("parishes") },
+  { to: "/admin/services", icon: HeartHandshake,  label: "Services Diocésains" },
+  { to: "/admin/pastoral", icon: HeartHandshake,  label: "Pastoral" },
   { to: "/admin/bishop",   icon: Cross,           label: "Message Évêque" },
   { to: "/admin/agenda",   icon: CalendarDays,    label: "Agenda Pastoral" },
   { section: t("communication") },
@@ -39,6 +41,8 @@ export default function Layout({ children }) {
     "hero":     t("hero_slides"),
     "news":     t("news"),
     "parishes": t("parishes"),
+    "services": "Services Diocésains",
+    "pastoral": "Pastoral",
     "messages": t("messages"),
     "settings": t("settings"),
     "users":    t("users"),
@@ -50,7 +54,7 @@ export default function Layout({ children }) {
       {/* ── Sidebar ─────────────────────────────── */}
       <aside className="sidebar">
         <div className="sidebar-brand">
-          <div className="sidebar-brand-icon">✝</div>
+          <div className="sidebar-brand-icon"><Cross size={24} color="#fff" /></div>
           <div className="sidebar-brand-text">
             <div className="sidebar-brand-title">Diocèse de Kabgayi</div>
             <div className="sidebar-brand-sub">{t("admin_portal")}</div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
+import { Mail, Inbox, Trash2, Reply } from "lucide-react";
 
 export default function MessagesPage() {
   const { t }              = useAdminLang();
@@ -23,12 +24,12 @@ export default function MessagesPage() {
     <div>
       <ToastContainer />
       <div className="page-header">
-        <div><div className="page-title">✉️ {t("msgs_title")}</div><div className="page-sub">{unread} {t("unread")}</div></div>
+        <div><div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Mail /> {t("msgs_title")}</div><div className="page-sub">{unread} {t("unread")}</div></div>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"340px 1fr",gap:20,alignItems:"start"}}>
         <div className="card" style={{padding:0,overflow:"hidden"}}>
           {loading ? <div className="admin-loading" style={{height:200}}><div className="admin-spinner"/></div>
-          : msgs.length===0 ? <div className="empty-state"><div className="empty-icon">📭</div><p>{t("no_messages")}</p></div>
+          : msgs.length===0 ? <div className="empty-state"><div className="empty-icon"><Inbox size={48} /></div><p>{t("no_messages")}</p></div>
           : msgs.map((m) => (
             <div key={m.id}
               onClick={() => { setSelected(m); if(!m.is_read) handleRead(m.id); }}
@@ -50,15 +51,15 @@ export default function MessagesPage() {
                 <div style={{fontSize:13,color:"var(--text-dim)"}}>{t("from")} : <strong>{selected.name}</strong> — <a href={`mailto:${selected.email}`} style={{color:"var(--red)"}}>{selected.email}</a></div>
                 <div style={{fontSize:12,color:"var(--text-dim)",marginTop:3}}>{new Date(selected.created_at).toLocaleString("fr-FR")}</div>
               </div>
-              <button className="btn btn-danger btn-sm" onClick={() => handleDelete(selected.id)}>{t("delete_msg")}</button>
+              <button className="btn btn-danger btn-sm" onClick={() => handleDelete(selected.id)} style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Trash2 size={16} /> {t("delete_msg")}</button>
             </div>
             <div className="divider"/>
             <p style={{lineHeight:1.8,fontSize:15,color:"var(--text)",whiteSpace:"pre-wrap"}}>{selected.message}</p>
             <div className="divider"/>
-            <a href={`mailto:${selected.email}?subject=Re: ${selected.subject||""}`} className="btn btn-primary btn-sm">{t("reply_email")}</a>
+            <a href={`mailto:${selected.email}?subject=Re: ${selected.subject||""}`} className="btn btn-primary btn-sm" style={{display:'inline-flex',alignItems:'center',gap:'0.5rem'}}><Reply size={16} /> {t("reply_email")}</a>
           </div>
         ) : (
-          <div className="card"><div className="empty-state"><div className="empty-icon">✉️</div><p>{t("select_msg")}</p></div></div>
+          <div className="card"><div className="empty-state"><div className="empty-icon"><Mail size={48} /></div><p>{t("select_msg")}</p></div></div>
         )}
       </div>
     </div>

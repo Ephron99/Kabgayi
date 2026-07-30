@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
+import { Cross } from "lucide-react";
 
 export default function CTASection() {
   const { t } = useLang();
@@ -7,7 +8,7 @@ export default function CTASection() {
   return (
     <section className="cta-section" aria-labelledby="cta-heading">
       <div className="cta-inner">
-        <div className="cta-cross" aria-hidden="true">✝</div>
+        <div className="cta-cross" aria-hidden="true"><Cross size={40} /></div>
         <h2 id="cta-heading" className="cta-title">{t("cta_title")}</h2>
         <p className="cta-subtitle">{t("cta_subtitle")}</p>
         <div className="cta-actions">

@@ -2,6 +2,7 @@ import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
 import { resolveImg } from "../utils/imageUrl";
+import { AlertTriangle, Church } from "lucide-react";
 
 export default function ParoissesPage() {
   const { t, lang } = useLang();
@@ -51,7 +52,7 @@ export default function ParoissesPage() {
 
         {error && (
           <div className="api-error" role="alert">
-            <span>⚠️</span>
+            <AlertTriangle size={18} />
             {lang === "fr" ? "Impossible de charger les paroisses." :
              lang === "en" ? "Could not load parishes." :
              "Ntibishoboka gufungura paruwasi."}
@@ -61,7 +62,7 @@ export default function ParoissesPage() {
         {!loading && list.length > 0 && (
           <div className="parishes-grid">
             {list.map((p) => (
-              <article key={p.id} className="parish-card">
+              <Link key={p.id} to={`/paroisses/${p.id}`} className="parish-card">
                 <div className="parish-card-img-wrap">
                   <img
                     src={resolveImg(p.image_url) || "https://images.unsplash.com/photo-1548625149-720754952028?w=400&q=80"}
@@ -90,14 +91,14 @@ export default function ParoissesPage() {
                     </p>
                   )}
                 </div>
-              </article>
+              </Link>
             ))}
           </div>
         )}
 
         {!loading && list.length === 0 && !error && (
           <div className="empty-news">
-            <div style={{ fontSize: 48, marginBottom: 16 }}>⛪</div>
+            <div style={{ fontSize: 48, marginBottom: 16 }}><Church size={48} /></div>
             <p>{lang === "fr" ? "Aucune paroisse enregistrée pour le moment." :
                lang === "en" ? "No parishes registered yet." :
                "Nta paruwasi zanditswe ubu."}</p>
@@ -108,11 +109,11 @@ export default function ParoissesPage() {
           <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true">
             <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
           </svg>
-          <span>
+          {/* <span>
             {lang === "fr" ? "Le Diocèse compte 47 paroisses au total. Contenu géré via le portail administratif."
-            : lang === "en" ? "The Diocese has 47 parishes in total. Content managed via the admin portal."
+            // : lang === "en" ? "The Diocese has 47 parishes in total. Content managed via the admin portal."
             : "Diyosezi igira paruwasi 47 muri rusange. Ibikubiyemo birindwa binyuze mu portail ya admin."}
-          </span>
+          </span> */}
         </div>
       </div>
     </main>

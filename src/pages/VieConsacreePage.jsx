@@ -1,5 +1,6 @@
 import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
+import { Cross } from "lucide-react";
 
 const content = {
   fr: {
@@ -59,7 +60,7 @@ export default function VieConsacreePage() {
 
       <div className="page-content">
         <div className="vie-intro">
-          <div className="vie-intro-cross" aria-hidden="true">✝</div>
+          <div className="vie-intro-cross" aria-hidden="true"><Cross size={32} /></div>
           <p>{c.intro}</p>
         </div>
 
@@ -71,7 +72,7 @@ export default function VieConsacreePage() {
         <div className="orders-grid">
           {c.orders.map((order, i) => (
             <div key={i} className="order-card">
-              <div className="order-card-icon" aria-hidden="true">✝</div>
+              <div className="order-card-icon" aria-hidden="true"><Cross size={28} /></div>
               <h3>{order.name}</h3>
               <p className="order-charism">{order.charism}</p>
               <span className="order-since">{order.since}</span>

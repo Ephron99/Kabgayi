@@ -8,11 +8,13 @@ import HeroPage    from "./pages/HeroPage";
 import NewsPage    from "./pages/NewsPage";
 import NewsForm    from "./pages/NewsForm";
 import ParishesPage from "./pages/ParishesPage";
+import ServicesPage from "./pages/ServicesPage";
 import MessagesPage from "./pages/MessagesPage";
 import SettingsPage from "./pages/SettingsPage";
 import UsersPage   from "./pages/UsersPage";
 import BishopPage  from "./pages/BishopPage";
 import AgendaPage  from "./pages/AgendaPage";
+import PastoralPage from "./pages/PastoralPage";
 import "./admin.css";
 
 function Guard({ children }) {
@@ -38,17 +40,19 @@ function AdminRoutes() {
           <Layout>
             <Routes>
               <Route index            element={<Dashboard />} />
-              <Route path="hero"      element={<HeroPage />} />
-              <Route path="news"      element={<NewsPage />} />
-              <Route path="news/new"  element={<NewsForm />} />
-              <Route path="news/:id"  element={<NewsForm />} />
-              <Route path="parishes"  element={<ParishesPage />} />
-              <Route path="bishop"    element={<BishopPage />} />
-              <Route path="agenda"    element={<AgendaPage />} />
-              <Route path="messages"  element={<MessagesPage />} />
-              <Route path="settings"  element={<SettingsPage />} />
-              <Route path="users"     element={<UsersPage />} />
-              <Route path="*"         element={<Navigate to="/admin" replace />} />
+              <Route path="hero"     element={<HeroPage />} />
+              <Route path="news"     element={<NewsPage />} />
+              <Route path="news/new" element={<NewsForm />} />
+              <Route path="news/:id" element={<NewsForm />} />
+              <Route path="parishes" element={<ParishesPage />} />
+              <Route path="services" element={<ServicesPage />} />
+              <Route path="pastoral" element={<PastoralPage />} />
+              <Route path="bishop"   element={<BishopPage />} />
+              <Route path="agenda"   element={<AgendaPage />} />
+              <Route path="messages" element={<MessagesPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="users"    element={<UsersPage />} />
+              <Route path="*"        element={<Navigate to="/admin" replace />} />
             </Routes>
           </Layout>
         </Guard>

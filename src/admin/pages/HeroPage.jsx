@@ -4,6 +4,7 @@ import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
 import { BACKEND_BASE } from "../../config";
+import { Image as ImageIcon, Edit2, Trash2 } from "lucide-react";
 
 const EMPTY = {
   badge: "", image_url: "", sort_order: 0, is_active: 1,
@@ -93,7 +94,7 @@ export default function HeroPage() {
       <ToastContainer />
       <div className="page-header">
         <div>
-          <div className="page-title">🖼️ {t("hero_title")}</div>
+          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><ImageIcon /> {t("hero_title")}</div>
           <div className="page-sub">{t("hero_sub")}</div>
         </div>
         <button className="btn btn-primary" onClick={openNew}>{t("new_slide")}</button>
@@ -104,7 +105,7 @@ export default function HeroPage() {
           <div className="admin-loading" style={{ height: 200 }}><div className="admin-spinner" /></div>
         ) : slides.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🖼️</div>
+            <div className="empty-icon"><ImageIcon size={48} /></div>
             <p>{t("new_slide")}</p>
             <button className="btn btn-primary" style={{ marginTop: 12 }} onClick={openNew}>{t("new_slide")}</button>
           </div>
@@ -142,8 +143,8 @@ export default function HeroPage() {
                     </td>
                     <td>
                       <div style={{ display:"flex", gap:8 }}>
-                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(s)}>✏️ {t("save")}</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(s.id)}>🗑️</button>
+                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(s)}><Edit2 size={16} /> {t("save")}</button>
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(s.id)}><Trash2 size={16} /></button>
                       </div>
                     </td>
                   </tr>
@@ -160,7 +161,7 @@ export default function HeroPage() {
           <div className="modal" style={{ maxWidth: 780 }}>
             <div className="modal-header">
               <div className="modal-title">{editing ? t("edit_slide") : t("new_slide_form")}</div>
-              <button className="modal-close" onClick={() => setModal(false)}>✕</button>
+              <button className="modal-close" onClick={() => setModal(false)}><span style={{fontSize:'24px'}}>×</span></button>
             </div>
 
             <form onSubmit={handleSave}>

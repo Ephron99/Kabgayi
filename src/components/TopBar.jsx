@@ -31,7 +31,7 @@ export default function TopBar() {
             onError={(e) => { e.target.style.display = "none"; }}
           />
           <div className="navbar-v2-logo-text">
-            <strong>DIOCÈSE DE KABGAYI</strong>
+            <h3>DIOCÈSE DE KABGAYI</h3>
             <em>Orate in veritate</em>
           </div>
         </Link>

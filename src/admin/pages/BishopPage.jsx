@@ -3,6 +3,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import { Cross, Camera, User, PenTool, Save } from "lucide-react";
 
 const EMPTY = {
   bishop_name: "Mgr Balthazar NTIVUGURUZWA",
@@ -53,11 +54,11 @@ export default function BishopPage() {
       <ToastContainer />
       <div className="page-header">
         <div>
-          <div className="page-title">✝ Message de l'Évêque</div>
+          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Cross /> Message de l'Évêque</div>
           <div className="page-sub">Gérez le message et le profil de l'Évêque affiché sur la page d'accueil</div>
         </div>
         <button className="btn btn-primary" form="bishop-form" type="submit" disabled={saving}>
-          {saving ? "Enregistrement..." : "💾 Enregistrer"}
+          {saving ? "Enregistrement..." : <><Save size={16} /> Enregistrer</>}
         </button>
       </div>
 
@@ -67,7 +68,7 @@ export default function BishopPage() {
           {/* Left — photo + identity */}
           <div style={{ display:"flex", flexDirection:"column", gap:20 }}>
             <div className="card">
-              <div className="card-title">📸 Photo de l'Évêque</div>
+              <div className="card-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Camera /> Photo de l'Évêque</div>
               <ImageUpload
                 value={form.photo_url}
                 onChange={(url) => setForm({ ...form, photo_url: url })}
@@ -76,7 +77,7 @@ export default function BishopPage() {
               />
             </div>
             <div className="card">
-              <div className="card-title">👤 Identité</div>
+              <div className="card-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><User /> Identité</div>
               <div className="form-group" style={{marginBottom:14}}>
                 <label className="form-label">Nom <span>*</span></label>
                 <input className="form-input" value={form.bishop_name} onChange={set("bishop_name")} required />
@@ -98,7 +99,7 @@ export default function BishopPage() {
 
           {/* Right — message in 3 languages */}
           <div className="card">
-            <div className="card-title">✍️ Message</div>
+            <div className="card-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><PenTool /> Message</div>
             <div className="form-tabs">
               {langs.map(({ code, flag, label }) => (
                 <button key={code} type="button"

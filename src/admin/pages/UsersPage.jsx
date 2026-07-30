@@ -3,6 +3,7 @@ import { api } from "../api";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
+import { Users, Edit2, Trash2 } from "lucide-react";
 
 const EMPTY = { name:"",email:"",password:"",role:"editor" };
 
@@ -40,7 +41,7 @@ export default function UsersPage() {
     <div>
       <ToastContainer />
       <div className="page-header">
-        <div><div className="page-title">👥 {t("users_title")}</div><div className="page-sub">{t("users_sub")}</div></div>
+        <div><div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Users /> {t("users_title")}</div><div className="page-sub">{t("users_sub")}</div></div>
         <button className="btn btn-primary" onClick={openNew}>{t("new_user")}</button>
       </div>
       <div className="card">
@@ -60,8 +61,8 @@ export default function UsersPage() {
                     <td><span className={`badge ${roleColors[u.role]||"badge-gray"}`}>{u.role}</span></td>
                     <td style={{fontSize:12,color:"var(--text-dim)"}}>{new Date(u.created_at).toLocaleDateString("fr-FR")}</td>
                     <td><div style={{display:"flex",gap:8}}>
-                      <button className="btn btn-secondary btn-sm" onClick={() => openEdit(u)}>✏️</button>
-                      <button className="btn btn-danger btn-sm" onClick={() => handleDelete(u.id)} disabled={u.id===me?.id}>🗑️</button>
+                      <button className="btn btn-secondary btn-sm" onClick={() => openEdit(u)}><Edit2 size={16} /></button>
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(u.id)} disabled={u.id===me?.id}><Trash2 size={16} /></button>
                     </div></td>
                   </tr>
                 ))}
@@ -73,7 +74,7 @@ export default function UsersPage() {
       {modal && (
         <div className="modal-backdrop" onClick={(e) => e.target===e.currentTarget&&setModal(false)}>
           <div className="modal">
-            <div className="modal-header"><div className="modal-title">{editing?t("edit_user"):t("new_user_f")}</div><button className="modal-close" onClick={() => setModal(false)}>✕</button></div>
+            <div className="modal-header"><div className="modal-title">{editing?t("edit_user"):t("new_user_f")}</div><button className="modal-close" onClick={() => setModal(false)}><span style={{fontSize:'24px'}}>×</span></button></div>
             <form onSubmit={handleSave}>
               <div className="modal-body"><div className="form-grid">
                 <div className="form-group"><label className="form-label">{t("name_col")} <span>*</span></label><input className="form-input" value={form.name} onChange={set("name")} required /></div>

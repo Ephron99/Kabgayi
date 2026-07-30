@@ -4,6 +4,7 @@ import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
 import { BACKEND_BASE } from "../../config";
+import { Church, Edit2, Trash2 } from "lucide-react";
 
 const EMPTY = {
   name:"", location:"", vicar:"", phone:"", email:"",
@@ -57,7 +58,7 @@ export default function ParishesPage() {
       <ToastContainer />
       <div className="page-header">
         <div>
-          <div className="page-title">⛪ {t("parishes_title")}</div>
+          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Church /> {t("parishes_title")}</div>
           <div className="page-sub">{t("parishes_sub")}</div>
         </div>
         <button className="btn btn-primary" onClick={openNew}>{t("new_parish")}</button>
@@ -78,14 +79,14 @@ export default function ParishesPage() {
               <tbody>
                 {parishes.length === 0 ? (
                   <tr><td colSpan={6}>
-                    <div className="empty-state"><div className="empty-icon">⛪</div><p>{t("new_parish")}</p></div>
+                    <div className="empty-state"><div className="empty-icon"><Church size={48} /></div><p>{t("new_parish")}</p></div>
                   </td></tr>
                 ) : parishes.map((p) => (
                   <tr key={p.id}>
                     <td>
                       {p.image_url
                         ? <img src={resolveUrl(p.image_url)} alt={p.name} className="img-preview" />
-                        : <span style={{ fontSize:24 }}>⛪</span>
+                        : <span style={{ fontSize:24 }}><Church /></span>
                       }
                     </td>
                     <td style={{ fontWeight:500 }}>{p.name}</td>
@@ -98,8 +99,8 @@ export default function ParishesPage() {
                     </td>
                     <td>
                       <div style={{ display:"flex", gap:8 }}>
-                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(p)}>✏️</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p.id)}>🗑️</button>
+                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(p)}><Edit2 size={16} /></button>
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(p.id)}><Trash2 size={16} /></button>
                       </div>
                     </td>
                   </tr>
@@ -116,7 +117,7 @@ export default function ParishesPage() {
           <div className="modal" style={{ maxWidth:720 }}>
             <div className="modal-header">
               <div className="modal-title">{editing ? t("edit_parish") : t("new_parish_f")}</div>
-              <button className="modal-close" onClick={() => setModal(false)}>✕</button>
+              <button className="modal-close" onClick={() => setModal(false)}><span style={{fontSize:'24px'}}>×</span></button>
             </div>
             <form onSubmit={handleSave}>
               <div className="modal-body">

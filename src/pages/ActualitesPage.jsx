@@ -2,6 +2,7 @@ import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import { useApi } from "../hooks/useApi";
 import { resolveImg } from "../utils/imageUrl";
+import { AlertTriangle, Newspaper } from "lucide-react";
 
 export default function ActualitesPage() {
   const { t, lang } = useLang();
@@ -56,7 +57,7 @@ export default function ActualitesPage() {
 
         {error && (
           <div className="api-error" role="alert">
-            <span>⚠️</span>
+            <AlertTriangle size={18} />
             {lang === "fr" ? "Impossible de charger les actualités." :
              lang === "en" ? "Could not load news." :
              "Ntibishoboka gufungura amakuru."}
@@ -65,7 +66,7 @@ export default function ActualitesPage() {
 
         {!loading && news.length === 0 && !error && (
           <div className="empty-news">
-            <div style={{ fontSize: 48, marginBottom: 16 }}>📰</div>
+            <div style={{ fontSize: 48, marginBottom: 16 }}><Newspaper size={48} /></div>
             <p>{lang === "fr" ? "Aucun article publié pour le moment." :
                lang === "en" ? "No articles published yet." :
                "Nta makuru ashyizwe ahagaragara ubu."}</p>

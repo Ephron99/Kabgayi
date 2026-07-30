@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
 import { resolveImg } from "../utils/imageUrl";
+import { AlertTriangle, Pen } from "lucide-react";
 
 export default function NewsDetailPage() {
   const { id } = useParams();
@@ -49,7 +50,7 @@ export default function NewsDetailPage() {
 
         {error && (
           <div className="api-error" role="alert">
-            ⚠️ {lang === "fr" ? "Impossible de charger cet article." : lang === "en" ? "Could not load this article." : "Ntibishoboka gufungura iyi nkuru."}
+            <AlertTriangle size={18} /> {lang === "fr" ? "Impossible de charger cet article." : lang === "en" ? "Could not load this article." : "Ntibishoboka gufungura iyi nkuru."}
           </div>
         )}
 
@@ -71,7 +72,7 @@ export default function NewsDetailPage() {
                   </svg>
                   {formatDate(item.published_at || item.created_at)}
                 </span>
-                {item.author_name && <span>✍️ {item.author_name}</span>}
+                {item.author_name && <span><Pen size={14} /> {item.author_name}</span>}
               </div>
             </div>
 

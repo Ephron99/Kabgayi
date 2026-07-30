@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
+import { Calendar, Edit2, Trash2 } from "lucide-react";
 
 const EMPTY = {
   day:"", month_fr:"", month_en:"", month_rw:"",
@@ -78,7 +79,7 @@ export default function AgendaPage() {
       <ToastContainer />
       <div className="page-header">
         <div>
-          <div className="page-title">📅 Agenda Pastoral</div>
+          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Calendar /> Agenda Pastoral</div>
           <div className="page-sub">Gérez les événements affichés dans l'agenda pastoral de la page d'accueil</div>
         </div>
         <button className="btn btn-primary" onClick={openNew}>+ Nouvel événement</button>
@@ -89,7 +90,7 @@ export default function AgendaPage() {
           <div className="admin-loading" style={{height:200}}><div className="admin-spinner"/></div>
         ) : events.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">📅</div>
+            <div className="empty-icon"><Calendar size={48} /></div>
             <p>Aucun événement. Créez le premier !</p>
           </div>
         ) : (
@@ -126,8 +127,8 @@ export default function AgendaPage() {
                     </td>
                     <td>
                       <div style={{ display:"flex", gap:8 }}>
-                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(ev)}>✏️</button>
-                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(ev.id)}>🗑️</button>
+                        <button className="btn btn-secondary btn-sm" onClick={() => openEdit(ev)}><Edit2 size={16} /></button>
+                        <button className="btn btn-danger btn-sm" onClick={() => handleDelete(ev.id)}><Trash2 size={16} /></button>
                       </div>
                     </td>
                   </tr>
@@ -144,7 +145,7 @@ export default function AgendaPage() {
           <div className="modal" style={{ maxWidth:680 }}>
             <div className="modal-header">
               <div className="modal-title">{editing ? "Modifier l'événement" : "Nouvel événement"}</div>
-              <button className="modal-close" onClick={() => setModal(false)}>✕</button>
+              <button className="modal-close" onClick={() => setModal(false)}><span style={{fontSize:'24px'}}>×</span></button>
             </div>
             <form onSubmit={handleSave}>
               <div className="modal-body">

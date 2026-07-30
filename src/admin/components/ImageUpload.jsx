@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { api } from "../api";
 import { BACKEND_BASE } from "../../config";
+import { Image, Trash2, UploadCloud, FolderOpen, CheckCircle2, AlertCircle, RefreshCw, Trash, RotateCcw } from "lucide-react";
 
 /**
  * ImageUpload — reusable file-picker + drag-and-drop image uploader
@@ -122,24 +123,26 @@ export default function ImageUpload({
                 type="button"
                 className="img-upload-change-btn"
                 onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
               >
-                🔄 Changer
+                <RotateCcw size={16} /> Changer
               </button>
               <button
                 type="button"
                 className="img-upload-remove-btn"
                 onClick={handleRemove}
                 aria-label="Supprimer l'image"
+                style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
               >
-                🗑️ Supprimer
+                <Trash size={16} /> Supprimer
               </button>
             </div>
           </div>
         ) : (
           /* ── Drop zone ── */
           <div className="img-upload-placeholder">
-            <div className="img-upload-icon" aria-hidden="true">
-              {dragging ? "📂" : "🖼️"}
+            <div className="img-upload-icon" aria-hidden="true" style={{ fontSize: '3rem' }}>
+              {dragging ? <FolderOpen size={48} /> : <UploadCloud size={48} />}
             </div>
             <div className="img-upload-text">
               {dragging
@@ -149,9 +152,9 @@ export default function ImageUpload({
             <div className="img-upload-hint">
               JPG · PNG · WebP · GIF · SVG — max 8 Mo
             </div>
-            <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: 10 }}
+            <button type="button" className="btn btn-secondary btn-sm" style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: '0.5rem' }}
               onClick={(e) => { e.stopPropagation(); inputRef.current?.click(); }}>
-              📁 Choisir un fichier
+              <FolderOpen size={16} /> Choisir un fichier
             </button>
           </div>
         )}
@@ -171,13 +174,17 @@ export default function ImageUpload({
 
         {/* ── Upload complete flash ── */}
         {progress === 100 && (
-          <div className="img-upload-success" aria-live="polite">✓ Image uploadée !</div>
+          <div className="img-upload-success" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <CheckCircle2 size={16} /> Image uploadée !
+          </div>
         )}
       </div>
 
       {/* ── Error message ── */}
       {error && (
-        <div className="img-upload-error" role="alert">⚠️ {error}</div>
+        <div className="img-upload-error" role="alert" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <AlertCircle size={16} /> {error}
+        </div>
       )}
     </div>
   );

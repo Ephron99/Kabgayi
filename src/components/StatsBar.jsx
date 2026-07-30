@@ -3,10 +3,10 @@ import { useLang } from "../context/LanguageContext";
 import { Users, Church, HeartHandshake, Cross } from "lucide-react";
 
 const stats = [
-  { value: 650000, suffix: "+", key: "stat_catholics",   Icon: Users,          color: "#1A56DB" },
-  { value: 31,     suffix: "",  key: "stat_parishes",    Icon: Church,         color: "#D4AF37" },
-  { value: 153,    suffix: "",  key: "stat_communities", Icon: HeartHandshake, color: "#1A56DB" },
-  { value: 78,     suffix: "",  key: "stat_priests",     Icon: Cross,          color: "#E74C3C" },
+  // { value: , suffix: "", key: "stat_catholics",   Icon: Users,          color: "#1A56DB" },
+  // { value: 31,     suffix: "",  key: "stat_parishes",    Icon: Church,         color: "#D4AF37" },
+  // { value: 153,    suffix: "",  key: "stat_communities", Icon: HeartHandshake, color: "#1A56DB" },
+  // { value: 78,     suffix: "",  key: "stat_priests",     Icon: Cross,          color: "#E74C3C" },
 ];
 
 function useCountUp(target, active) {
