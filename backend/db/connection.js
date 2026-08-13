@@ -1,5 +1,6 @@
 const mysql = require("mysql2/promise");
-require("dotenv").config();
+const path  = require("path");
+require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 
 const pool = mysql.createPool({
   host:     process.env.DB_HOST     || "localhost",
@@ -13,7 +14,7 @@ const pool = mysql.createPool({
 
 pool.getConnection()
   .then((conn) => {
-    console.log("  MySQL connected — database:", process.env.DB_NAME);
+    console.log("  MySQL connected — database:", process.env.DB_NAME || "kabgayi");
     conn.release();
   })
   .catch((err) => {

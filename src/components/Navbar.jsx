@@ -157,42 +157,47 @@ export default function Navbar() {
       path: "/pastorale",
       children: buildPastoralMenu(),
     },
-    {
-      key: "actualites",
-      label: lang === "fr" ? "Actualités" : lang === "en" ? "News" : "Amakuru",
-      path: "/actualites",
-      children: [
-        {
-          group: "",
-          items: [
-            { label: lang === "fr" ? "Communiqués"           : lang === "en" ? "Press releases"  : "Itangazo",         path: "/actualites" },
-            { label: lang === "fr" ? "Nouvelles du Diocèse"  : lang === "en" ? "Diocese news"    : "Amakuru y'Diyosezi", path: "/actualites" },
-            { label: lang === "fr" ? "Événements en cours"   : lang === "en" ? "Current events"  : "Ibikorwa",          path: "/actualites" },
-          ],
-        },
-      ],
-    },
     // {
-    //   key: "publications",
-    //   label: lang === "fr" ? "Nos Publications" : lang === "en" ? "Publications" : "Ibitangazwa",
-    //   path: "/documentation",
+    //   key: "actualites",
+    //   label: lang === "fr" ? "Actualités" : lang === "en" ? "News" : "Amakuru",
+    //   path: "/actualites",
     //   children: [
     //     {
     //       group: "",
     //       items: [
-    //         { label: "Mwigisha",                                                                                              path: "/documentation/mwigisha" },
-    //         { label: lang === "fr" ? "Train-d'union"         : lang === "en" ? "Newsletter"       : "Itangazo",         path: "/documentation/nouvelles" },
-    //         { label: lang === "fr" ? "Homélies de l'Évêque"  : lang === "en" ? "Bishop's homilies": "Insiguro",          path: "/documentation/homelies" },
-    //         { label: lang === "fr" ? "Urumuri Rwa Kristu"    : lang === "en" ? "Urumuri Rwa Kristu": "Urumuri Rwa Kristu", path: "/documentation/urumuri" },
-    //         { label: lang === "fr" ? "Vidéos"                : lang === "en" ? "Videos"            : "Amashusho",         path: "/liturgie/videos" },
-    //         { label: lang === "fr" ? "Albums Photos"         : lang === "en" ? "Photo albums"      : "Amafoto",           path: "/documentation/photos" },
+    //         { label: lang === "fr" ? "Communiqués"           : lang === "en" ? "Press releases"  : "Itangazo",         path: "/actualites" },
+    //         { label: lang === "fr" ? "Nouvelles du Diocèse"  : lang === "en" ? "Diocese news"    : "Amakuru y'Diyosezi", path: "/actualites" },
+    //         { label: lang === "fr" ? "Événements en cours"   : lang === "en" ? "Current events"  : "Ibikorwa",          path: "/actualites" },
     //       ],
     //     },
     //   ],
     // },
     {
+      key: "actualites",
+      label: lang === "fr" ? "actualites" : lang === "en" ? "News" : "Amakuru",
+      path: "/actualites",
+    },
+    {
+      key: "publications",
+      label: lang === "fr" ? "Publications" : lang === "en" ? "Publications" : "Ibitangazwa",
+      path: "",
+      children: [
+        {
+          group: "",
+          items: [
+            { label: "Mwigisha",                                                                                              path: "" },
+            { label: lang === "fr" ? "Train-d'union"         : lang === "en" ? "Newsletter"       : "Itangazo",         path: "" },
+            { label: lang === "fr" ? "Homélies de l'Évêque"  : lang === "en" ? "Bishop's homilies": "Insiguro",          path: "" },
+            { label: lang === "fr" ? "Urumuri Rwa Kristu"    : lang === "en" ? "Urumuri Rwa Kristu": "Urumuri Rwa Kristu", path: "" },
+            { label: lang === "fr" ? "Vidéos"                : lang === "en" ? "Videos"            : "Amashusho",         path: "" },
+            { label: lang === "fr" ? "Albums Photos"         : lang === "en" ? "Photo albums"      : "Amafoto",           path: "" },
+          ],
+        },
+      ],
+    },
+    {
       key: "contact",
-      label: lang === "fr" ? "Nous Contacter" : lang === "en" ? "Contact" : "Twunganire",
+      label: lang === "fr" ? "Contacter" : lang === "en" ? "Contact" : "Twunganire",
       path: "/contact",
     },
   ];
@@ -204,14 +209,14 @@ export default function Navbar() {
     <nav className={`navbar-v2${scrolled ? " sticky" : ""}`} ref={navRef} role="navigation" aria-label="Navigation principale">
       <div className="navbar-v2-inner">
         {/* Logo */}
-        {/* <Link to="/" className="navbar-v2-logo" aria-label="Diocèse de Kabgayi – Accueil">
+        <Link to="/" className="navbar-v2-logo" aria-label="Diocèse de Kabgayi – Accueil">
           <img src={logoImg} alt="Blason Diocèse de Kabgayi" className="navbar-v2-logo-img"
             onError={(e) => { e.target.style.display = "none"; }} />
           <div className="navbar-v2-logo-text">
             <strong>DIOCÈSE DE KABGAYI</strong>
-            <em>Orate in veritate</em>
+            <span>Orate in veritate</span>
           </div>
-        </Link> */}
+        </Link>
 
         {/* Desktop menu */}
         <ul className="navbar-v2-menu" role="menubar">

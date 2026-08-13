@@ -39,36 +39,36 @@ export default function PastoralDetailPage() {
           <div className="detail-text">
             <h2>{getName()}</h2>
             <div className="section-divider" aria-hidden="true"></div>
-            
+
             {getMoto() && (
-              <div style={{ marginBottom: "24px", padding: "16px", backgroundColor: "var(--cream)", borderRadius: "var(--radius)", borderLeft: "4px solid var(--gold)" }}>
-                <p style={{ fontStyle: "italic", margin: 0, fontSize: "18px" }}>
-                  "{getMoto()}"
-                </p>
-              </div>
+              <div
+                className="rich-text motto-box"
+                style={{ marginBottom: "24px", padding: "16px", backgroundColor: "var(--cream)", borderRadius: "var(--radius)", borderLeft: "4px solid var(--gold)", fontStyle: "italic", fontSize: "18px" }}
+                dangerouslySetInnerHTML={{ __html: getMoto() }}
+              />
             )}
-            
+
             {getSaintPatron() && (
               <div style={{ marginBottom: "20px" }}>
                 <strong>{lang === "fr" ? "Saint Patron : " : lang === "en" ? "Patron Saint : " : "Mutabera wa Gatolika : "}</strong>
                 {getSaintPatron()}
               </div>
             )}
-            
+
             {item.date_fondation && (
               <div style={{ marginBottom: "20px" }}>
                 <strong>{lang === "fr" ? "Date de fondation : " : lang === "en" ? "Foundation date : " : "Itariki ry'ibere : "}</strong>
                 {new Date(item.date_fondation).toLocaleDateString(lang === "fr" ? "fr-FR" : lang === "en" ? "en-US" : "rw-RW")}
               </div>
             )}
-            
+
             {getDirecteurName() && (
               <div style={{ marginBottom: "20px" }}>
                 <strong>{lang === "fr" ? "Nom du Directeur : " : lang === "en" ? "Director's name : " : "Izina rya Muyobozi : "}</strong>
                 {getDirecteurName()}
               </div>
             )}
-            
+
             {item.directeur_contact && (
               <div style={{ marginBottom: "20px" }}>
                 <strong>{lang === "fr" ? "Contact du Directeur : " : lang === "en" ? "Director's contact : " : "Imibare yo kwandikira Muyobozi : "}</strong>

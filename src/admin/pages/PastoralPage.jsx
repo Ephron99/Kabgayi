@@ -3,6 +3,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import RichTextEditor from "../components/RichTextEditor";
 import { BACKEND_BASE } from "../../config";
 import { Church, Edit2, Trash2 } from "lucide-react";
 
@@ -87,6 +88,8 @@ export default function PastoralPage() {
   };
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  // Quill's onChange hands back the HTML string directly, not an event
+  const setHtml = (k) => (html) => setForm({ ...form, [k]: html });
 
   const parentOptions = items.filter(item => !item.parent_id); // Only top-level items as parents
 
@@ -210,15 +213,30 @@ export default function PastoralPage() {
                   {/* Mottos */}
                   <div className="form-group form-full">
                     <label className="form-label">Motto (FR)</label>
-                    <textarea className="form-input form-textarea" rows={2} value={form.moto_fr} onChange={set("moto_fr")} />
+                    <RichTextEditor
+                      value={form.moto_fr}
+                      onChange={setHtml("moto_fr")}
+                      placeholder="Motto en français..."
+                      height={100}
+                    />
                   </div>
                   <div className="form-group form-full">
                     <label className="form-label">Motto (EN)</label>
-                    <textarea className="form-input form-textarea" rows={2} value={form.moto_en} onChange={set("moto_en")} />
+                    <RichTextEditor
+                      value={form.moto_en}
+                      onChange={setHtml("moto_en")}
+                      placeholder="Motto in English..."
+                      height={100}
+                    />
                   </div>
                   <div className="form-group form-full">
                     <label className="form-label">Motto (RW)</label>
-                    <textarea className="form-input form-textarea" rows={2} value={form.moto_rw} onChange={set("moto_rw")} />
+                    <RichTextEditor
+                      value={form.moto_rw}
+                      onChange={setHtml("moto_rw")}
+                      placeholder="Umugambi mu kinyarwanda..."
+                      height={100}
+                    />
                   </div>
 
                   {/* Saint Patron */}

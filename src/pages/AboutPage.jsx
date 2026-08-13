@@ -3,6 +3,35 @@ import { useLang } from "../context/LanguageContext";
 import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg';
 import kabgayi from '../assets/kabgayi.jpg';
 
+// Raw stats data (language-independent values, section markers, and translation keys)
+const dioceseStatsData = [
+  { key: "population", value: "1 120 821" },
+  { key: "baptises", value: "666 097" },
+  { key: "catechumenes", value: "5 668" },
+  { key: "total_catholiques", value: "638 368" },
+  { key: "pct_cath", value: "59.20%" },
+  { key: "paroisses", value: "31" },
+  { key: "centrales", value: "507" },
+  { key: "comites_base", value: "5 927" },
+  { section: "pretres" },
+  { key: "pretres_diocesains", value: "80" },
+  { key: "pretres_religieux", value: "20" },
+  { key: "religieux", value: "77" },
+  { key: "religieuses", value: "430" },
+  { key: "communautes_masc", value: "15" },
+  { key: "communautes_fem", value: "36" },
+  { key: "catechistes", value: "740" },
+  { key: "grands_seminaristes", value: "65" },
+  { key: "petits_seminaristes", value: "306" },
+  { section: "ecoles" },
+  { key: "ecoles_primaires", value: "127" },
+  { key: "ecoles_secondaires", value: "105" },
+  { key: "ecoles_superieures", value: "1" },
+  { section: "formations_sanitaires" },
+  { key: "centres_sante", value: "10" },
+  { key: "hopitaux", value: "2" },
+];
+
 const content = {
   fr: {
     title: "À Propos du Diocèse de Kabgayi",
@@ -26,6 +55,35 @@ BREVE CHRONOLOGIE HIERARCHIQUE DU DIOCESE DE KABGAYI
 L’histoire du Diocèse de Kabgayi se confond jusqu’en 1952 avec l’histoire religieuse du Christianisme au Rwanda.
 Phase missionnaire : Kabgayi à l’époque des vicariats (1912-1959)
 Jusqu’en 1912, le Rwanda était rattaché au Vicariat Apostolique du Nyanza- Méridional, juridiction ecclésiastique dont le chef-lieu se situait au-delà de l’Akagera, à Kashozi (Tanzanie). Son Excellence Mgr Hirth devint le Vicaire Apostolique de cette juridiction.`,
+      statsTitle: "Statistiques du Diocèse 2026",
+      statsLabels: {
+        population: "Population",
+        baptises: "Baptisés Catholiques",
+        catechumenes: "Catéchumènes",
+        total_catholiques: "Total Catholiques",
+        pct_cath: "% des Cath. / Pop. Totale",
+        paroisses: "Paroisses",
+        centrales: "Centrales",
+        comites_base: "Comités Ecclésiales de Base",
+        pretres: "Prêtres",
+        pretres_diocesains: "Prêtres Diocésains",
+        pretres_religieux: "Prêtres Religieux",
+        religieux: "Religieux",
+        religieuses: "Religieuses",
+        communautes_masc: "Communautés Masculines",
+        communautes_fem: "Communautés Féminines",
+        catechistes: "Catéchistes",
+        grands_seminaristes: "Grands Séminaristes",
+        petits_seminaristes: "Petits Séminaristes",
+        ecoles: "Écoles",
+        ecoles_primaires: "Écoles Primaires",
+        ecoles_secondaires: "Écoles Secondaires",
+        ecoles_superieures: "Écoles Supérieures Laïques",
+        formations_sanitaires: "Formations Sanitaires de l'Église",
+        centres_sante: "Centres de Santé",
+        hopitaux: "Hôpitaux",
+      },
+      statsHeaders: { designation: "Désignation", figure: "Chiffre" },
     },
     bishop: {
       title: "Mgr Balthazar Ntivuguruzwa",
@@ -54,6 +112,35 @@ BRIEF HIERARCHICAL CHRONOLOGY OF THE DIOCESE OF KABGAYI
 
 The history of the Diocese of Kabgayi is intertwined with the religious history of Christianity in Rwanda until 1952. Missionary Phase: Kabgayi during the Vicariate Era (1912-1959)
 Until 1912, Rwanda was part of the Apostolic Vicariate of Southern Nyanza, an ecclesiastical jurisdiction whose capital was located beyond the Akagera River, in Kashozi (Tanzania). His Excellency Bishop Hirth became the Apostolic Vicar of this jurisdiction.`,
+      statsTitle: "Diocese Statistics 2026",
+      statsLabels: {
+        population: "Population",
+        baptises: "Baptized Catholics",
+        catechumenes: "Catechumens",
+        total_catholiques: "Total Catholics",
+        pct_cath: "% Catholics / Total Pop.",
+        paroisses: "Parishes",
+        centrales: "Central Stations",
+        comites_base: "Basic Ecclesial Communities",
+        pretres: "Priests",
+        pretres_diocesains: "Diocesan Priests",
+        pretres_religieux: "Religious Priests",
+        religieux: "Religious Brothers",
+        religieuses: "Religious Sisters",
+        communautes_masc: "Male Communities",
+        communautes_fem: "Female Communities",
+        catechistes: "Catechists",
+        grands_seminaristes: "Major Seminarians",
+        petits_seminaristes: "Minor Seminarians",
+        ecoles: "Schools",
+        ecoles_primaires: "Primary Schools",
+        ecoles_secondaires: "Secondary Schools",
+        ecoles_superieures: "Lay Higher Education Schools",
+        formations_sanitaires: "Church Health Facilities",
+        centres_sante: "Health Centers",
+        hopitaux: "Hospitals",
+      },
+      statsHeaders: { designation: "Designation", figure: "Figure" },
     },
     bishop: {
       title: "Mgr Balthazar Ntivuguruzwa",
@@ -75,6 +162,35 @@ Diyosezi ya Kabgayi ni imwe mu Diyosezi za kera za Gatolika mu Rwanda. Yashinzwe
 Kabgayi, iherereye mu Ntara y'Epfo ya Rwanda, ni icyicaro cy'Umusenyeri kandi ikigarama nka Katedrale ya Notre-Dame ya Kabgayi, imwe mu nziza kandi za kera mu gihugu.
 
 Mu myaka ishize, Diyosezi yahuye n'ibihe byinshi bigoye n'iby'itumaini, harimo jenoside yo mu 1994 yakomerekeje umutima w'umuryango w'abakristu. Ubu, izirikana ukwizera n'ubwunvikane.`,
+      statsTitle: "Imibare y'Ingenzi ya Diyosezi 2026",
+      statsLabels: {
+        population: "Abaturage",
+        baptises: "Ababatijwe Abagatolika",
+        catechumenes: "Abatoza",
+        total_catholiques: "Abagatolika Bose",
+        pct_cath: "% y'Abagatolika ku Baturage Bose",
+        paroisses: "Amaparuwasi",
+        centrales: "Ibigo Nkuru",
+        comites_base: "Amatorero Mato",
+        pretres: "Abapadiri",
+        pretres_diocesains: "Abapadiri ba Diyosezi",
+        pretres_religieux: "Abapadiri b'Amashyirahamwe",
+        religieux: "Abarumuna",
+        religieuses: "Abaseturi",
+        communautes_masc: "Amashyirahamwe y'Abagabo",
+        communautes_fem: "Amashyirahamwe y'Abagore",
+        catechistes: "Abatekiseri",
+        grands_seminaristes: "Abasemenari Bakuru",
+        petits_seminaristes: "Abasemenari Bato",
+        ecoles: "Amashuri",
+        ecoles_primaires: "Amashuri Abanza",
+        ecoles_secondaires: "Amashuri Yisumbuye",
+        ecoles_superieures: "Amashuri Makuru y'Abasivili",
+        formations_sanitaires: "Ivuriro ry'Itorero",
+        centres_sante: "Ibigo Nderabuzima",
+        hopitaux: "Ibitaro",
+      },
+      statsHeaders: { designation: "Icyo Bigaragaza", figure: "Umubare" },
     },
     bishop: {
       title: "Mgr Balthazar Ntivuguruzwa",
@@ -83,6 +199,118 @@ Mu myaka ishize, Diyosezi yahuye n'ibihe byinshi bigoye n'iby'itumaini, harimo j
     }
   }
 };
+
+// Reusable, self-contained statistics table for the Diocese tab
+function DioceseStatsTable({ diocese }) {
+  const { statsTitle, statsLabels, statsHeaders } = diocese;
+
+  return (
+    <div style={{ marginTop: '12px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+        <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '24px' }}>
+          {statsTitle}
+        </h3>
+        <div className="section-divider" style={{ margin: '16px auto' }} aria-hidden="true"></div>
+      </div>
+
+      <div
+        style={{
+          borderRadius: '14px',
+          overflow: 'hidden',
+          border: '1px solid var(--border)',
+          boxShadow: 'var(--shadow-md)',
+        }}
+      >
+        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '15px' }}>
+          <thead>
+            <tr style={{ backgroundColor: 'var(--navy)' }}>
+              <th
+                style={{
+                  textAlign: 'left',
+                  padding: '14px 20px',
+                  color: '#fff',
+                  fontFamily: 'var(--font-serif)',
+                  fontWeight: '600',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                {statsHeaders.designation}
+              </th>
+              <th
+                style={{
+                  textAlign: 'right',
+                  padding: '14px 20px',
+                  color: '#fff',
+                  fontFamily: 'var(--font-serif)',
+                  fontWeight: '600',
+                  letterSpacing: '0.02em',
+                }}
+              >
+                {statsHeaders.figure}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {dioceseStatsData.map((row, i) => {
+              if (row.section) {
+                return (
+                  <tr key={`section-${row.section}`}>
+                    <td
+                      colSpan={2}
+                      style={{
+                        padding: '10px 20px',
+                        backgroundColor: 'rgba(var(--red-rgb, 178, 34, 52), 0.08)',
+                        color: 'var(--red)',
+                        fontWeight: '700',
+                        fontSize: '13px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.06em',
+                        borderTop: '1px solid var(--border)',
+                        borderBottom: '1px solid var(--border)',
+                      }}
+                    >
+                      {statsLabels[row.section]}
+                    </td>
+                  </tr>
+                );
+              }
+              return (
+                <tr
+                  key={row.key}
+                  style={{
+                    backgroundColor: i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.02)',
+                  }}
+                >
+                  <td
+                    style={{
+                      padding: '12px 20px',
+                      color: 'var(--text)',
+                      borderBottom: '1px solid var(--border)',
+                    }}
+                  >
+                    {statsLabels[row.key]}
+                  </td>
+                  <td
+                    style={{
+                      padding: '12px 20px',
+                      textAlign: 'right',
+                      color: 'var(--navy)',
+                      fontWeight: '700',
+                      fontVariantNumeric: 'tabular-nums',
+                      borderBottom: '1px solid var(--border)',
+                    }}
+                  >
+                    {row.value}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   const { t, lang } = useLang();
@@ -167,6 +395,9 @@ export default function AboutPage() {
             <div style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.9' }}>
               {c.diocese.text.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
             </div>
+
+            {/* Statistics table */}
+            <DioceseStatsTable diocese={c.diocese} />
           </div>
         )}
 

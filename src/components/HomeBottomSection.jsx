@@ -85,7 +85,7 @@ function DocumentsWidget({ lang }) {
   );
 }
 
-// ── Agenda Pastoral widget ──────────────────────────────────
+// ── AGENDA PASTORAL 2026/2027 widget ──────────────────────────────────
 function AgendaWidget({ lang }) {
   const { data } = useApi("/api/agenda", []);
   const events = Array.isArray(data) ? data : [];
@@ -106,7 +106,7 @@ function AgendaWidget({ lang }) {
     <div className="home-widget agenda-widget">
       <div className="home-widget-header">
         <CalendarDays size={15} strokeWidth={2} style={{ color:"var(--red)", flexShrink:0 }} />
-        <h3>{lang === "fr" ? "AGENDA PASTORAL" : lang === "en" ? "PASTORAL AGENDA" : "GAHUNDA Y'UBUTUMWA"}</h3>
+        <h3>{lang === "fr" ? "AGENDA PASTORAL 2026/2027" : lang === "en" ? "PASTORAL AGENDA" : "GAHUNDA Y'UBUTUMWA"}</h3>
       </div>
       <div className="agenda-list">
         {displayEvents.slice(0, 4).map((ev, i) => (

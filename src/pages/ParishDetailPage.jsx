@@ -72,7 +72,7 @@ export default function ParishDetailPage() {
             {parish.location && (
               <div style={{ marginBottom: "16px" }}>
                 <strong>
-                  {lang === "fr" ? "Localisation : " : lang === "en" ? "Location : " : "Aho hagera : "}
+                  {lang === "fr" ? "Doyenné : " : lang === "en" ? "Location : " : "Aho hagera : "}
                 </strong>
                 {parish.location}
               </div>

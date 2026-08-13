@@ -79,8 +79,8 @@ export default function AgendaPage() {
       <ToastContainer />
       <div className="page-header">
         <div>
-          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Calendar /> Agenda Pastoral</div>
-          <div className="page-sub">Gérez les événements affichés dans l'agenda pastoral de la page d'accueil</div>
+          <div className="page-title" style={{display:'flex',alignItems:'center',gap:'0.5rem'}}><Calendar /> AGENDA PASTORAL 2026/2027</div>
+          <div className="page-sub">Gérez les événements affichés dans l'AGENDA PASTORAL 2026/2027 de la page d'accueil</div>
         </div>
         <button className="btn btn-primary" onClick={openNew}>+ Nouvel événement</button>
       </div>

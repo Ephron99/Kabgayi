@@ -73,6 +73,7 @@ export default function App() {
           <>
             <Route path="/" element={<MaintenancePage />} />
             <Route path="/home" element={<MaintenancePage />} />
+            <Route path="/ecrire" element={<MaintenancePage />} />
           </>
         )}
 

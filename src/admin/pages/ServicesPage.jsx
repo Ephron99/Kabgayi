@@ -3,6 +3,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import RichTextEditor from "../components/RichTextEditor";
 import { BACKEND_BASE } from "../../config";
 import { Building2, Edit2, Trash2 } from "lucide-react";
 
@@ -79,6 +80,8 @@ export default function ServicesPage() {
   };
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  // Quill's onChange hands back the HTML string directly, not an event
+  const setHtml = (k) => (html) => setForm({ ...form, [k]: html });
 
   return (
     <div>
@@ -197,15 +200,27 @@ export default function ServicesPage() {
                   {/* Descriptions */}
                   <div className="form-group form-full">
                     <label className="form-label">Description (FR)</label>
-                    <textarea className="form-input form-textarea" rows={4} value={form.desc_fr} onChange={set("desc_fr")} />
+                    <RichTextEditor
+                      value={form.desc_fr}
+                      onChange={setHtml("desc_fr")}
+                      placeholder="Description en français..."
+                    />
                   </div>
                   <div className="form-group form-full">
                     <label className="form-label">Description (EN)</label>
-                    <textarea className="form-input form-textarea" rows={4} value={form.desc_en} onChange={set("desc_en")} />
+                    <RichTextEditor
+                      value={form.desc_en}
+                      onChange={setHtml("desc_en")}
+                      placeholder="Description in English..."
+                    />
                   </div>
                   <div className="form-group form-full">
                     <label className="form-label">Description (RW)</label>
-                    <textarea className="form-input form-textarea" rows={4} value={form.desc_rw} onChange={set("desc_rw")} />
+                    <RichTextEditor
+                      value={form.desc_rw}
+                      onChange={setHtml("desc_rw")}
+                      placeholder="Ibisobanuro mu kinyarwanda..."
+                    />
                   </div>
 
                   {/* Order & Active */}

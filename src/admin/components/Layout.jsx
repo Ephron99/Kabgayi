@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink, useLocation, Link } from "react-router-dom";
 import { useAdminAuth } from "../context/AdminAuthContext";
 import { useAdminLang } from "../context/AdminLangContext";
 import "../admin.css";
-import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen, Cross, CalendarDays, HeartHandshake } from "lucide-react";
+import { LayoutDashboard, Image, Newspaper, Church, Mail, Settings, Users, DoorOpen, Cross, CalendarDays, HeartHandshake, Menu, X } from "lucide-react";
 const LANG_OPTIONS = [
   { code: "fr", flag: "🇫🇷", label: "Français" },
   { code: "en", flag: "🇬🇧", label: "English" },
@@ -15,6 +15,23 @@ export default function Layout({ children }) {
   const { t, lang, setLang } = useAdminLang();
   const location           = useLocation();
   const [langOpen, setLangOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => { setSidebarOpen(false); }, [location.pathname]);
+
+  // Close sidebar on Escape key (mobile)
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") setSidebarOpen(false); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Lock body scroll when sidebar is open (mobile)
+  useEffect(() => {
+    document.body.style.overflow = sidebarOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [sidebarOpen]);
 
   const NAV = [
   { section: t("general") },
@@ -26,7 +43,7 @@ export default function Layout({ children }) {
   { to: "/admin/services", icon: HeartHandshake,  label: "Services Diocésains" },
   { to: "/admin/pastoral", icon: HeartHandshake,  label: "Pastoral" },
   { to: "/admin/bishop",   icon: Cross,           label: "Message Évêque" },
-  { to: "/admin/agenda",   icon: CalendarDays,    label: "Agenda Pastoral" },
+  { to: "/admin/agenda",   icon: CalendarDays,    label: "AGENDA PASTORAL 2026/2027" },
   { section: t("communication") },
   { to: "/admin/messages", icon: Mail,            label: t("messages") },
   { section: t("system") },
@@ -51,14 +68,27 @@ export default function Layout({ children }) {
 
   return (
     <div className="admin-layout">
+      {/* ── Mobile sidebar overlay ─────────────────── */}
+      {sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} aria-hidden="true" />
+      )}
+
       {/* ── Sidebar ─────────────────────────────── */}
-      <aside className="sidebar">
+      <aside className={`sidebar${sidebarOpen ? " open" : ""}`}>
         <div className="sidebar-brand">
           <div className="sidebar-brand-icon"><Cross size={24} color="#fff" /></div>
           <div className="sidebar-brand-text">
             <div className="sidebar-brand-title">Diocèse de Kabgayi</div>
             <div className="sidebar-brand-sub">{t("admin_portal")}</div>
           </div>
+          {/* Close button (mobile only) */}
+          <button
+            className="sidebar-close-btn"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Close sidebar"
+          >
+            <X size={20} />
+          </button>
         </div>
 
         <nav className="sidebar-nav">
@@ -141,28 +171,27 @@ export default function Layout({ children }) {
       {/* ── Main ───────────────────────────────── */}
       <div className="admin-main">
         <header className="admin-header">
+          {/* Mobile hamburger button */}
+          <button
+            className="admin-hamburger"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
+          >
+            <Menu size={22} />
+          </button>
           <div className="admin-header-title">{pageTitle}</div>
           <div className="admin-header-right">
-            <span style={{ fontSize: 13, color: "var(--text-dim)" }}>
-              {t("logged_as")} <strong style={{ color: "var(--text-dark)" }}>{user?.name}</strong>
+            <span className="admin-header-user">
+              {t("logged_as")} <strong>{user?.name}</strong>
             </span>
             {/* Inline language switcher for header */}
-            <div style={{ display: "flex", gap: 4 }}>
+            <div className="admin-header-langs">
               {LANG_OPTIONS.map(({ code, flag }) => (
                 <button
                   key={code}
                   onClick={() => setLang(code)}
                   title={LANG_OPTIONS.find(l => l.code === code)?.label}
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: 6,
-                    border: "1.5px solid",
-                    borderColor: lang === code ? "var(--red)" : "var(--border)",
-                    background: lang === code ? "rgba(139,0,0,.08)" : "transparent",
-                    fontSize: 16,
-                    cursor: "pointer",
-                    transition: "all .2s",
-                  }}
+                  className={`admin-lang-flag${lang === code ? " active" : ""}`}
                 >
                   {flag}
                 </button>

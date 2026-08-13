@@ -1,7 +1,5 @@
 import { useLang } from "../context/LanguageContext";
 import { Calendar, Mail } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
 
 // Brand icon SVGs (not in lucide-react v1.21)
 const FbIcon  = () => <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
@@ -21,39 +19,28 @@ export default function TopBar() {
   return (
     <div className="topbar-new">
       <div className="topbar-new-inner">
-        {/* Left — logo + name */}
-        {/* Logo */}
-        <Link to="/" className="navbar-v2-logo" aria-label="Accueil – Diocèse de Kabgayi">
-          <img
-            src={logoImg}
-            alt="Blason Diocèse de Kabgayi"
-            className="navbar-v2-logo-img"
-            onError={(e) => { e.target.style.display = "none"; }}
-          />
-          <div className="navbar-v2-logo-text">
-            <h3>DIOCÈSE DE KABGAYI</h3>
-            <em>Orate in veritate</em>
-          </div>
-        </Link>
-
-        {/* Right — actions + lang */}
-        <div className="topbar-new-right">
-          <div className="topbar-new-actions">
-            <a href="/liturgie/jour" className="topbar-action-btn">
-              <Calendar size={14} strokeWidth={2} />
+        {/* Left — quick actions */}
+        <div className="topbar-new-left">
+          <a href="/liturgie/jour" className="topbar-action-btn">
+            <Calendar size={14} strokeWidth={2} />
+            <span className="topbar-action-label">
               {lang === "fr" ? "Horaire des messes" : lang === "en" ? "Mass schedule" : "Amasaha y'imisa"}
-            </a>
-            <a href="/contact" className="topbar-action-btn">
-              <Mail size={14} strokeWidth={2} />
-              Newsletter
-            </a>
-            <div className="topbar-social-group">
-              <a href="https://www.facebook.com/diocesedekabgayi" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="topbar-new-social"><FbIcon /></a>
-              <a href="https://www.youtube.com/diocesedekabgayi"  target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="topbar-new-social"><YtIcon /></a>
-              <a href="https://twitter.com/diocesekabgayi"        target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="topbar-new-social"><TwIcon /></a>
-              <a href="https://www.instagram.com/diocesedekabgayi"target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="topbar-new-social"><IgIcon /></a>
-              <span className="topbar-social-label">Social medias</span>
-            </div>
+            </span>
+          </a>
+          <a href="/contact" className="topbar-action-btn">
+            <Mail size={14} strokeWidth={2} />
+            <span className="topbar-action-label">Newsletter</span>
+          </a>
+        </div>
+
+        {/* Right — socials + lang */}
+        <div className="topbar-new-right">
+          <div className="topbar-social-group">
+            <a href="https://www.facebook.com/diocesedekabgayi" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="topbar-new-social"><FbIcon /></a>
+            <a href="https://www.youtube.com/diocesedekabgayi"  target="_blank" rel="noopener noreferrer" aria-label="YouTube"   className="topbar-new-social"><YtIcon /></a>
+            <a href="https://twitter.com/diocesekabgayi"        target="_blank" rel="noopener noreferrer" aria-label="Twitter"   className="topbar-new-social"><TwIcon /></a>
+            <a href="https://www.instagram.com/diocesedekabgayi"target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="topbar-new-social"><IgIcon /></a>
+            <span className="topbar-social-label">Social medias</span>
           </div>
 
           {/* Language flags */}

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
+import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
 import { MapPin, Phone, Mail, Globe, Clock, Cross } from "lucide-react";
 
 const FbIcon = () => <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>;
@@ -18,8 +19,9 @@ export default function Footer() {
           {/* Brand */}
           <div className="footer-v2-brand">
             <div className="footer-v2-logo">
-              <div className="footer-v2-logo-icon"><Cross size={28} /></div>
-              <div>
+              <img src={logoImg} alt="Blason Diocèse de Kabgayi" className="navbar-v2-logo-img"
+            onError={(e) => { e.target.style.display = "none"; }} />
+          <div>
                 <strong className="footer-v2-logo-title">DIOCÈSE DE KABGAYI</strong>
                 <em className="footer-v2-logo-sub">Orate in veritate</em>
               </div>
@@ -47,25 +49,41 @@ export default function Footer() {
 
           {/* Quick links */}
           <nav className="footer-v2-col">
-            <h4 className="footer-v2-col-title">{lang === "fr" ? "LIENS RAPIDES" : lang === "en" ? "QUICK LINKS" : "IBIBUZWA VUBA"}</h4>
+            <h4 className="footer-v2-col-title">{lang === "fr" ? "Autres liens" : lang === "en" ? "OTHER LINKS" : "IBIBUZWA VUBA"}</h4>
             <ul className="footer-v2-links">
-              <li><Link to="/">{lang === "fr" ? "Accueil" : lang === "en" ? "Home" : "Ahabanza"}</Link></li>
-              <li><Link to="/a-propos">{lang === "fr" ? "Diocèse" : lang === "en" ? "Diocese" : "Diyosezi"}</Link></li>
-              <li><Link to="/actualites">{lang === "fr" ? "Actualités" : lang === "en" ? "News" : "Amakuru"}</Link></li>
-              <li><Link to="/documentation">{lang === "fr" ? "Médias" : lang === "en" ? "Media" : "Itangazamakuru"}</Link></li>
-              <li><Link to="/pastorale">{lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral"}</Link></li>
-            </ul>
+  <li>
+    <a href="https://www.eglisecatholiquerwanda.org" target="_blank" rel="noopener noreferrer">
+      {lang === "fr" ? "CEPR" : lang === "en" ? "CEPR" : "CEPR"}
+    </a>
+  </li>
+  <li>
+    <a href="https://aceaceglise.net" target="_blank" rel="noopener noreferrer">
+      {lang === "fr" ? "ACEAC" : lang === "en" ? "ACEAC" : "ACEAC"}
+    </a>
+  </li>
+  <li>
+    <a href="https://secam.org" target="_blank" rel="noopener noreferrer">
+      {lang === "fr" ? "SECAM/SCEAM" : lang === "en" ? "SECAM/SCEAM" : "SECAM/SCEAM"}
+    </a>
+  </li>
+  <li>
+    <a href="https://vatican.va" target="_blank" rel="noopener noreferrer">
+      {lang === "fr" ? "Vatican" : lang === "en" ? "Vatican" : "Vatican"}
+    </a>
+  </li>
+  {/* <li><Link to="/pastorale">{lang === "fr" ? "Pastorale" : lang === "en" ? "Pastoral" : "Pastoral"}</Link></li> */}
+</ul>
           </nav>
 
           {/* Parishes */}
           <nav className="footer-v2-col">
-            <h4 className="footer-v2-col-title">{lang === "fr" ? "PAROISSES" : lang === "en" ? "PARISHES" : "PARUWASI"}</h4>
+            <h4 className="footer-v2-col-title">{lang === "fr" ? "LIENS RAPIDES" : lang === "en" ? "QUICK LINKS" : "AHANYURWA VUBA"}</h4>
             <ul className="footer-v2-links">
               <li><Link to="/paroisses">{lang === "fr" ? "Paroisses" : "Parishes"}</Link></li>
               <li><Link to="/paroisses">{lang === "fr" ? "Mouvements" : "Movements"}</Link></li>
-              <li><Link to="/services">{lang === "fr" ? "Services diocésains" : "Diocesan services"}</Link></li>
-              <li><Link to="/vie-consacree">{lang === "fr" ? "Vie consacrée" : "Consecrated life"}</Link></li>
-              <li><Link to="/services/education">{lang === "fr" ? "Écoles catholiques" : "Catholic schools"}</Link></li>
+              <li><Link to="">{lang === "fr" ? "Services diocésains" : "Diocesan services"}</Link></li>
+              <li><Link to="">{lang === "fr" ? "Vie consacrée" : "Consecrated life"}</Link></li>
+              <li><Link to="">{lang === "fr" ? "Écoles catholiques" : "Catholic schools"}</Link></li>
             </ul>
           </nav>
 
