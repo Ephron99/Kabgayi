@@ -80,6 +80,9 @@ button { cursor:pointer; font-family:inherit; border:none; background:none; }
 .navbar-v2-mobile-sub { padding:4px 0 10px 12px; display:flex; flex-direction:column; gap:4px; }
 .navbar-v2-mobile-sublink { font-size:13px; color:var(--gray); padding:6px 0; }
 .navbar-v2-mobile-sublink:hover { color:var(--red); }
+.navbar-v2-mobile-sub .pastoral-menu-node.nested { margin-left:12px; border-left:1px solid rgba(139,0,0,.18); }
+.navbar-v2-mobile-sub .pastoral-menu-node.nested > .navbar-v2-mobile-sublink { padding-left:12px; }
+.navbar-v2-mobile-sub .pastoral-menu-children { margin-top:0; }
 .rotated { transform:rotate(180deg); }
 
 /* ── HERO FULL-WIDTH ── */
@@ -122,7 +125,7 @@ button { cursor:pointer; font-family:inherit; border:none; background:none; }
 .news-v2-title { font-family:var(--font-serif); font-size:26px; font-weight:700; color:var(--text-dark); }
 .news-v2-see-all { font-size:13.5px; color:var(--red); font-weight:600; }
 .news-v2-see-all:hover { text-decoration:underline; }
-.news-v2-grid { display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:start; }
+.news-v2-grid { display:grid; grid-template-columns:1fr 320px; gap:24px; align-items:stretch; }
 .news-v2-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
 .news-v2-card { border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column; transition:all var(--transition); background:#fff; }
 .news-v2-card:hover { box-shadow:var(--shadow-md); transform:translateY(-3px); }
@@ -139,12 +142,12 @@ button { cursor:pointer; font-family:inherit; border:none; background:none; }
 .skel-card { pointer-events:none; }
 
 /* Bishop message card */
-.bishop-msg-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; display:flex; flex-direction:column; gap:16px; box-shadow:var(--shadow-sm); }
+.bishop-msg-card { background:#fff; border:1px solid var(--border); border-radius:var(--radius-lg); padding:24px; display:flex; flex-direction:column; gap:16px; box-shadow:var(--shadow-sm); height:100%; min-height:0; box-sizing:border-box; overflow:hidden; }
 .bishop-msg-heading { font-family:var(--font-serif); font-size:22px; font-weight:700; color:var(--text-dark); line-height:1.2; }
 .bishop-msg-body { display:flex; gap:14px; align-items:flex-start; }
 .bishop-msg-photo { width:80px; height:100px; object-fit:cover; border-radius:var(--radius); border:2px solid var(--red); flex-shrink:0; }
-.bishop-msg-quote { font-family:var(--font-serif); font-size:15px; font-style:italic; color:var(--text-dark); line-height:1.7; min-width:0; }
-.bishop-msg-btn { display:inline-flex; align-items:center; gap:7px; background:var(--navy); color:#fff; padding:10px 18px; border-radius:4px; font-size:13px; font-weight:600; transition:background var(--transition); }
+.bishop-msg-quote { font-family:var(--font-serif); font-size:15px; font-style:italic; color:var(--text-dark); line-height:1.7; min-width:0; min-height:0; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:5; }
+.bishop-msg-btn { display:inline-flex; align-items:center; gap:7px; background:var(--navy); color:#fff; padding:10px 18px; border-radius:4px; font-size:13px; font-weight:600; transition:background var(--transition); margin-top:auto; }
 .bishop-msg-btn:hover { background:var(--red); }
 
 /* ── HOME WIDGETS ── */
@@ -730,6 +733,18 @@ button { cursor:pointer; font-family:inherit; border:none; background:none; }
   color: var(--red);
   border-left-color: var(--red);
 }
+.pastoral-menu-node { position:relative; }
+.pastoral-menu-node.nested { margin-left:12px; border-left:1px solid rgba(139,0,0,.16); }
+.pastoral-menu-node.nested > .navbar-v2-dropdown-item { padding-left:18px; font-size:12.5px; }
+.pastoral-menu-node.nested > .navbar-v2-dropdown-item::before {
+  content:"";
+  position:absolute;
+  left:-1px;
+  width:8px;
+  border-top:1px solid rgba(139,0,0,.16);
+}
+.pastoral-menu-children { margin-bottom:2px; }
+.pastoral-menu-chevron { margin-left:auto; color:var(--gold-dark); flex-shrink:0; }
 .dropdown-dot {
   width: 5px;
   height: 5px;

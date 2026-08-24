@@ -46,7 +46,7 @@ export default function QuickAccess() {
       labelFr: "Messes & Liturgies",
       labelEn: "Masses & Liturgies",
       labelRw: "Imisa n'Ibadiho",
-      to: "",
+      to: "/liturgie/horaires-messes",
     },
     {
       Icon: Users,

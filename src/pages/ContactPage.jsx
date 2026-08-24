@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 export default function ContactPage() {
   const { t, lang } = useLang();
-  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [form, setForm] = useState({ name: "", email: "", destination: "", subject: "", message: "" });
   const [sent, setSent] = useState(false);
 
   const labels = {
-    fr: { title: "Contactez-nous", subtitle: "Nous sommes à votre écoute", name: "Nom complet", email: "Adresse email", subject: "Sujet", message: "Message", send: "Envoyer le message", success: "Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.", required: "Champ requis" },
-    en: { title: "Contact Us", subtitle: "We are here to listen", name: "Full name", email: "Email address", subject: "Subject", message: "Message", send: "Send message", success: "Message sent successfully! We will reply as soon as possible.", required: "Required field" },
-    rw: { title: "Twunganire", subtitle: "Turi hano kumva", name: "Amazina yuzuye", email: "Imeyili", subject: "Inyito", message: "Ubutumwa", send: "Ohereza ubutumwa", success: "Ubutumwa bwoherejwe! Tuzagusubiza vuba.", required: "Ngombwa" },
+    fr: { title: "Contactez-nous", subtitle: "Nous sommes à votre écoute", name: "Nom complet", email: "Adresse email", destination: "Destinataire", destinationPlaceholder: "Nom de Destinataire", subject: "Sujet", message: "Message", send: "Envoyer le message", success: "Message envoyé avec succès ! Nous vous répondrons dans les plus brefs délais.", required: "Champ requis" },
+    en: { title: "Contact Us", subtitle: "We are here to listen", name: "Full name", email: "Email address", destination: "Recipient", destinationPlaceholder: "Recipient", subject: "Subject", message: "Message", send: "Send message", success: "Message sent successfully! We will reply as soon as possible.", required: "Required field" },
+    rw: { title: "Twunganire", subtitle: "Turi hano kumva", name: "Amazina yuzuye", email: "Imeyili", destination: "Uwo Wohereza", destinationPlaceholder: "Uwo Wohereza", subject: "Inyito", message: "Ubutumwa", send: "Ohereza ubutumwa", success: "Ubutumwa bwoherejwe! Tuzagusubiza vuba.", required: "Ngombwa" },
   };
   const l = labels[lang] || labels.fr;
 
@@ -107,6 +107,20 @@ export default function ContactPage() {
                     <input id="email" name="email" type="email" value={form.email} onChange={handleChange} required placeholder={l.email} />
                   </div>
                 </div>
+
+                <div className="form-group">
+                  <label htmlFor="destination">{l.destination} <span className="required" aria-label={l.required}>*</span></label>
+                  <input
+                    id="destination"
+                    name="destination"
+                    type="text"
+                    value={form.destination}
+                    onChange={handleChange}
+                    required
+                    placeholder={l.destinationPlaceholder}
+                  />
+                </div>
+
                 <div className="form-group">
                   <label htmlFor="subject">{l.subject} <span className="required" aria-label={l.required}>*</span></label>
                   <input id="subject" name="subject" type="text" value={form.subject} onChange={handleChange} required placeholder={l.subject} />

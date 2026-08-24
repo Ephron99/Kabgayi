@@ -21,7 +21,7 @@ export default function TopBar() {
       <div className="topbar-new-inner">
         {/* Left — quick actions */}
         <div className="topbar-new-left">
-          <a href="/liturgie/jour" className="topbar-action-btn">
+          <a href="/liturgie/horaires-messes" className="topbar-action-btn">
             <Calendar size={14} strokeWidth={2} />
             <span className="topbar-action-label">
               {lang === "fr" ? "Horaire des messes" : lang === "en" ? "Mass schedule" : "Amasaha y'imisa"}
@@ -44,7 +44,7 @@ export default function TopBar() {
           </div>
 
           {/* Language flags */}
-          <div className="topbar-new-langs">
+          {/* <div className="topbar-new-langs">
             <span className="topbar-langs-label">Langues</span>
             {langs.map(({ code, flag }) => (
               <button
@@ -57,7 +57,7 @@ export default function TopBar() {
                 {flag}
               </button>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

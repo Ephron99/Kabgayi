@@ -89,6 +89,13 @@ Jusqu’en 1912, le Rwanda était rattaché au Vicariat Apostolique du Nyanza- M
       title: "Mgr Balthazar Ntivuguruzwa",
       role: "Évêque du Diocèse de Kabgayi",
       text: `Mgr Balthazar Ntivuguruzwa est l'évêque actuel du Diocèse de Kabgayi, ordonné en juin 2023.`,
+      collaboratorsTitle: "Ses Collaborateurs",
+      collaborators: [
+        { name: "Mgr Hodari Jean de Dieu", role: "Vicaire Général" },
+        { name: "Abbé Joseph Emmanuel Kageruka", role: "Chancelier" },
+        { name: "Abbé Alype Hategekimana", role: "Secrétaire de l'Évêché" },
+        { name: "Abbé Eugène Dushimimana", role: "Économe du Diocèse" },
+      ],
     }
   },
   en: {
@@ -146,6 +153,13 @@ Until 1912, Rwanda was part of the Apostolic Vicariate of Southern Nyanza, an ec
       title: "Mgr Balthazar Ntivuguruzwa",
       role: "Bishop of the Diocese of Kabgayi",
       text: `Mgr Balthazar Ntivuguruzwa is the current bishop of the Diocese of Kabgayi, ordained in June 2023.`,
+      collaboratorsTitle: "His Collaborators",
+      collaborators: [
+        { name: "Mgr Hodari Jean de Dieu", role: "Vicar General" },
+        { name: "Abbé Joseph Emmanuel Kageruka", role: "Chancellor" },
+        { name: "Abbé Alype Hategekimana", role: "Secretary of the Bishopric" },
+        { name: "Abbé Eugène Dushimimana", role: "Diocesan Bursar" },
+      ],
     }
   },
   rw: {
@@ -196,6 +210,13 @@ Mu myaka ishize, Diyosezi yahuye n'ibihe byinshi bigoye n'iby'itumaini, harimo j
       title: "Mgr Balthazar Ntivuguruzwa",
       role: "Umusenyeri wa Diyosezi ya Kabgayi",
       text: `Mgr Balthazar Ntivuguruzwa ni umusenyeri w'ubu wa Diyosezi ya Kabgayi, yashinzwe mu kwezi wa Nyakanga 2023.`,
+      collaboratorsTitle: "Abafasha be",
+      collaborators: [
+        { name: "Mgr Hodari Jean de Dieu", role: "Visi Jenerali" },
+        { name: "Abbé Joseph Emmanuel Kageruka", role: "Shanseliye" },
+        { name: "Abbé Alype Hategekimana", role: "Umunyamabanga w'Ubwepiskopi" },
+        { name: "Abbé Eugène Dushimimana", role: "Umubitsi wa Diyosezi" },
+      ],
     }
   }
 };
@@ -312,6 +333,49 @@ function DioceseStatsTable({ diocese }) {
   );
 }
 
+// Collaborators list rendered under the bishop's bio text
+function BishopCollaborators({ bishop }) {
+  const { collaboratorsTitle, collaborators } = bishop;
+
+  if (!collaborators || collaborators.length === 0) return null;
+
+  return (
+    <div style={{ marginTop: '32px' }}>
+      <h3
+        style={{
+          fontFamily: 'var(--font-serif)',
+          color: 'var(--navy)',
+          fontSize: '20px',
+          marginBottom: '16px',
+        }}
+      >
+        {collaboratorsTitle}
+      </h3>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+        {collaborators.map((person, i) => (
+          <li
+            key={i}
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'baseline',
+              flexWrap: 'wrap',
+              gap: '8px 16px',
+              padding: '12px 0',
+              borderBottom: i < collaborators.length - 1 ? '1px solid var(--border)' : 'none',
+            }}
+          >
+            <span style={{ fontWeight: '600', color: 'var(--text)' }}>{person.name}</span>
+            <span style={{ color: 'var(--red)', fontSize: '14px', fontWeight: '600', textAlign: 'right' }}>
+              {person.role}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export default function AboutPage() {
   const { t, lang } = useLang();
   const c = content[lang] || content.fr;
@@ -420,6 +484,9 @@ export default function AboutPage() {
               <div style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.9' }}>
                 {c.bishop.text.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
               </div>
+
+              {/* Collaborators list */}
+              <BishopCollaborators bishop={c.bishop} />
             </div>
           </div>
         )}

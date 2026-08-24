@@ -71,9 +71,9 @@ export default function App() {
 
         {MAINTENANCE_MODE && (
           <>
-            <Route path="/" element={<MaintenancePage />} />
-            <Route path="/home" element={<MaintenancePage />} />
-            <Route path="/ecrire" element={<MaintenancePage />} />
+            <Route path="/" element={<PublicSite />} />
+            <Route path="/home" element={<PublicSite />} />
+            <Route path="/ecrire" element={<PublicSite />} />
           </>
         )}
 

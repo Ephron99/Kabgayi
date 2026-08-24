@@ -1,9 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { Search } from "lucide-react";
+import { ChevronRight, Search } from "lucide-react";
 import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
 import { useApi } from "../hooks/useApi";
+
+function MenuItemList({ items, mobile = false, depth = 0 }) {
+  return items.map((item) => (
+    <div key={item.path + item.label} className={`pastoral-menu-node${depth > 0 ? " nested" : ""}`}>
+      <Link
+        to={item.path}
+        className={mobile ? "navbar-v2-mobile-sublink" : "navbar-v2-dropdown-item"}
+        role={mobile ? undefined : "menuitem"}
+      >
+        <span className="dropdown-dot" aria-hidden="true" />
+        <span>{item.label}</span>
+        {item.children?.length > 0 && <ChevronRight className="pastoral-menu-chevron" size={14} aria-hidden="true" />}
+      </Link>
+      {item.children?.length > 0 && (
+        <div className="pastoral-menu-children">
+          <MenuItemList items={item.children} mobile={mobile} depth={depth + 1} />
+        </div>
+      )}
+    </div>
+  ));
+}
 
 export default function Navbar() {
   const { t, lang } = useLang();
@@ -65,49 +86,38 @@ export default function Navbar() {
     if (pastoralItems && Array.isArray(pastoralItems)) {
       const activePastoralItems = pastoralItems.filter(item => item.is_active);
       activePastoralItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
+      const itemById = new Map(activePastoralItems.map(item => [item.id, item]));
+      const childrenByParent = new Map();
 
-      const topLevel = activePastoralItems.filter(item => !item.parent_id);
-      const children = activePastoralItems.filter(item => item.parent_id);
-
-      const standaloneTopLevel = topLevel.filter(parent =>
-        !children.some(child => child.parent_id === parent.id)
-      );
-
-      if (standaloneTopLevel.length > 0) {
-        menuGroups.push({
-          group: "",
-          items: standaloneTopLevel.map(item => ({
-            label: item[`name_${lang}`] || item.name_fr,
-            path: `/pastorale/${item.slug}`
-          }))
-        });
-      }
-
-      topLevel.forEach(parent => {
-        const parentChildren = children.filter(c => c.parent_id === parent.id);
-        if (parentChildren.length > 0) {
-          menuGroups.push({
-            group: parent[`name_${lang}`] || parent.name_fr,
-            items: parentChildren.map(child => ({
-              label: child[`name_${lang}`] || child.name_fr,
-              path: `/pastorale/${child.slug}`
-            }))
-          });
-        }
+      activePastoralItems.forEach((item) => {
+        const parentId = itemById.has(item.parent_id) ? item.parent_id : null;
+        const children = childrenByParent.get(parentId) || [];
+        children.push(item);
+        childrenByParent.set(parentId, children);
       });
 
-      const orphanChildren = children.filter(c =>
-        !topLevel.some(p => p.id === c.parent_id)
-      );
-      if (orphanChildren.length > 0) {
-        menuGroups.push({
-          group: "",
-          items: orphanChildren.map(item => ({
-            label: item[`name_${lang}`] || item.name_fr,
-            path: `/pastorale/${item.slug}`
-          }))
-        });
-      }
+      const toMenuItem = (item, ancestorIds = new Set()) => {
+        if (ancestorIds.has(item.id)) return null;
+        const nextAncestors = new Set(ancestorIds).add(item.id);
+        return {
+          label: item[`name_${lang}`] || item.name_fr,
+          path: `/pastorale/${item.slug}`,
+          children: (childrenByParent.get(item.id) || [])
+            .map(child => toMenuItem(child, nextAncestors))
+            .filter(Boolean)
+        };
+      };
+
+      const rootItems = (childrenByParent.get(null) || []).map(item => toMenuItem(item)).filter(Boolean);
+      const standaloneItems = rootItems.filter(item => item.children.length === 0);
+      const groupedItems = rootItems.filter(item => item.children.length > 0);
+
+      if (standaloneItems.length > 0) menuGroups.push({ group: "", items: standaloneItems });
+      groupedItems.forEach(item => menuGroups.push({
+        group: item.label,
+        items: item.children,
+        pastoral: true
+      }));
     }
 
     if (services && Array.isArray(services)) {
@@ -253,17 +263,7 @@ export default function Navbar() {
                           {group.group && (
                             <div className="mega-group-title">{group.group}</div>
                           )}
-                          {group.items.map((child) => (
-                            <Link
-                              key={child.path + child.label}
-                              to={child.path}
-                              className="navbar-v2-dropdown-item"
-                              role="menuitem"
-                            >
-                              <span className="dropdown-dot" aria-hidden="true" />
-                              {child.label}
-                            </Link>
-                          ))}
+                          <MenuItemList items={group.items} />
                         </div>
                       ))}
                     </div>
@@ -327,12 +327,7 @@ export default function Navbar() {
                             {group.group && (
                               <div className="mobile-group-title">{group.group}</div>
                             )}
-                            {group.items.map((child) => (
-                              <Link key={child.path + child.label} to={child.path}
-                                className="navbar-v2-mobile-sublink">
-                                {child.label}
-                              </Link>
-                            ))}
+                            <MenuItemList items={group.items} mobile />
                           </div>
                         ))}
                       </div>

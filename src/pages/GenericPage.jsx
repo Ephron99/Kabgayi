@@ -1,4 +1,4 @@
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { Link } from "react-router-dom";
 import ick from "../assets/ICK.jpeg";
@@ -11,7 +11,7 @@ import elizabeth from "../assets/elizabeth.jpg";
 import {
   BarChart3, Heart, GraduationCap, Hospital, Hotel, Printer,
   HandHeart, Landmark, Target, Settings, Cross, School,
-  BookOpen, Book, Lightbulb, Newspaper, Calendar, Video, Church
+  BookOpen, Book, Lightbulb, Newspaper, Calendar, Video, Church, Clock
 } from "lucide-react";
 
 
@@ -23,39 +23,39 @@ const pageData = {
     items: [
       { slug: "economat", key: "sub_economat", icon: <BarChart3 />, img: kabgayi, desc: { fr: "L'Économat Général assure la gestion financière et administrative du Diocèse de Kabgayi dans la transparence et selon les normes de l'Église catholique. Il gère les budgets, les comptes, les biens du diocèse et assure la bonne administration des ressources pour soutenir la mission évangélisatrice et les œuvres caritatives.", en: "The General Bursar ensures the financial and administrative management of the Diocese of Kabgayi with transparency and according to the norms of the Catholic Church. It manages budgets, accounts, diocesan assets and ensures the proper administration of resources to support the evangelizing mission and charitable works.", rw: "Ubukungu Rusange bugenzura imicungire y'imari no gutunga kwa Diyosezi ya Kabgayi mu bucuruzi no mu mategeko y'Itorero Gatolika. Bugenzura ibije, amakonti, ibintu bya diyosezi kandi bugenzura neza ingufu zo kugira ngo zigere inshingano yo gutangaza Ubutumwa n'ibikorwa by'umutima." } },
       { slug: "caritas", key: "sub_caritas", icon: <Heart />, img: caritas, desc: { fr: `1. Définition et Historique 
-Caritas est un mot latin qui signifie Charité. La charité qui nous a été enseignée par Jésus Christ. C’est la mise en pratique de la loi de l’amour suivant son précepte : « Aimez-vous les uns les autres comme je vous ai aimé » (Jn15, 12) 
-La Caritas constitue l’instrument de la mise en œuvre de la pastorale sociale de l’église Catholique pour le témoignage et l’exercice de la charité. C’est une manière organisée d’exercer le service de la charité et de la justice pour le salut et la promotion de tout homme. 
+Caritas est un mot latin qui signifie Charité. La charité qui nous a été enseignée par Jésus Christ. C'est la mise en pratique de la loi de l'amour suivant son précepte : « Aimez-vous les uns les autres comme je vous ai aimé » (Jn15, 12) 
+La Caritas constitue l'instrument de la mise en œuvre de la pastorale sociale de l'église Catholique pour le témoignage et l'exercice de la charité. C'est une manière organisée d'exercer le service de la charité et de la justice pour le salut et la promotion de tout homme. 
 
 Au niveau mondial 
-La première organisation Caritas est née à Freiburg, en Allemagne, en1897. Ensuite, d’autres organisations nationales de Caritas furent créées en Suisse (1901), en Autriche (1903), aux Etats-Unis (1910) et aux Pays bas (1924). 
-Ces organisations ont aussitôt ressenti l’exigence de travailler en synergie car, en 1924, les Caritas européennes se sont organisées, sous le nom de Caritas Internationales. En 1950, une nouvelle fondation vit le jour sous le nom de « Fédération Internationale des charités catholiques ». En 1957, le 10ème comité Exécutif opta pour un nom plus simple, celui de Caritas Internationale (CI). Par cette décision, la Caritas Internationale fondée en 1924, à un niveau uniquement européen, cessa d’exister. 
-Actuellement, Caritas Internationale est une confédération de 162 organisations catholiques d’aide, de développement et de service social travaillant pour construire un monde meilleur, spécialement en faveur des pauvres et des opprimés dans plus de 200 pays et territoires. 
-Mais depuis 1970, les membres d’une même région géographique se sont organisés en Conférence régionale, et c’est dans ce cadre qu’il y a la Caritas pour la Région d’Afrique, regroupant au tour de 45 organisations membres présents dans 45 pays (dont le Rwanda) sur les 54 du continent africain, avec une subdivision en 7 coordinations zonales correspondant actuellement à 7 des 9 conférences Episcopales sous-régionales. 
+La première organisation Caritas est née à Freiburg, en Allemagne, en1897. Ensuite, d'autres organisations nationales de Caritas furent créées en Suisse (1901), en Autriche (1903), aux Etats-Unis (1910) et aux Pays bas (1924). 
+Ces organisations ont aussitôt ressenti l'exigence de travailler en synergie car, en 1924, les Caritas européennes se sont organisées, sous le nom de Caritas Internationales. En 1950, une nouvelle fondation vit le jour sous le nom de « Fédération Internationale des charités catholiques ». En 1957, le 10ème comité Exécutif opta pour un nom plus simple, celui de Caritas Internationale (CI). Par cette décision, la Caritas Internationale fondée en 1924, à un niveau uniquement européen, cessa d'exister. 
+Actuellement, Caritas Internationale est une confédération de 162 organisations catholiques d'aide, de développement et de service social travaillant pour construire un monde meilleur, spécialement en faveur des pauvres et des opprimés dans plus de 200 pays et territoires. 
+Mais depuis 1970, les membres d'une même région géographique se sont organisés en Conférence régionale, et c'est dans ce cadre qu'il y a la Caritas pour la Région d'Afrique, regroupant au tour de 45 organisations membres présents dans 45 pays (dont le Rwanda) sur les 54 du continent africain, avec une subdivision en 7 coordinations zonales correspondant actuellement à 7 des 9 conférences Episcopales sous-régionales. 
 
 Au niveau national 
-L’historique de la Caritas au Rwanda remonte dans les années 1960 dans le Diocèse de Kabgayi avec Monseigneur André Parraudin qui était Evêque de ce Diocèse. C’était dans les événements troublants que le pays a connus de 1959 jusqu’en 1963. En effet, ces événements ont poussé l’Eglise Catholique (représentée à cette époque par 3 Evêques) à créer en 1960 une institution appelée à l’époque le « Secours Catholique Rwandais » (SCR). Son objectif était de venir en aide aux populations victimes du changement politique intervenu dans le pays et d’être attentifs à tous ceux qui étaient opprimés par la maladie et la pauvreté. En 1963, le « Secours Catholique Rwandais » est devenu la « Caritas Rwanda », agréée par l’Etat comme une association sans but lucratif. La Caritas Rwanda a été admise comme membre de la Caritas Internationale en 1965 lors de son assemblée générale tenue à Rome du 7 au 10 septembre 1965. 
-A l’époque, les interventions de développement de l’Eglise Catholique étaient exécutées sous le nom de Caritas du Développement. Mais comme certains organismes refusaient de lui accorder l’aide, considérant que c’était une œuvre purement caritative, les Evêques décidèrent de séparer le service de développement de la Caritas. C’est ainsi que le 7 décembre 1968, les Evêques du Rwanda ont approuvé la création d’un Bureau de Recherche et d’Animation du Développement au Rwanda (BRADRWA). Par la suite, on s’est rendu compte que cette appellation faisait penser plus à un service public, avec des risques de lui donner un rôle qui n’était pas le sien. Pour éviter cette confusion, l’appellation de BRADRWA fut changée en Bureau Episcopal de Développement (BED). Institué par les Evêques en 1972, ce n’est qu’à partir de 1976 que le BED prit pleinement son rôle national. Dans la période de l’après-guerre, vers les années 1997-1998, le BED est devenu le département de développement au sein de la Caritas. 
+L'historique de la Caritas au Rwanda remonte dans les années 1960 dans le Diocèse de Kabgayi avec Monseigneur André Parraudin qui était Evêque de ce Diocèse. C'était dans les événements troublants que le pays a connus de 1959 jusqu'en 1963. En effet, ces événements ont poussé l'Eglise Catholique (représentée à cette époque par 3 Evêques) à créer en 1960 une institution appelée à l'époque le « Secours Catholique Rwandais » (SCR). Son objectif était de venir en aide aux populations victimes du changement politique intervenu dans le pays et d'être attentifs à tous ceux qui étaient opprimés par la maladie et la pauvreté. En 1963, le « Secours Catholique Rwandais » est devenu la « Caritas Rwanda », agréée par l'Etat comme une association sans but lucratif. La Caritas Rwanda a été admise comme membre de la Caritas Internationale en 1965 lors de son assemblée générale tenue à Rome du 7 au 10 septembre 1965. 
+A l'époque, les interventions de développement de l'Eglise Catholique étaient exécutées sous le nom de Caritas du Développement. Mais comme certains organismes refusaient de lui accorder l'aide, considérant que c'était une œuvre purement caritative, les Evêques décidèrent de séparer le service de développement de la Caritas. C'est ainsi que le 7 décembre 1968, les Evêques du Rwanda ont approuvé la création d'un Bureau de Recherche et d'Animation du Développement au Rwanda (BRADRWA). Par la suite, on s'est rendu compte que cette appellation faisait penser plus à un service public, avec des risques de lui donner un rôle qui n'était pas le sien. Pour éviter cette confusion, l'appellation de BRADRWA fut changée en Bureau Episcopal de Développement (BED). Institué par les Evêques en 1972, ce n'est qu'à partir de 1976 que le BED prit pleinement son rôle national. Dans la période de l'après-guerre, vers les années 1997-1998, le BED est devenu le département de développement au sein de la Caritas. 
 
-1. Dénomination, objet, siège social, zone d’activités 
+1. Dénomination, objet, siège social, zone d'activités 
 1.1 Dénomination officielle 
-Le service d’action socio pastorale et caritative du Diocèse Catholique de Kabgayi est dénommée : « CARITAS DIOCESAINE DE KABGAYI ». Son statut juridique est lié à celui du Diocèse de Kabgayi A.S.B.L, du 15/10/1962, mais elle dispose d’une autonomie de gestion. 
+Le service d'action socio pastorale et caritative du Diocèse Catholique de Kabgayi est dénommée : « CARITAS DIOCESAINE DE KABGAYI ». Son statut juridique est lié à celui du Diocèse de Kabgayi A.S.B.L, du 15/10/1962, mais elle dispose d'une autonomie de gestion. 
 
 1.2 Objet 
-Caritas a pour objet de promouvoir la dignité humaine. Ses activités consistent à secourir les personnes qui se trouvent en situation de détresse en leur venant en aide pour leurs besoins indispensables et en favorisant leur promotion sociale et leur autonomie. C’est une structure officielle, une organisation qui permet d’exercer la charité, la solidarité, le partage, l’accueil et le service à la communauté. Comme structure, Caritas cherche à stimuler et à organiser la solidarité dans la communauté en vue de la justice et de la charité.`, en: "Caritas Kabgayi is the charitable organization of the diocese working for integral human development and the fight against poverty.", rw: "Caritas Kabgayi ni umuryango w'imfashanyo wa diyosezi ukorera mu gutera imbere abantu wose no kurwanya ubukene." } },
+Caritas a pour objet de promouvoir la dignité humaine. Ses activités consistent à secourir les personnes qui se trouvent en situation de détresse en leur venant en aide pour leurs besoins indispensables et en favorisant leur promotion sociale et leur autonomie. C'est une structure officielle, une organisation qui permet d'exercer la charité, la solidarité, le partage, l'accueil et le service à la communauté. Comme structure, Caritas cherche à stimuler et à organiser la solidarité dans la communauté en vue de la justice et de la charité.`, en: "Caritas Kabgayi is the charitable organization of the diocese working for integral human development and the fight against poverty.", rw: "Caritas Kabgayi ni umuryango w'imfashanyo wa diyosezi ukorera mu gutera imbere abantu wose no kurwanya ubukene." } },
       { slug: "education", key: "sub_education", icon: <GraduationCap />, img: ick, sectionLink: "/education", desc: { fr: "ICK – Institut Catholique de Kabgayi, Institut Ste Elizabeth Kabgayi, Grand Séminaire Kabgayi, Écoles Catholiques privées, Écoles Catholiques Conventionnées.", en: "ICK – Institut Catholique de Kabgayi, Institut Ste Elizabeth Kabgayi, Grand Séminaire Kabgayi, private Catholic Schools, State-partnered Catholic Schools.", rw: "ICK – Inshuri Gatolika ya Kabgayi, Inshuri Ste Elizabeth Kabgayi, Grand Séminaire Kabgayi, Amashuri Gatolika y'abikorera, Amashuri Gatolika y'amasezerano." } },
-      { slug: "hopital", key: "sub_hopital", icon: <Hospital />, img: kabgayi_h, desc: { fr: `L’Hôpital de Kabgayi est un hôpital libre subsidié du Diocèse de Kabgayi, administrativement localisé au Province du Sud, District de Muhanga, Secteur Nyamabuye ; à Kabgayi : tout au long de la route HUYE-KIGALI. 
+      { slug: "hopital", key: "sub_hopital", icon: <Hospital />, img: kabgayi_h, desc: { fr: `L'Hôpital de Kabgayi est un hôpital libre subsidié du Diocèse de Kabgayi, administrativement localisé au Province du Sud, District de Muhanga, Secteur Nyamabuye ; à Kabgayi : tout au long de la route HUYE-KIGALI. 
 
-L’Hôpital de Kabgayi a été inauguré le 9 septembre 1937. Il a une capacité de 372 lits, il compte 14 Services ; 9 Unités et serve une population de ± 700.000 habitants. Il est responsable de 16 Centres de Santé (Kabgayi, Shyogwe, Gitarama, Kivumu, Nyarusange, Mushishiro, Gikomero, Rugendabari, Gasovu, Buramba, Nyabinoni, Nyabikenke, Gasagara, Gitega, Rutobwe, Mata) et le dispensaire de la Prison Centrale de Muhanga. 
+L'Hôpital de Kabgayi a été inauguré le 9 septembre 1937. Il a une capacité de 372 lits, il compte 14 Services ; 9 Unités et serve une population de ± 700.000 habitants. Il est responsable de 16 Centres de Santé (Kabgayi, Shyogwe, Gitarama, Kivumu, Nyarusange, Mushishiro, Gikomero, Rugendabari, Gasovu, Buramba, Nyabinoni, Nyabikenke, Gasagara, Gitega, Rutobwe, Mata) et le dispensaire de la Prison Centrale de Muhanga. 
 
 Il dessert aussi par transfert 5 Centres de Santé du District de Ruhango (Ruhango, Byimana, Kizibere, Mbuye et Gishweru) et 2 Centres de Santé du District de Kamonyi (Musambira et Nyamiyaga). 
 
 A PROPOS DE NOUS 
 
 MISSION 
-Améliorer la santé de la population à travers la dispensation des services de qualité du paquet complémentaire d’activités, tout en assurant l’encadrement des centres de santé de notre zone de rayonnement. 
+Améliorer la santé de la population à travers la dispensation des services de qualité du paquet complémentaire d'activités, tout en assurant l'encadrement des centres de santé de notre zone de rayonnement. 
 
 VISION 
-Garantir et promouvoir l’état de santé de la population rwandaise en offrant des services de qualité en matière de prévention, de réhabilitation et de médecine curative au sein d’un système de santé efficace. 
+Garantir et promouvoir l'état de santé de la population rwandaise en offrant des services de qualité en matière de prévention, de réhabilitation et de médecine curative au sein d'un système de santé efficace. 
 
 VALEURS 
 Hospitalité - Qualité - Professionnalisme`, en: "Kabgayi Hospital is one of the most important health facilities in the region, offering quality care to all.", rw: "Ibitaro bya Kabgayi ni kimwe mu bikorwa by'ubuvuzi byo mu karere, bitanga ubuvuzi bwiza ku bantu bose." } },
@@ -103,11 +103,151 @@ Hospitalité - Qualité - Professionnalisme`, en: "Kabgayi Hospital is one of th
     titleKey: "nav_accueil_liturgique",
     navKey: "nav_accueil_liturgique",
     items: [
-      { slug: "jour", key: "sub_liturgie", icon: <Calendar />, img: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=600&q=80", desc: { fr: "Retrouvez chaque jour les lectures, le psaume et l'évangile de la liturgie catholique pour nourrir votre prière quotidienne.", en: "Find each day the readings, psalm and gospel of the Catholic liturgy to nourish your daily prayer.", rw: "Buri munsi shaka amasomero, indirimbo ya Zaburi n'Ubutumwa Bwiza bw'ibadiho Gatolika kugira ngo ufashe gusenga buri munsi." } },
-      { slug: "videos", key: "sub_videos", icon: <Video />, img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80", desc: { fr: "Regardez les messes, célébrations, conférences et événements du Diocèse de Kabgayi en vidéo.", en: "Watch Masses, celebrations, conferences and events from the Diocese of Kabgayi on video.", rw: "Reba amisa, ibirori, inama n'ibikorwa bya Diyosezi ya Kabgayi mu mashusho." } },
+      {
+        slug: "jour",
+        key: "sub_liturgie",
+        icon: <Calendar />,
+        img: "https://images.unsplash.com/photo-1507692049790-de58290a4334?w=600&q=80",
+        desc: {
+          fr: "Retrouvez chaque jour les lectures, le psaume et l'évangile de la liturgie catholique pour nourrir votre prière quotidienne.",
+          en: "Find each day the readings, psalm and gospel of the Catholic liturgy to nourish your daily prayer.",
+          rw: "Buri munsi shaka amasomero, indirimbo ya Zaburi n'Ubutumwa Bwiza bw'ibadiho Gatolika kugira ngo ufashe gusenga buri munsi.",
+        },
+      },
+      {
+        slug: "videos",
+        key: "sub_videos",
+        icon: <Video />,
+        img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
+        desc: {
+          fr: "Regardez les messes, célébrations, conférences et événements du Diocèse de Kabgayi en vidéo.",
+          en: "Watch Masses, celebrations, conferences and events from the Diocese of Kabgayi on video.",
+          rw: "Reba amisa, ibirori, inama n'ibikorwa bya Diyosezi ya Kabgayi mu mashusho.",
+        },
+      },
+      {
+        slug: "horaires-messes",
+        key: "sub_horaires",
+        icon: <Clock />,
+        img: kabgayi,
+        // Short preview text shown on the card grid (list view uses desc.substring(0,100))
+        desc: {
+          fr: "Consultez les horaires des messes à la Cathédrale et dans les chapelles du diocèse.",
+          en: "Check Mass times at the Cathedral and in the diocese's chapels.",
+          rw: "Reba amasaha y'amisa muri Katedrali no mu ma chapelle ya diyosezi.",
+        },
+        // Structured schedule data — rendered by MassScheduleTable on the detail page
+        schedule: [
+          {
+            place: { fr: "Cathédrale de Kabgayi", en: "Kabgayi Cathedral", rw: "Katedrali ya Kabgayi" },
+            rows: [
+              {
+                day: { fr: "Lundi à vendredi", en: "Monday to Friday", rw: "Kuwa mbere kugeza kuwa gatanu" },
+                slots: [{ time: "06h15", lang: "Kinyarwanda" }, { time: "07h00", lang: "Kinyarwanda" }],
+              },
+              {
+                day: { fr: "Samedi", en: "Saturday", rw: "Kuwa gatandatu" },
+                slots: [{ time: "07h00", lang: "Kinyarwanda" }],
+              },
+              {
+                day: { fr: "Dimanche", en: "Sunday", rw: "Ku cyumweru" },
+                slots: [{ time: "07h00", lang: "Kinyarwanda" }, { time: "10h00", lang: "Kinyarwanda" }],
+              },
+            ],
+          },
+          {
+            place: { fr: "Chapelle Fatima", en: "Fatima Chapel", rw: "Chapelle Fatima" },
+            rows: [
+              {
+                day: { fr: "Samedi", en: "Saturday", rw: "Kuwa gatandatu" },
+                slots: [{ time: "06h15", lang: "Kinyarwanda" }],
+              },
+            ],
+          },
+          {
+            place: { fr: "Chapelle Hôpital Kabgayi", en: "Kabgayi Hospital Chapel", rw: "Chapelle y'Ibitaro bya Kabgayi" },
+            rows: [
+              {
+                day: { fr: "Vendredi", en: "Friday", rw: "Kuwa gatanu" },
+                slots: [{ time: "16h00", lang: "Kinyarwanda" }],
+              },
+              {
+                day: { fr: "Samedi", en: "Saturday", rw: "Kuwa gatandatu" },
+                slots: [{ time: "06h30", lang: "Kinyarwanda" }],
+              },
+            ],
+          },
+          {
+            place: { fr: "Chapelle ICK", en: "ICK Chapel", rw: "Chapelle ya ICK" },
+            rows: [
+              {
+                day: { fr: "Mercredi", en: "Wednesday", rw: "Kuwa gatatu" },
+                slots: [{ time: "12h00", lang: "Kinyarwanda" }],
+              },
+              {
+                day: { fr: "Vendredi", en: "Friday", rw: "Kuwa gatanu" },
+                slots: [{ time: "16h30", lang: "Kinyarwanda" }],
+              },
+              {
+                day: { fr: "Dimanche", en: "Sunday", rw: "Ku cyumweru" },
+                slots: [{ time: "07h00", lang: "Kinyarwanda" }, { time: "11h00", lang: "Français" }],
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 };
+
+// Renders a structured, translatable Mass-schedule view (used only for items
+// that carry a `schedule` field, e.g. the "horaires-messes" item above).
+function MassScheduleTable({ schedule, lang }) {
+  const joinWord = lang === "fr" ? " et " : lang === "rw" ? " na " : " and ";
+
+  return (
+    <div className="mass-schedule">
+      {schedule.map((chapel, idx) => (
+        <div key={idx} className="mass-schedule-chapel">
+          <h3
+            style={{
+              margin: idx > 0 ? "28px 0 12px" : "0 0 12px",
+              color: "var(--navy)",
+              fontFamily: "var(--font-serif)",
+              fontSize: "18px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <Church size={18} style={{ color: "var(--red)", flexShrink: 0 }} aria-hidden="true" />
+            {chapel.place[lang] || chapel.place.fr}
+          </h3>
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            {chapel.rows.map((row, rIdx) => (
+              <li
+                key={rIdx}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  gap: "6px",
+                  padding: "8px 0",
+                  borderBottom: "1px solid #eee",
+                }}
+              >
+                <span style={{ fontWeight: 500 }}>{row.day[lang] || row.day.fr}</span>
+                <span style={{ color: "#555" }}>
+                  {row.slots.map((s) => `${s.time} – ${s.lang}`).join(joinWord)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 export default function GenericPage({ section }) {
   const { t, lang } = useLang();
@@ -142,14 +282,22 @@ export default function GenericPage({ section }) {
             <div className="detail-text">
               <h2>{t(item.key)}</h2>
               <div className="section-divider" aria-hidden="true"></div>
-              {(item.desc[lang] || item.desc.fr).split('\n\n').map((paragraph, idx) => {
-                const trimmed = paragraph.trim();
-                if (trimmed.startsWith('1.') || trimmed.startsWith('Au niveau') || trimmed.startsWith('Dénomination') || trimmed.startsWith('1.1') || 
-                    trimmed === 'A PROPOS DE NOUS' || trimmed === 'MISSION' || trimmed === 'VISION' || trimmed === 'VALEURS') {
-                  return <h3 key={idx} style={{marginTop: idx > 0 ? '24px' : '0', marginBottom: '12px', color: 'var(--navy)', fontFamily: 'var(--font-serif)', fontSize: '18px'}}>{paragraph}</h3>;
-                }
-                return <p key={idx} style={{marginBottom: '14px'}}>{paragraph}</p>;
-              })}
+
+              {item.schedule ? (
+                <MassScheduleTable schedule={item.schedule} lang={lang} />
+              ) : (
+                (item.desc[lang] || item.desc.fr).split('\n\n').map((paragraph, idx) => {
+                  const trimmed = paragraph.trim();
+                  const isKnownHeader = trimmed.startsWith('1.') || trimmed.startsWith('Au niveau') || trimmed.startsWith('Dénomination') || trimmed.startsWith('1.1') ||
+                      trimmed === 'A PROPOS DE NOUS' || trimmed === 'MISSION' || trimmed === 'VISION' || trimmed === 'VALEURS';
+                  // Generic heuristic: short, single-line, colon-free paragraphs (e.g. location names) render as sub-headers.
+                  const isShortHeader = !trimmed.includes(':') && !trimmed.startsWith('•') && trimmed.length < 60;
+                  if (isKnownHeader || isShortHeader) {
+                    return <h3 key={idx} style={{marginTop: idx > 0 ? '24px' : '0', marginBottom: '12px', color: 'var(--navy)', fontFamily: 'var(--font-serif)', fontSize: '18px'}}>{paragraph}</h3>;
+                  }
+                  return <p key={idx} style={{marginBottom: '14px'}}>{paragraph}</p>;
+                })
+              )}
             </div>
           </div>
         </div>

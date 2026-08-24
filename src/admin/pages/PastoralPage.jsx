@@ -91,7 +91,39 @@ export default function PastoralPage() {
   // Quill's onChange hands back the HTML string directly, not an event
   const setHtml = (k) => (html) => setForm({ ...form, [k]: html });
 
-  const parentOptions = items.filter(item => !item.parent_id); // Only top-level items as parents
+  const getDescendantIds = (itemId) => {
+    const descendantIds = new Set();
+    const pending = [itemId];
+
+    while (pending.length > 0) {
+      const parentId = pending.pop();
+      items.forEach((item) => {
+        if (item.parent_id === parentId && !descendantIds.has(item.id)) {
+          descendantIds.add(item.id);
+          pending.push(item.id);
+        }
+      });
+    }
+
+    return descendantIds;
+  };
+
+  const getParentLabel = (item) => {
+    const ancestors = [];
+    const visited = new Set();
+    let current = item;
+
+    while (current && !visited.has(current.id)) {
+      visited.add(current.id);
+      ancestors.unshift(current.name_fr);
+      current = items.find((candidate) => candidate.id === current.parent_id);
+    }
+
+    return ancestors.join(" / ");
+  };
+
+  const descendantIds = editing ? getDescendantIds(editing) : new Set();
+  const parentOptions = items.filter((item) => item.id !== editing && !descendantIds.has(item.id));
 
   return (
     <div>
@@ -178,7 +210,7 @@ export default function PastoralPage() {
                     <label className="form-label">Parent</label>
                     <select className="form-input" value={form.parent_id || ""} onChange={(e) => setForm({ ...form, parent_id: e.target.value ? Number(e.target.value) : null })}>
                       <option value="">Aucun (menu principal)</option>
-                      {parentOptions.map(item => <option key={item.id} value={item.id}>{item.name_fr}</option>)}
+                      {parentOptions.map(item => <option key={item.id} value={item.id}>{getParentLabel(item)}</option>)}
                     </select>
                   </div>
                   <div className="form-group">
