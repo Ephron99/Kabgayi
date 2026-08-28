@@ -81,11 +81,11 @@ export default function ContactPage() {
             </ul>
 
             {/* Office hours */}
-            <div className="contact-hours">
+            {/* <div className="contact-hours">
               <h3>{lang === "fr" ? "Heures d'ouverture" : lang === "en" ? "Office Hours" : "Amasaha Afunguye"}</h3>
               <p>{lang === "fr" ? "Lundi – Vendredi : 8h00 – 17h00" : lang === "en" ? "Monday – Friday: 8:00 AM – 5:00 PM" : "Kuwa Mbere – Kuwa Gatanu: 8h00 – 17h00"}</p>
               <p>{lang === "fr" ? "Samedi : 8h00 – 12h00" : lang === "en" ? "Saturday: 8:00 AM – 12:00 PM" : "Kuwa Gatandatu: 8h00 – 12h00"}</p>
-            </div>
+            </div> */}
           </aside>
 
           {/* Form */}

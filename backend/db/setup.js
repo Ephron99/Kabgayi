@@ -192,7 +192,7 @@ async function setup() {
     ["bishop_role_fr", "Évêque du Diocèse de Kabgayi"],
     ["phone",          "+250 788 315 609"],
     ["email",          "info@diocesedekabgayi.org"],
-    ["address",        "B.P. 23 Kabgayi – Rwanda"],
+    ["address",        "BP 60 Muhanga -Rwanda"],
     ["facebook",       "https://www.facebook.com/diocesedekabgayi"],
     ["youtube",        "https://www.youtube.com/diocesedekabgayi"],
     ["instagram",      "https://www.instagram.com/diocesedekabgayi"],

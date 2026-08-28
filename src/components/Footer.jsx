@@ -92,10 +92,10 @@ export default function Footer() {
             <h4 className="footer-v2-col-title">{lang === "fr" ? "CONTACT" : "CONTACT"}</h4>
             <ul className="footer-v2-contact">
               <li><MapPin  size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/> BP 60 Kabgayi – Rwanda</li>
-              <li><Phone   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="tel:+250786535173">+250 786 535 173</a></li>
-              <li><Mail    size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="mailto:info@diocesekabgayi.rw">info@diocesekabgayi.rw</a></li>
+              <li><Phone   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="tel:+250786535173"> 0788877848</a></li>
+              <li><Mail    size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="mailto:dkabgayi@gmail.com ">dkabgayi@gmail.com </a></li>
               <li><Globe   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="https://www.diocesekabgayi.rw" target="_blank" rel="noopener noreferrer">www.diocesekabgayi.rw</a></li>
-              <li><Clock   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/>Lun – Ven : 8h00 – 17h00</li>
+              {/* <li><Clock   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/>Lun – Ven : 8h00 – 17h00</li> */}
             </ul>
           </address>
 
