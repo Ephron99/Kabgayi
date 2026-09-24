@@ -13,6 +13,7 @@ import MessagesPage from "./pages/MessagesPage";
 import SettingsPage from "./pages/SettingsPage";
 import UsersPage   from "./pages/UsersPage";
 import BishopPage  from "./pages/BishopPage";
+import AboutPage   from "./pages/AboutPage";
 import AgendaPage  from "./pages/AgendaPage";
 import PastoralPage from "./pages/PastoralPage";
 import "./admin.css";
@@ -48,6 +49,7 @@ function AdminRoutes() {
               <Route path="services" element={<ServicesPage />} />
               <Route path="pastoral" element={<PastoralPage />} />
               <Route path="bishop"   element={<BishopPage />} />
+              <Route path="about"    element={<AboutPage />} />
               <Route path="agenda"   element={<AgendaPage />} />
               <Route path="messages" element={<MessagesPage />} />
               <Route path="settings" element={<SettingsPage />} />

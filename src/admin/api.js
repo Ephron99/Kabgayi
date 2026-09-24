@@ -74,6 +74,10 @@ export const api = {
   getBishop:     ()     => request("GET", "/bishop"),
   saveBishop:    (b)    => request("PUT", "/bishop", b),
 
+  // About page (À Propos)
+  getAbout:      ()     => request("GET", "/about"),
+  saveAbout:     (b)    => request("PUT", "/about", b),
+
   // Agenda
   getAgenda:     ()     => request("GET",  "/agenda/all"),
   createEvent:   (b)    => request("POST", "/agenda", b),

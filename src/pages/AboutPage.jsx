@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useLang } from "../context/LanguageContext";
+import { useApi } from "../hooks/useApi";
+import { resolveImg } from "../utils/imageUrl";
 import eveque from '../assets/portrait_eveque_-_copy_2_-9a431.jpg';
 import kabgayi from '../assets/kabgayi.jpg';
 
-// Raw stats data (language-independent values, section markers, and translation keys)
+// ── Fallback content (used when the database has no data yet) ──────────
 const dioceseStatsData = [
   { key: "population", value: "1 120 821" },
   { key: "baptises", value: "666 097" },
@@ -32,7 +34,7 @@ const dioceseStatsData = [
   { key: "hopitaux", value: "2" },
 ];
 
-const content = {
+const FALLBACK_CONTENT = {
   fr: {
     title: "À Propos du Diocèse de Kabgayi",
     subtitle: "Une Église particulière au cœur du Rwanda",
@@ -42,46 +44,18 @@ const content = {
       title: "Le Diocèse de Kabgayi",
       text: `Le diocèse de Kabgayi est une circonscription de l'Église catholique au Rwanda, dont le siège est situé à Gitarama, dans la Province du Sud. Il s'étend sur 2 187 km² à travers les districts de Muhanga, Kamonyi, Ruhango et Nyanza. Son évêque actuel, Mgr Balthazar Ntivuguruzwa, a été ordonné en juin 2023.
 
-Le territoire du Diocèse de Kabgayi se situe en province Sud du Rwanda, et couvre l’étendue de trois districts à savoir Kamonyi, Muhanga et Ruhango ainsi qu’une petite portion du district de Nyanza sur une superficie de 2.187 km2. D’après les statistiques de l’année 2023, le diocèse de Kabgayi compte 695.920 catholiques sur une population approximative de 1.203.959 habitants, ce qui fait une portion de 57,8% de toute la population avec une diminution de 4% par rapport à l’année 2022.
-
-Le Diocèse de Kabgayi est composé aujourd’hui de 31 paroisses. Les deux nouvelles paroisses sont celles de Kabugondo et Gasovu fondées en 2024.
-
-Carte géographique du Diocèse
-
-Au niveau du Personnel apostolique, le nombre des prêtres diocésains résidents dans le Diocèse et dans les services interdiocésains au Rwanda s’élève à 101. Le diocèse compte 10 prêtres religieux qui font leur apostolat sous convention. Le total général de tous les prêtres diocésains, y compris ceux qui sont aux études et d’autres qui vivent à l’étranger, s’élève au nombre de 154 prêtres incardinés.
-
-BREVE CHRONOLOGIE HIERARCHIQUE DU DIOCESE DE KABGAYI
-
-L’histoire du Diocèse de Kabgayi se confond jusqu’en 1952 avec l’histoire religieuse du Christianisme au Rwanda.
-Phase missionnaire : Kabgayi à l’époque des vicariats (1912-1959)
-Jusqu’en 1912, le Rwanda était rattaché au Vicariat Apostolique du Nyanza- Méridional, juridiction ecclésiastique dont le chef-lieu se situait au-delà de l’Akagera, à Kashozi (Tanzanie). Son Excellence Mgr Hirth devint le Vicaire Apostolique de cette juridiction.`,
+Le Diocèse de Kabgayi est composé aujourd'hui de 31 paroisses. Les deux nouvelles paroisses sont celles de Kabugondo et Gasovu fondées en 2024.`,
       statsTitle: "Statistiques du Diocèse 2026",
       statsLabels: {
-        population: "Population",
-        baptises: "Baptisés Catholiques",
-        catechumenes: "Catéchumènes",
-        total_catholiques: "Total Catholiques",
-        pct_cath: "% des Cath. / Pop. Totale",
-        paroisses: "Paroisses",
-        centrales: "Centrales",
-        comites_base: "Comités Ecclésiales de Base",
-        pretres: "Prêtres",
-        pretres_diocesains: "Prêtres Diocésains",
-        pretres_religieux: "Prêtres Religieux",
-        religieux: "Religieux",
-        religieuses: "Religieuses",
-        communautes_masc: "Communautés Masculines",
-        communautes_fem: "Communautés Féminines",
-        catechistes: "Catéchistes",
-        grands_seminaristes: "Grands Séminaristes",
-        petits_seminaristes: "Petits Séminaristes",
-        ecoles: "Écoles",
-        ecoles_primaires: "Écoles Primaires",
-        ecoles_secondaires: "Écoles Secondaires",
-        ecoles_superieures: "Écoles Supérieures Laïques",
-        formations_sanitaires: "Formations Sanitaires de l'Église",
-        centres_sante: "Centres de Santé",
-        hopitaux: "Hôpitaux",
+        population: "Population", baptises: "Baptisés Catholiques", catechumenes: "Catéchumènes",
+        total_catholiques: "Total Catholiques", pct_cath: "% des Cath. / Pop. Totale", paroisses: "Paroisses",
+        centrales: "Centrales", comites_base: "Comités Ecclésiales de Base", pretres: "Prêtres",
+        pretres_diocesains: "Prêtres Diocésains", pretres_religieux: "Prêtres Religieux", religieux: "Religieux",
+        religieuses: "Religieuses", communautes_masc: "Communautés Masculines", communautes_fem: "Communautés Féminines",
+        catechistes: "Catéchistes", grands_seminaristes: "Grands Séminaristes", petits_seminaristes: "Petits Séminaristes",
+        ecoles: "Écoles", ecoles_primaires: "Écoles Primaires", ecoles_secondaires: "Écoles Secondaires",
+        ecoles_superieures: "Écoles Supérieures Laïques", formations_sanitaires: "Formations Sanitaires de l'Église",
+        centres_sante: "Centres de Santé", hopitaux: "Hôpitaux",
       },
       statsHeaders: { designation: "Désignation", figure: "Chiffre" },
     },
@@ -105,47 +79,20 @@ Jusqu’en 1912, le Rwanda était rattaché au Vicariat Apostolique du Nyanza- M
     bishop_tab: "Our Bishop",
     diocese: {
       title: "The Diocese of Kabgayi",
-      text: `The Diocese of Kabgayi is a circumscription of the Catholic Church in Rwanda, with its seat in Gitarama, in the Southern Province. It covers an area of 2,187 km² across the districts of Muhanga, Kamonyi, Ruhango and Nyanza. Its current bishop, Mgr Balthazar Ntivuguruzwa, was ordained in June 2023.
+      text: `The Diocese of Kabgayi is a circumscription of the Catholic Church in Rwanda, with its seat in Gitarama, in the Southern Province. Its current bishop, Mgr Balthazar Ntivuguruzwa, was ordained in June 2023.
 
-The Diocese of Kabgayi is located in the Southern Province of Rwanda and covers three districts: Kamonyi, Muhanga, and Ruhango, as well as a small portion of the Nyanza district, encompassing an area of 2,187 km². According to 2023 statistics, the Diocese of Kabgayi has 695,920 Catholics out of an approximate population of 1,203,959, representing 57.8% of the total population, a decrease of 4% compared to 2022.
-
-The Diocese of Kabgayi currently comprises 31 parishes. The two new parishes are Kabugondo and Gasovu, founded in 2024.
-
-Geographical Map of the Diocese
-
-Regarding the apostolic personnel, the number of diocesan priests residing in the Diocese and serving in interdiocesan offices in Rwanda is 101. The diocese has 10 religious priests who carry out their ministry under contract. The total number of all diocesan priests, including those studying and others living abroad, is 154 incardinated priests.
-
-BRIEF HIERARCHICAL CHRONOLOGY OF THE DIOCESE OF KABGAYI
-
-The history of the Diocese of Kabgayi is intertwined with the religious history of Christianity in Rwanda until 1952. Missionary Phase: Kabgayi during the Vicariate Era (1912-1959)
-Until 1912, Rwanda was part of the Apostolic Vicariate of Southern Nyanza, an ecclesiastical jurisdiction whose capital was located beyond the Akagera River, in Kashozi (Tanzania). His Excellency Bishop Hirth became the Apostolic Vicar of this jurisdiction.`,
+The Diocese of Kabgayi currently comprises 31 parishes. The two new parishes are Kabugondo and Gasovu, founded in 2024.`,
       statsTitle: "Diocese Statistics 2026",
       statsLabels: {
-        population: "Population",
-        baptises: "Baptized Catholics",
-        catechumenes: "Catechumens",
-        total_catholiques: "Total Catholics",
-        pct_cath: "% Catholics / Total Pop.",
-        paroisses: "Parishes",
-        centrales: "Central Stations",
-        comites_base: "Basic Ecclesial Communities",
-        pretres: "Priests",
-        pretres_diocesains: "Diocesan Priests",
-        pretres_religieux: "Religious Priests",
-        religieux: "Religious Brothers",
-        religieuses: "Religious Sisters",
-        communautes_masc: "Male Communities",
-        communautes_fem: "Female Communities",
-        catechistes: "Catechists",
-        grands_seminaristes: "Major Seminarians",
-        petits_seminaristes: "Minor Seminarians",
-        ecoles: "Schools",
-        ecoles_primaires: "Primary Schools",
-        ecoles_secondaires: "Secondary Schools",
-        ecoles_superieures: "Lay Higher Education Schools",
-        formations_sanitaires: "Church Health Facilities",
-        centres_sante: "Health Centers",
-        hopitaux: "Hospitals",
+        population: "Population", baptises: "Baptized Catholics", catechumenes: "Catechumens",
+        total_catholiques: "Total Catholics", pct_cath: "% Catholics / Total Pop.", paroisses: "Parishes",
+        centrales: "Central Stations", comites_base: "Basic Ecclesial Communities", pretres: "Priests",
+        pretres_diocesains: "Diocesan Priests", pretres_religieux: "Religious Priests", religieux: "Religious Brothers",
+        religieuses: "Religious Sisters", communautes_masc: "Male Communities", communautes_fem: "Female Communities",
+        catechistes: "Catechists", grands_seminaristes: "Major Seminarians", petits_seminaristes: "Minor Seminarians",
+        ecoles: "Schools", ecoles_primaires: "Primary Schools", ecoles_secondaires: "Secondary Schools",
+        ecoles_superieures: "Lay Higher Education Schools", formations_sanitaires: "Church Health Facilities",
+        centres_sante: "Health Centers", hopitaux: "Hospitals",
       },
       statsHeaders: { designation: "Designation", figure: "Figure" },
     },
@@ -169,40 +116,20 @@ Until 1912, Rwanda was part of the Apostolic Vicariate of Southern Nyanza, an ec
     bishop_tab: "Umusenyeri Wacu",
     diocese: {
       title: "Diyosezi ya Kabgayi",
-      text: `Diyosezi ya Kabgayi ni ingengabitekerezo y'Itorero Gatolika mu Rwanda, aho icyicaro cya Gitarama, mu Ntara y'Epfo. Igizwe ku 2,187 km² kuzuye imirenge ya Muhanga, Kamonyi, Ruhango na Nyanza. Umusenyeri wayo ubu, Mgr Balthazar Ntivuguruzwa, yashinzwe mu kwezi wa Nyakanga 2023.
+      text: `Diyosezi ya Kabgayi ni ingengabitekerezo y'Itorero Gatolika mu Rwanda, aho icyicaro cya Gitarama, mu Ntara y'Epfo. Umusenyeri wayo ubu, Mgr Balthazar Ntivuguruzwa, yashinzwe mu kwezi wa Nyakanga 2023.
 
-Diyosezi ya Kabgayi ni imwe mu Diyosezi za kera za Gatolika mu Rwanda. Yashinzwe mu ntangiriro z'ikinyejana cya 20 n'Ubutumwa bw'Abapadiri b'i Afrika (Pères Blancs), kandi yakoreye mu gukurura abantu kuri Yesu Kristu no guteza imbere abantu mu Rwanda.
-
-Kabgayi, iherereye mu Ntara y'Epfo ya Rwanda, ni icyicaro cy'Umusenyeri kandi ikigarama nka Katedrale ya Notre-Dame ya Kabgayi, imwe mu nziza kandi za kera mu gihugu.
-
-Mu myaka ishize, Diyosezi yahuye n'ibihe byinshi bigoye n'iby'itumaini, harimo jenoside yo mu 1994 yakomerekeje umutima w'umuryango w'abakristu. Ubu, izirikana ukwizera n'ubwunvikane.`,
+Kabgayi, iherereye mu Ntara y'Epfo ya Rwanda, ni icyicaro cy'Umusenyeri kandi ikigarama nka Katedrale ya Notre-Dame ya Kabgayi.`,
       statsTitle: "Imibare y'Ingenzi ya Diyosezi 2026",
       statsLabels: {
-        population: "Abaturage",
-        baptises: "Ababatijwe Abagatolika",
-        catechumenes: "Abatoza",
-        total_catholiques: "Abagatolika Bose",
-        pct_cath: "% y'Abagatolika ku Baturage Bose",
-        paroisses: "Amaparuwasi",
-        centrales: "Ibigo Nkuru",
-        comites_base: "Amatorero Mato",
-        pretres: "Abapadiri",
-        pretres_diocesains: "Abapadiri ba Diyosezi",
-        pretres_religieux: "Abapadiri b'Amashyirahamwe",
-        religieux: "Abarumuna",
-        religieuses: "Abaseturi",
-        communautes_masc: "Amashyirahamwe y'Abagabo",
-        communautes_fem: "Amashyirahamwe y'Abagore",
-        catechistes: "Abatekiseri",
-        grands_seminaristes: "Abasemenari Bakuru",
-        petits_seminaristes: "Abasemenari Bato",
-        ecoles: "Amashuri",
-        ecoles_primaires: "Amashuri Abanza",
-        ecoles_secondaires: "Amashuri Yisumbuye",
-        ecoles_superieures: "Amashuri Makuru y'Abasivili",
-        formations_sanitaires: "Ivuriro ry'Itorero",
-        centres_sante: "Ibigo Nderabuzima",
-        hopitaux: "Ibitaro",
+        population: "Abaturage", baptises: "Ababatijwe Abagatolika", catechumenes: "Abatoza",
+        total_catholiques: "Abagatolika Bose", pct_cath: "% y'Abagatolika ku Baturage Bose", paroisses: "Amaparuwasi",
+        centrales: "Ibigo Nkuru", comites_base: "Amatorero Mato", pretres: "Abapadiri",
+        pretres_diocesains: "Abapadiri ba Diyosezi", pretres_religieux: "Abapadiri b'Amashyirahamwe", religieux: "Abarumuna",
+        religieuses: "Abaseturi", communautes_masc: "Amashyirahamwe y'Abagabo", communautes_fem: "Amashyirahamwe y'Abagore",
+        catechistes: "Abatekiseri", grands_seminaristes: "Abasemenari Bakuru", petits_seminaristes: "Abasemenari Bato",
+        ecoles: "Amashuri", ecoles_primaires: "Amashuri Abanza", ecoles_secondaires: "Amashuri Yisumbuye",
+        ecoles_superieures: "Amashuri Makuru y'Abasivili", formations_sanitaires: "Ivuriro ry'Itorero",
+        centres_sante: "Ibigo Nderabuzima", hopitaux: "Ibitaro",
       },
       statsHeaders: { designation: "Icyo Bigaragaza", figure: "Umubare" },
     },
@@ -222,9 +149,7 @@ Mu myaka ishize, Diyosezi yahuye n'ibihe byinshi bigoye n'iby'itumaini, harimo j
 };
 
 // Reusable, self-contained statistics table for the Diocese tab
-function DioceseStatsTable({ diocese }) {
-  const { statsTitle, statsLabels, statsHeaders } = diocese;
-
+function DioceseStatsTable({ statsTitle, headers, rows }) {
   return (
     <div style={{ marginTop: '12px' }}>
       <div style={{ textAlign: 'center', marginBottom: '24px' }}>
@@ -247,78 +172,51 @@ function DioceseStatsTable({ diocese }) {
             <tr style={{ backgroundColor: 'var(--navy)' }}>
               <th
                 style={{
-                  textAlign: 'left',
-                  padding: '14px 20px',
-                  color: '#fff',
-                  fontFamily: 'var(--font-serif)',
-                  fontWeight: '600',
-                  letterSpacing: '0.02em',
+                  textAlign: 'left', padding: '14px 20px', color: '#fff',
+                  fontFamily: 'var(--font-serif)', fontWeight: '600', letterSpacing: '0.02em',
                 }}
               >
-                {statsHeaders.designation}
+                {headers.designation}
               </th>
               <th
                 style={{
-                  textAlign: 'right',
-                  padding: '14px 20px',
-                  color: '#fff',
-                  fontFamily: 'var(--font-serif)',
-                  fontWeight: '600',
-                  letterSpacing: '0.02em',
+                  textAlign: 'right', padding: '14px 20px', color: '#fff',
+                  fontFamily: 'var(--font-serif)', fontWeight: '600', letterSpacing: '0.02em',
                 }}
               >
-                {statsHeaders.figure}
+                {headers.figure}
               </th>
             </tr>
           </thead>
           <tbody>
-            {dioceseStatsData.map((row, i) => {
-              if (row.section) {
+            {rows.map((row, i) => {
+              if (row.is_section) {
                 return (
-                  <tr key={`section-${row.section}`}>
+                  <tr key={`section-${i}`}>
                     <td
                       colSpan={2}
                       style={{
                         padding: '10px 20px',
                         backgroundColor: 'rgba(var(--red-rgb, 178, 34, 52), 0.08)',
-                        color: 'var(--red)',
-                        fontWeight: '700',
-                        fontSize: '13px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '0.06em',
-                        borderTop: '1px solid var(--border)',
-                        borderBottom: '1px solid var(--border)',
+                        color: 'var(--red)', fontWeight: '700', fontSize: '13px',
+                        textTransform: 'uppercase', letterSpacing: '0.06em',
+                        borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)',
                       }}
                     >
-                      {statsLabels[row.section]}
+                      {row.label}
                     </td>
                   </tr>
                 );
               }
               return (
-                <tr
-                  key={row.key}
-                  style={{
-                    backgroundColor: i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.02)',
-                  }}
-                >
-                  <td
-                    style={{
-                      padding: '12px 20px',
-                      color: 'var(--text)',
-                      borderBottom: '1px solid var(--border)',
-                    }}
-                  >
-                    {statsLabels[row.key]}
+                <tr key={`row-${i}`} style={{ backgroundColor: i % 2 === 0 ? 'transparent' : 'rgba(0,0,0,0.02)' }}>
+                  <td style={{ padding: '12px 20px', color: 'var(--text)', borderBottom: '1px solid var(--border)' }}>
+                    {row.label}
                   </td>
                   <td
                     style={{
-                      padding: '12px 20px',
-                      textAlign: 'right',
-                      color: 'var(--navy)',
-                      fontWeight: '700',
-                      fontVariantNumeric: 'tabular-nums',
-                      borderBottom: '1px solid var(--border)',
+                      padding: '12px 20px', textAlign: 'right', color: 'var(--navy)', fontWeight: '700',
+                      fontVariantNumeric: 'tabular-nums', borderBottom: '1px solid var(--border)',
                     }}
                   >
                     {row.value}
@@ -334,21 +232,12 @@ function DioceseStatsTable({ diocese }) {
 }
 
 // Collaborators list rendered under the bishop's bio text
-function BishopCollaborators({ bishop }) {
-  const { collaboratorsTitle, collaborators } = bishop;
-
+function BishopCollaborators({ collaboratorsTitle, collaborators }) {
   if (!collaborators || collaborators.length === 0) return null;
 
   return (
     <div style={{ marginTop: '32px' }}>
-      <h3
-        style={{
-          fontFamily: 'var(--font-serif)',
-          color: 'var(--navy)',
-          fontSize: '20px',
-          marginBottom: '16px',
-        }}
-      >
+      <h3 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '20px', marginBottom: '16px' }}>
         {collaboratorsTitle}
       </h3>
       <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -356,12 +245,8 @@ function BishopCollaborators({ bishop }) {
           <li
             key={i}
             style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'baseline',
-              flexWrap: 'wrap',
-              gap: '8px 16px',
-              padding: '12px 0',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+              flexWrap: 'wrap', gap: '8px 16px', padding: '12px 0',
               borderBottom: i < collaborators.length - 1 ? '1px solid var(--border)' : 'none',
             }}
           >
@@ -378,18 +263,69 @@ function BishopCollaborators({ bishop }) {
 
 export default function AboutPage() {
   const { t, lang } = useLang();
-  const c = content[lang] || content.fr;
+  const { data } = useApi("/api/about", { content: {}, stats: [], collaborators: [] });
   const [activeTab, setActiveTab] = useState('diocese'); // 'diocese' or 'bishop'
+
+  const fallback = FALLBACK_CONTENT[lang] || FALLBACK_CONTENT.fr;
+  const db = data?.content || {};
+  const dbStats = data?.stats || [];
+  const dbCollab = data?.collaborators || [];
+
+  // Resolve a trilingual DB column with a fallback to the static content.
+  const L = (base, fb) => {
+    const v = lang === "en" ? db[`${base}_en`] : lang === "rw" ? db[`${base}_rw`] : db[`${base}_fr`];
+    return (v && String(v).trim()) ? v : fb;
+  };
+
+  const heroTitle    = L("hero_title", fallback.title);
+  const heroSubtitle = L("hero_subtitle", fallback.subtitle);
+  const dioceseTab   = L("diocese_tab", fallback.diocese_tab);
+  const bishopTab    = L("bishop_tab", fallback.bishop_tab);
+
+  const dioceseTitle = L("diocese_title", fallback.diocese.title);
+  const dioceseText  = L("diocese_text", fallback.diocese.text);
+  const statsTitle   = L("stats_title", fallback.diocese.statsTitle);
+  const statsHeaders = {
+    designation: L("stats_designation", fallback.diocese.statsHeaders.designation),
+    figure: L("stats_figure", fallback.diocese.statsHeaders.figure),
+  };
+
+  const bishopTitle = L("bishop_title", fallback.bishop.title);
+  const bishopRole  = L("bishop_role", fallback.bishop.role);
+  const bishopText  = L("bishop_text", fallback.bishop.text);
+  const collabTitle = L("collab_title", fallback.bishop.collaboratorsTitle);
+
+  const dioceseImg = db.diocese_image ? resolveImg(db.diocese_image) : kabgayi;
+  const bishopImg  = db.bishop_image  ? resolveImg(db.bishop_image)  : eveque;
+
+  // Statistics rows — prefer DB, else derive from the static dataset.
+  const statsRows = dbStats.length
+    ? dbStats.map((s) => ({
+        label: (lang === "en" ? s.label_en : lang === "rw" ? s.label_rw : s.label_fr) || s.label_fr || "",
+        value: s.value || "",
+        is_section: !!s.is_section,
+      }))
+    : dioceseStatsData.map((row) => row.section
+        ? { label: fallback.diocese.statsLabels[row.section], value: "", is_section: true }
+        : { label: fallback.diocese.statsLabels[row.key], value: row.value, is_section: false });
+
+  // Collaborators — prefer DB, else static.
+  const collaborators = dbCollab.length
+    ? dbCollab.map((p) => ({
+        name: p.name || "",
+        role: (lang === "en" ? p.role_en : lang === "rw" ? p.role_rw : p.role_fr) || p.role_fr || "",
+      }))
+    : fallback.bishop.collaborators;
 
   return (
     <main id="main-content">
       {/* Hero */}
-      <div className="page-hero" style={{ backgroundImage: `url(${activeTab === 'diocese' ? kabgayi : eveque})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
+      <div className="page-hero" style={{ backgroundImage: `url(${activeTab === 'diocese' ? dioceseImg : bishopImg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
         <div className="page-hero-overlay" aria-hidden="true"></div>
         <div className="page-hero-content">
           <div className="section-label">{t("nav_about")}</div>
-          <h1>{c.title}</h1>
-          <p>{c.subtitle}</p>
+          <h1>{heroTitle}</h1>
+          <p>{heroSubtitle}</p>
         </div>
       </div>
 
@@ -407,34 +343,28 @@ export default function AboutPage() {
           <button
             onClick={() => setActiveTab('diocese')}
             style={{
-              padding: '12px 32px',
-              fontSize: '16px',
+              padding: '12px 32px', fontSize: '16px',
               fontWeight: activeTab === 'diocese' ? '700' : '500',
               color: activeTab === 'diocese' ? 'var(--red)' : 'var(--text)',
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
+              border: 'none', background: 'transparent', cursor: 'pointer',
               borderBottom: activeTab === 'diocese' ? '3px solid var(--red)' : '3px solid transparent',
               transition: 'all 0.2s ease'
             }}
           >
-            {c.diocese_tab}
+            {dioceseTab}
           </button>
           <button
             onClick={() => setActiveTab('bishop')}
             style={{
-              padding: '12px 32px',
-              fontSize: '16px',
+              padding: '12px 32px', fontSize: '16px',
               fontWeight: activeTab === 'bishop' ? '700' : '500',
               color: activeTab === 'bishop' ? 'var(--red)' : 'var(--text)',
-              border: 'none',
-              background: 'transparent',
-              cursor: 'pointer',
+              border: 'none', background: 'transparent', cursor: 'pointer',
               borderBottom: activeTab === 'bishop' ? '3px solid var(--red)' : '3px solid transparent',
               transition: 'all 0.2s ease'
             }}
           >
-            {c.bishop_tab}
+            {bishopTab}
           </button>
         </div>
 
@@ -442,51 +372,40 @@ export default function AboutPage() {
         {activeTab === 'diocese' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div style={{ textAlign: 'center', marginBottom: '12px' }}>
-              <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '28px' }}>{c.diocese.title}</h2>
+              <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '28px' }}>{dioceseTitle}</h2>
               <div className="section-divider" style={{ margin: '16px auto' }} aria-hidden="true"></div>
             </div>
             <img
-              src={kabgayi}
-              alt="Diocèse de Kabgayi"
-              style={{
-                width: '100%',
-                maxHeight: '500px',
-                objectFit: 'cover',
-                borderRadius: '16px',
-                boxShadow: 'var(--shadow-md)'
-              }}
+              src={dioceseImg}
+              alt={dioceseTitle}
+              style={{ width: '100%', maxHeight: '500px', objectFit: 'cover', borderRadius: '16px', boxShadow: 'var(--shadow-md)' }}
             />
             <div style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.9' }}>
-              {c.diocese.text.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
+              {dioceseText.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
             </div>
 
             {/* Statistics table */}
-            <DioceseStatsTable diocese={c.diocese} />
+            <DioceseStatsTable statsTitle={statsTitle} headers={statsHeaders} rows={statsRows} />
           </div>
         )}
 
         {activeTab === 'bishop' && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '40px', alignItems: 'start' }}>
             <img
-              src={eveque}
-              alt="Évêque du Diocèse de Kabgayi"
-              style={{
-                width: '100%',
-                borderRadius: '16px',
-                boxShadow: 'var(--shadow-lg)',
-                objectFit: 'cover'
-              }}
+              src={bishopImg}
+              alt={bishopTitle}
+              style={{ width: '100%', borderRadius: '16px', boxShadow: 'var(--shadow-lg)', objectFit: 'cover' }}
             />
             <div>
-              <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '28px', marginBottom: '8px' }}>{c.bishop.title}</h2>
-              <p style={{ fontSize: '16px', color: 'var(--red)', fontWeight: '600', marginBottom: '20px' }}>{c.bishop.role}</p>
+              <h2 style={{ fontFamily: 'var(--font-serif)', color: 'var(--navy)', fontSize: '28px', marginBottom: '8px' }}>{bishopTitle}</h2>
+              <p style={{ fontSize: '16px', color: 'var(--red)', fontWeight: '600', marginBottom: '20px' }}>{bishopRole}</p>
               <div className="section-divider" style={{ marginBottom: '20px' }} aria-hidden="true"></div>
               <div style={{ fontSize: '16px', color: 'var(--text)', lineHeight: '1.9' }}>
-                {c.bishop.text.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
+                {bishopText.split('\n\n').map((p, i) => <p key={i} style={{ marginBottom: '16px' }}>{p}</p>)}
               </div>
 
               {/* Collaborators list */}
-              <BishopCollaborators bishop={c.bishop} />
+              <BishopCollaborators collaboratorsTitle={collabTitle} collaborators={collaborators} />
             </div>
           </div>
         )}
