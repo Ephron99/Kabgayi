@@ -1,29 +1,89 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
-import { ChevronRight, Search } from "lucide-react";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import logoImg from "../assets/logo_balthazar-3-2bb20.jpg";
 import { useApi } from "../hooks/useApi";
 
-function MenuItemList({ items, mobile = false, depth = 0 }) {
-  return items.map((item) => (
-    <div key={item.path + item.label} className={`pastoral-menu-node${depth > 0 ? " nested" : ""}`}>
-      <Link
-        to={item.path}
-        className={mobile ? "navbar-v2-mobile-sublink" : "navbar-v2-dropdown-item"}
-        role={mobile ? undefined : "menuitem"}
-      >
-        <span className="dropdown-dot" aria-hidden="true" />
-        <span>{item.label}</span>
-        {item.children?.length > 0 && <ChevronRight className="pastoral-menu-chevron" size={14} aria-hidden="true" />}
-      </Link>
-      {item.children?.length > 0 && (
-        <div className="pastoral-menu-children">
-          <MenuItemList items={item.children} mobile={mobile} depth={depth + 1} />
+/* Desktop: inline vertical tree — sub menus shown on the same column,
+   deeper levels (sub-sub, sub-sub-sub …) collapsed until the toggle is pressed. */
+export function MenuNode({ item, path, depth = 0 }) {
+  const hasChildren = item.children?.length > 0;
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className={`nv2-node${hasChildren ? " has-children" : ""} d${Math.min(depth, 4)}`}>
+      <div className="nv2-node-row">
+        <Link
+          to={item.path}
+          className="nv2-node-link"
+          role="menuitem"
+        >
+          <span className="nv2-node-label">{item.label}</span>
+        </Link>
+        {hasChildren && (
+          <button
+            type="button"
+            className={`nv2-node-toggle${open ? " open" : ""}`}
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-label={open ? `Réduire ${item.label}` : `Développer ${item.label}`}
+          >
+            <ChevronDown size={15} aria-hidden="true" />
+          </button>
+        )}
+      </div>
+      {hasChildren && open && (
+        <div className="nv2-children">
+          {item.children.map((child) => (
+            <MenuNode key={path + child.path} item={child} path={path + child.path} depth={depth + 1} />
+          ))}
         </div>
       )}
     </div>
-  ));
+  );
+}
+
+/* Mobile: collapsible sub-menu tree (tap chevron to expand / collapse) */
+export function MobileMenuItemList({ items, depth = 0 }) {
+  const [openPaths, setOpenPaths] = useState(() => new Set());
+
+  const togglePath = (p) =>
+    setOpenPaths((prev) => {
+      const next = new Set(prev);
+      next.has(p) ? next.delete(p) : next.add(p);
+      return next;
+    });
+
+  return items.map((item) => {
+    const hasChildren = item.children?.length > 0;
+    const isOpen = openPaths.has(item.path);
+    return (
+      <div key={item.path + item.label} className={`m-sub-node d${Math.min(depth, 3)}`}>
+        <div className="m-sub-row">
+          <Link to={item.path} className="navbar-v2-mobile-sublink">
+            {item.label}
+          </Link>
+          {hasChildren && (
+            <button
+              type="button"
+              className={`m-sub-toggle${isOpen ? " open" : ""}`}
+              onClick={() => togglePath(item.path)}
+              aria-expanded={isOpen}
+              aria-label={isOpen ? `Réduire ${item.label}` : `Développer ${item.label}`}
+            >
+              <ChevronDown size={16} aria-hidden="true" />
+            </button>
+          )}
+        </div>
+        {hasChildren && isOpen && (
+          <div className="m-sub-children">
+            <MobileMenuItemList items={item.children} depth={depth + 1} />
+          </div>
+        )}
+      </div>
+    );
+  });
 }
 
 export default function Navbar() {
@@ -79,9 +139,11 @@ export default function Navbar() {
     ];
   };
 
-  // Build pastoral menu structure
+  // Build pastoral menu structure — a single vertical tree where the
+  // top-level items are the visible sub-menus and every deeper level
+  // (sub-sub, sub-sub-sub …) stays collapsed behind a toggle.
   const buildPastoralMenu = () => {
-    const menuGroups = [];
+    const rootItems = [];
 
     if (pastoralItems && Array.isArray(pastoralItems)) {
       const activePastoralItems = pastoralItems.filter(item => item.is_active);
@@ -108,16 +170,10 @@ export default function Navbar() {
         };
       };
 
-      const rootItems = (childrenByParent.get(null) || []).map(item => toMenuItem(item)).filter(Boolean);
-      const standaloneItems = rootItems.filter(item => item.children.length === 0);
-      const groupedItems = rootItems.filter(item => item.children.length > 0);
-
-      if (standaloneItems.length > 0) menuGroups.push({ group: "", items: standaloneItems });
-      groupedItems.forEach(item => menuGroups.push({
-        group: item.label,
-        items: item.children,
-        pastoral: true
-      }));
+      (childrenByParent.get(null) || []).forEach(item => {
+        const node = toMenuItem(item);
+        if (node) rootItems.push(node);
+      });
     }
 
     if (services && Array.isArray(services)) {
@@ -125,17 +181,19 @@ export default function Navbar() {
       educationItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0));
 
       if (educationItems.length > 0) {
-        menuGroups.push({
-          group: lang === "fr" ? "ÉDUCATION" : lang === "en" ? "EDUCATION" : "UBUREZI",
-          items: educationItems.map(item => ({
+        rootItems.push({
+          label: lang === "fr" ? "ÉDUCATION" : lang === "en" ? "EDUCATION" : "UBUREZI",
+          path: "/education",
+          children: educationItems.map(item => ({
             label: item[`name_${lang}`] || item.name_fr,
-            path: `/services/${item.slug}`
+            path: `/services/${item.slug}`,
+            children: []
           }))
         });
       }
     }
 
-    return menuGroups;
+    return [{ group: "", items: rootItems }];
   };
 
   // ── Menu structure ──────────────────────────────────────
@@ -232,8 +290,10 @@ export default function Navbar() {
         <ul className="navbar-v2-menu" role="menubar">
           {navItems.map((item) => {
             const isActive =
-              location.pathname === item.path ||
-              (item.path !== "/" && location.pathname.startsWith(item.path));
+              !!item.path && (
+                location.pathname === item.path ||
+                (item.path !== "/" && location.pathname.startsWith(item.path))
+              );
             const isOpen = activeDropdown === item.key;
             const hasChildren = item.children && item.children.length > 0;
 
@@ -261,9 +321,22 @@ export default function Navbar() {
                       {item.children.map((group, gi) => (
                         <div key={gi} className="mega-group">
                           {group.group && (
-                            <div className="mega-group-title">{group.group}</div>
+                            group.groupLink ? (
+                              <Link
+                                to={group.groupLink}
+                                className="mega-group-title mega-group-link"
+                                onClick={() => setActiveDropdown(null)}
+                              >
+                                {group.group}
+                                <ChevronRight size={13} aria-hidden="true" />
+                              </Link>
+                            ) : (
+                              <div className="mega-group-title">{group.group}</div>
+                            )
                           )}
-                          <MenuItemList items={group.items} />
+                          {group.items.map((sub) => (
+                            <MenuNode key={sub.path + sub.label} item={sub} path={sub.path} />
+                          ))}
                         </div>
                       ))}
                     </div>
@@ -325,9 +398,15 @@ export default function Navbar() {
                         {item.children.map((group, gi) => (
                           <div key={gi}>
                             {group.group && (
-                              <div className="mobile-group-title">{group.group}</div>
+                              group.groupLink ? (
+                                <Link to={group.groupLink} className="mobile-group-title mobile-group-link">
+                                  {group.group}
+                                </Link>
+                              ) : (
+                                <div className="mobile-group-title">{group.group}</div>
+                              )
                             )}
-                            <MenuItemList items={group.items} mobile />
+                            <MobileMenuItemList items={group.items} />
                           </div>
                         ))}
                       </div>

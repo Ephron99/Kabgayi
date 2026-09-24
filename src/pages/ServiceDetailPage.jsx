@@ -69,7 +69,12 @@ export default function ServiceDetailPage() {
           <div className="detail-text">
             <h2>{getName()}</h2>
             <div className="section-divider" aria-hidden="true"></div>
-            {getDesc() && <p>{getDesc()}</p>}
+            {getDesc() && (
+              <div
+                className="detail-body"
+                dangerouslySetInnerHTML={{ __html: getDesc() }}
+              />
+            )}
           </div>
         </div>
       </div>

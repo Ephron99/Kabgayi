@@ -38,10 +38,10 @@ function ParishesWidget({ lang }) {
       </div>
 
       {/* Parish search */}
-      <div className="home-parish-search">
+            <div className="home-parish-search">
         <label className="home-parish-search-label">
           <MapPin size={12} style={{ display:"inline", marginRight:4 }} />
-          {lang === "fr" ? "Trouvez votre paroisse" : lang === "en" ? "Find your parish" : "Shaka paruwasi yawe"}
+          {lang === "fr" ? "horaires" : lang === "en" ? "Find your parish" : "Shaka paruwasi yawe"}
         </label>
         <div className="home-parish-search-row">
           <select className="home-parish-select">
@@ -52,6 +52,32 @@ function ParishesWidget({ lang }) {
             <Search size={14} />
             {lang === "fr" ? "Chercher" : "Search"}
           </button>
+        </div>
+      </div>
+
+      <div className="home-documentary">
+        <h2 className="home-documentary-title">
+          {lang === "fr"
+            ? "Découvrez notre documentaire"
+            : lang === "en"
+            ? "Watch our documentary"
+            : "Reba filime yacu"}
+        </h2>
+        <div className="home-documentary-video-wrap">
+          <iframe
+            className="home-documentary-iframe"
+            src="https://www.youtube.com/embed/jnsZxUOooQ8?list=PL0m86HabqytdEwBBprEwNb3Pb3-KyrT_D"
+            title={
+              lang === "fr"
+                ? "Documentaire du Diocèse de Kabgayi"
+                : lang === "en"
+                ? "Kabgayi Diocese Documentary"
+                : "Filime y'Idiyosezi ya Kabgayi"
+            }
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
         </div>
       </div>
     </div>
