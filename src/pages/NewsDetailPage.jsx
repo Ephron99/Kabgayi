@@ -21,6 +21,17 @@ export default function NewsDetailPage() {
     catch { return d; }
   };
 
+  // Renders the article body as HTML (from the rich text editor).
+  // Falls back to converting legacy plain-text content into paragraphs.
+  const bodyHtml = (raw) => {
+    if (!raw) return "";
+    if (/<[a-z][\s\S]*>/i.test(raw)) return raw;
+    return raw
+      .split(/\n{2,}/)
+      .map((p) => `<p>${p.replace(/\n/g, "<br>")}</p>`)
+      .join("");
+  };
+
   return (
     <main id="main-content">
       <div className="page-hero" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=80)", minHeight: 220 }}>
@@ -86,12 +97,10 @@ export default function NewsDetailPage() {
               />
             )}
 
-            <div className="news-detail-body">
-              {/* Full content if available, else excerpt */}
-              {(getField("content") || getField("excerpt")).split("\n\n").map((para, i) => (
-                <p key={i}>{para}</p>
-              ))}
-            </div>
+            <div
+              className="news-detail-body rich-text"
+              dangerouslySetInnerHTML={{ __html: bodyHtml(getField("content") || getField("excerpt")) }}
+            />
 
             <div style={{ marginTop: 40, paddingTop: 24, borderTop: "1px solid var(--border)", display:"flex", justifyContent:"space-between", alignItems:"center", flexWrap:"wrap", gap:12 }}>
               <Link to="/actualites" className="btn btn--outline-dark">

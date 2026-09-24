@@ -13,6 +13,23 @@ export default function ActualitesPage() {
     (lang === "en" ? item[`${base}_en`] : lang === "rw" ? item[`${base}_rw`] : item[`${base}_fr`])
     || item[`${base}_fr`] || "";
 
+  // Strips HTML tags so rich-text content can be previewed as plain text.
+  const stripHtml = (html) => {
+    if (!html) return "";
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return (doc.body.textContent || "").replace(/\s+/g, " ").trim();
+  };
+
+  // Short summary for the card: prefer the excerpt, else derive from content.
+  // Full content stays on the detail page (opened via "Lire la suite").
+  const getSummary = (item, maxLen = 180) => {
+    const text = stripHtml(getField(item, "excerpt") || getField(item, "content"));
+    if (text.length <= maxLen) return text;
+    const cut = text.slice(0, maxLen);
+    const lastSpace = cut.lastIndexOf(" ");
+    return (lastSpace > 80 ? cut.slice(0, lastSpace) : cut).trimEnd() + "…";
+  };
+
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     try {
@@ -93,7 +110,7 @@ export default function ActualitesPage() {
                   <h3 className="news-card-title">
                     <Link to={`/actualites/${item.id}`}>{getField(item, "title")}</Link>
                   </h3>
-                  <p className="news-card-excerpt">{getField(item, "excerpt")}</p>
+                  <p className="news-card-excerpt">{getSummary(item)}</p>
                   <Link to={`/actualites/${item.id}`} className="news-card-read">
                     {t("news_read")} →
                   </Link>

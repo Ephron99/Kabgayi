@@ -114,7 +114,7 @@ export const translations = {
     footer_privacy: "Politique de confidentialité",
 
     // Contact info
-    contact_address: "BP 60 Muhanga -Rwanda",
+    contact_address: "BP 66 Muhanga -Rwanda",
     contact_phone: "+250 788877848",
     contact_email: "dkabgayi@gmail.com",
     contact_web: "diocesekabgayi.rw",
@@ -350,7 +350,7 @@ export const translations = {
     footer_legal: "Amategeko",
     footer_privacy: "Politiki y'Ibanga",
 
-    contact_address: "BP 60 Muhanga -Rwanda",
+    contact_address: "BP 66 Muhanga -Rwanda",
     contact_phone: "+250 788877848",
     contact_email: "dkabgayi@gmail.com",
     contact_web: "diocesekabgayi.rw",

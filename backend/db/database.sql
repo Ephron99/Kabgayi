@@ -179,7 +179,7 @@ INSERT IGNORE INTO settings (setting_key, value) VALUES
   ('bishop_role_fr', 'Évêque du Diocèse de Kabgayi'),
   ('phone',          '+250 788 315 609'),
   ('email',          'info@diocesedekabgayi.org'),
-  ('address',        'BP 60 Muhanga -Rwanda'),
+  ('address',        'BP 66 Muhanga -Rwanda'),
   ('facebook',       'https://www.facebook.com/diocesedekabgayi'),
   ('youtube',        'https://www.youtube.com/diocesedekabgayi'),
   ('instagram',      'https://www.instagram.com/diocesedekabgayi');

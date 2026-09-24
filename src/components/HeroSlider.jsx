@@ -89,9 +89,6 @@ export default function HeroSlider() {
   const getDesc   = (s) => (lang === "en" ? s.descEn   : lang === "rw" ? s.descRw   : s.descFr)   || s.descFr   || "";
   const imgSrc    = (s) => resolveImg(s.image_url || s.image || "");
 
-  const handlePrev = () => { transition((currentRef.current - 1 + slides.length) % slides.length); resetTimer(); };
-  const handleNext = () => { transition((currentRef.current + 1) % slides.length); resetTimer(); };
-
   return (
     <section className="hero-fw" aria-label="Présentation du diocèse">
       {/* Background images */}
@@ -131,20 +128,6 @@ export default function HeroSlider() {
           </div>
         </div>
       ))}
-
-      {/* Left arrow */}
-      <button className="hero-fw-arrow hero-fw-arrow--left" onClick={handlePrev} aria-label="Précédent">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
-          <path d="M15 18l-6-6 6-6"/>
-        </svg>
-      </button>
-
-      {/* Right arrow */}
-      <button className="hero-fw-arrow hero-fw-arrow--right" onClick={handleNext} aria-label="Suivant">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="22" height="22">
-          <path d="M9 18l6-6-6-6"/>
-        </svg>
-      </button>
 
       {/* Dots */}
       <div className="hero-fw-dots" role="tablist">

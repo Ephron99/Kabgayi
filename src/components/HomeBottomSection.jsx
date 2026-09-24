@@ -24,7 +24,7 @@ function ParishesWidget({ lang }) {
 
       {/* Mini map */}
       <div className="home-parish-map">
-        <svg viewBox="0 0 240 160" width="100%" style={{ display:"block" }}>
+        {/* <svg viewBox="0 0 240 160" width="100%" style={{ display:"block" }}>
           <rect width="240" height="160" fill="#EEF2FF" rx="8"/>
           <text x="120" y="65" textAnchor="middle" fill="#4B5563" fontSize="12" fontWeight="600">Rwanda</text>
           <text x="120" y="82" textAnchor="middle" fill="#8B0000" fontSize="10">Diocèse de Kabgayi</text>
@@ -34,7 +34,7 @@ function ParishesWidget({ lang }) {
               <circle cx={x} cy={y} r="3" fill="#D4AF37"/>
             </g>
           ))}
-        </svg>
+        </svg> */}
       </div>
 
       {/* Parish search */}
@@ -148,7 +148,7 @@ function ActionBanners({ lang }) {
       Icon: Target,
       title: lang === "fr" ? "NOS PRIORITÉS PASTORALES" : lang === "en" ? "PASTORAL PRIORITIES" : "IBINTU BY'INGENZI",
       desc:  "",
-      to:    "/pastorale/priorites",
+      to:    "/pastorale/Priorités%20Pastorales%20du%20Diocèse",
       color: "#1A3C6E",
     },
   ];

@@ -127,7 +127,7 @@ Hospitalité - Qualité - Professionnalisme`, en: "Kabgayi Hospital is one of th
       },
       {
         slug: "horaires-messes",
-        key: "sub_horaires",
+        key: "horaires",
         icon: <Clock />,
         img: kabgayi,
         // Short preview text shown on the card grid (list view uses desc.substring(0,100))

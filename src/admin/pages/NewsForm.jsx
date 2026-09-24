@@ -4,6 +4,7 @@ import { api } from "../api";
 import { showToast, ToastContainer } from "../components/Toast";
 import { useAdminLang } from "../context/AdminLangContext";
 import ImageUpload from "../components/ImageUpload";
+import RichTextEditor from "../components/RichTextEditor";
 import { Save, Rocket, Image, Settings, Trash2, Reply } from "lucide-react";
 const EMPTY = {
   category_fr:"", category_en:"", category_rw:"",
@@ -33,6 +34,8 @@ export default function NewsForm() {
   }, [id]);
 
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
+  // Quill hands back the HTML string directly, not an event
+  const setHtml = (k) => (html) => setForm({ ...form, [k]: html });
 
   const handleSave = async (published) => {
     setSaving(true);
@@ -113,8 +116,12 @@ export default function NewsForm() {
               </div>
               <div className="form-group">
                 <label className="form-label">{t("full_content")}</label>
-                <textarea className="form-input form-textarea" rows={12}
-                  value={form[`content_${code}`]} onChange={set(`content_${code}`)} />
+                <RichTextEditor
+                  value={form[`content_${code}`]}
+                  onChange={setHtml(`content_${code}`)}
+                  placeholder={t("full_content")}
+                  height={300}
+                />
               </div>
             </div>
           ))}

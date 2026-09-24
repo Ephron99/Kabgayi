@@ -1,8 +1,9 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLang } from "../context/LanguageContext";
 import { useApi } from "../hooks/useApi";
 import { resolveImg } from "../utils/imageUrl";
-import { Calendar, ChevronRight } from "lucide-react";
+import { Calendar, ChevronRight, X } from "lucide-react";
 import bishopFallback from "../assets/portrait_eveque_-_copy_2_-9a431.jpg";
 
 const FALLBACK = [
@@ -39,6 +40,19 @@ export default function NewsSection() {
   const { data: bishopData } = useApi("/api/bishop", {});
 
   const items = (Array.isArray(data) ? data : (data?.data ?? FALLBACK)).slice(0, 3);
+
+  // "Message de l'Évêque" full-text dialog
+  const [msgOpen, setMsgOpen] = useState(false);
+  useEffect(() => {
+    if (!msgOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setMsgOpen(false); };
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [msgOpen]);
 
   const getField = (item, base) =>
     (lang === "en" ? item[`${base}_en`] : lang === "rw" ? item[`${base}_rw`] : item[`${base}_fr`])
@@ -131,13 +145,65 @@ export default function NewsSection() {
               <strong>{bishopName}</strong>
               <span>{bishopRole}</span>
             </div>
-            <Link to="/a-propos" className="bishop-msg-btn">
+            <button type="button" className="bishop-msg-btn" onClick={() => setMsgOpen(true)}>
               {lang === "fr" ? "Lire le message complet" : lang === "en" ? "Read full message" : "Soma ubutumwa bwose"}
               <ChevronRight size={14} />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Bishop message dialog */}
+      {msgOpen && (
+        <div
+          className="bishop-modal-overlay"
+          onClick={() => setMsgOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="bishop-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="bishop-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="bishop-modal-close"
+              onClick={() => setMsgOpen(false)}
+              aria-label={lang === "fr" ? "Fermer" : lang === "en" ? "Close" : "Funga"}
+            >
+              <X size={20} />
+            </button>
+            <div className="bishop-modal-head">
+              <img
+                src={bishopPhoto}
+                alt={bishopName}
+                className="bishop-modal-photo"
+                onError={(e) => { e.target.src = bishopFallback; }}
+              />
+              <div>
+                <h3 id="bishop-modal-title" className="bishop-modal-title">
+                  {lang === "fr" ? "Message de l'Évêque" : lang === "en" ? "Bishop's Message" : "Ijambo ry'Umusenyeri"}
+                </h3>
+                <p className="bishop-modal-meta">
+                  <strong>{bishopName}</strong>
+                  <span>{bishopRole}</span>
+                </p>
+              </div>
+            </div>
+            <div className="bishop-modal-body">
+              {bishopMsg.split(/\n{2,}/).map((para, i) => (
+                <p key={i}>
+                  {para.split("\n").map((line, j) => (
+                    <span key={j}>{j > 0 && <br />}{line}</span>
+                  ))}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

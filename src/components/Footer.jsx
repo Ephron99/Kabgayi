@@ -89,10 +89,10 @@ export default function Footer() {
 
           {/* Contact */}
           <address className="footer-v2-col">
-            <h4 className="footer-v2-col-title">{lang === "fr" ? "CONTACT" : "CONTACT"}</h4>
+            <h4 className="footer-v2-col-title">{lang === "fr" ? "Nos Coordonnées" : "CONTACT"}</h4>
             <ul className="footer-v2-contact">
-              <li><MapPin  size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/> BP 60 Kabgayi – Rwanda</li>
-              <li><Phone   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="tel:+250786535173"> 0788877848</a></li>
+              <li><MapPin  size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/> BP 66 Kabgayi – Rwanda</li>
+              {/* <li><Phone   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="tel:+250786535173"> 0788877848</a></li> */}
               <li><Mail    size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="mailto:dkabgayi@gmail.com ">dkabgayi@gmail.com </a></li>
               <li><Globe   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/><a href="https://www.diocesekabgayi.rw" target="_blank" rel="noopener noreferrer">www.diocesekabgayi.rw</a></li>
               {/* <li><Clock   size={14} style={{flexShrink:0,color:"var(--gold)",marginTop:2}}/>Lun – Ven : 8h00 – 17h00</li> */}
@@ -103,13 +103,16 @@ export default function Footer() {
           <div className="footer-v2-col footer-v2-map-col">
             <h4 className="footer-v2-col-title">LOCALISATION</h4>
             <div className="footer-v2-map">
-              <svg viewBox="0 0 200 140" width="100%">
-                <rect width="200" height="140" fill="#E8EDF5" rx="6"/>
-                <text x="100" y="60" textAnchor="middle" fill="#4B5563" fontSize="11">Rwanda</text>
-                <circle cx="100" cy="80" r="10" fill="#8B0000" opacity="0.7"/>
-                <circle cx="100" cy="80" r="5"  fill="#D4AF37"/>
-                <text x="100" y="110" textAnchor="middle" fill="#8B0000" fontSize="10" fontWeight="600">Kabgayi</text>
-              </svg>
+              <iframe
+                title="Localisation Kabgayi, Rwanda"
+                src="https://www.google.com/maps?q=Kabgayi,%20Rwanda&z=13&output=embed"
+                width="100%"
+                height="180"
+                style={{ border: 0, display: "block" }}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </div>
